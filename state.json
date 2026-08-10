@@ -356,6 +356,7 @@
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
       "behind": 12,
+      "head": "97421c49658aaa8cf6e64736a8cb21697db3f866",
       "latest": "update DB"
     },
     "Kosinkadink/ComfyUI-VideoHelperSuite": {
@@ -365,6 +366,7 @@
     "kijai/ComfyUI-KJNodes": {
       "pinned": "35e595619376",
       "behind": 5,
+      "head": "60cd6bc1870db94c6eeb05fbe455147a8e91c4e9",
       "latest": "Optimize tiny vae some"
     },
     "rgthree/rgthree-comfy": {
@@ -382,6 +384,7 @@
     "Larryvrh/ComfyUI-MiniMax-H3-Turbo": {
       "pinned": "96cc1ddc0016",
       "behind": 6,
+      "head": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
       "latest": "README: v4-600 vs v1-850 decision tree — v1-850 is friendlier for 4-step heavy motion"
     }
   },
@@ -567,6 +570,76 @@
   "reddit/r-comfyui": {
     "posts": [
       {
+        "id": "t3_1vkeqel",
+        "title": "Minimax H3 - Speeding It Up On LowVRAM (12GB)",
+        "author": "/u/Support_Marmoset",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vkeqel/minimax_h3_speeding_it_up_on_lowvram_12gb/",
+        "updated": "2026-08-10T08:10:19+00:00"
+      },
+      {
+        "id": "t3_1vkbo38",
+        "title": "Minimax H3 used as Infinite Talk Unlimited Lipsync?",
+        "author": "/u/Disastrous_Pea529",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vkbo38/minimax_h3_used_as_infinite_talk_unlimited_lipsync/",
+        "updated": "2026-08-10T05:10:58+00:00"
+      },
+      {
+        "id": "t3_1vk8lm9",
+        "title": "He was my turtle first",
+        "author": "/u/FitContribution2946",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk8lm9/he_was_my_turtle_first/",
+        "updated": "2026-08-10T02:33:34+00:00"
+      },
+      {
+        "id": "t3_1vk863v",
+        "title": "1980s sitcom using Minimax-H3",
+        "author": "/u/carmidian",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk863v/1980s_sitcom_using_minimaxh3/",
+        "updated": "2026-08-10T02:12:42+00:00"
+      },
+      {
+        "id": "t3_1vk65xf",
+        "title": "Need some advice on Prompting for MiniMax H3.",
+        "author": "/u/Askdevin777",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk65xf/need_some_advice_on_prompting_for_minimax_h3/",
+        "updated": "2026-08-10T00:37:59+00:00"
+      },
+      {
+        "id": "t3_1vk5rsw",
+        "title": "Minimax H3 has incredible reference to video accuracy. Any way to make a reference(s) to image workflow?",
+        "author": "/u/ColdExample",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk5rsw/minimax_h3_has_incredible_reference_to_video/",
+        "updated": "2026-08-10T00:19:36+00:00"
+      },
+      {
+        "id": "t3_1vk52fg",
+        "title": "MiniMax H3 RTX PRO 6000 follow-up: 7-way Sage vs Spectrum vs FirstBlock vs Turbo v4 (+ workflows)",
+        "author": "/u/WhoopJack",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk52fg/minimax_h3_rtx_pro_6000_followup_7way_sage_vs/",
+        "updated": "2026-08-09T23:48:10+00:00"
+      },
+      {
+        "id": "t3_1vk4ib7",
+        "title": "If you are VRAM limited, you NEED to try this MiniMax-H3 setup — saved ~10GB+ VRAM and eliminated swapping",
+        "author": "/u/Annual_Mess_1839",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk4ib7/if_you_are_vram_limited_you_need_to_try_this/",
+        "updated": "2026-08-09T23:22:33+00:00"
+      },
+      {
+        "id": "t3_1vk479s",
+        "title": "Modelsamplingminimaxh3 node?",
+        "author": "/u/havredrengenDK",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk479s/modelsamplingminimaxh3_node/",
+        "updated": "2026-08-09T23:08:47+00:00"
+      },
+      {
+        "id": "t3_1vk2654",
+        "title": "Minimax H3 ~ \"Hack\" 50+ reference or more",
+        "author": "/u/No_Damage_8420",
+        "url": "https://www.reddit.com/r/comfyui/comments/1vk2654/minimax_h3_hack_50_reference_or_more/",
+        "updated": "2026-08-09T21:42:13+00:00"
+      },
+      {
         "id": "t3_1vjw1nz",
         "title": "Most aggressive acceleration for Minimax H3 ref2v (till Aug 9, 2026)",
         "author": "/u/nik_amaze",
@@ -670,13 +743,6 @@
         "author": "/u/Crafty-Percentage-29",
         "url": "https://www.reddit.com/r/comfyui/comments/1vjky91/wan_22_i2v_vs_minimax_h3_i2v/",
         "updated": "2026-08-09T09:00:13+00:00"
-      },
-      {
-        "id": "t3_1vjk2dr",
-        "title": "Workflow for existing image scene edit? Minimax H3",
-        "author": "/u/flaminghotcola",
-        "url": "https://www.reddit.com/r/comfyui/comments/1vjk2dr/workflow_for_existing_image_scene_edit_minimax_h3/",
-        "updated": "2026-08-09T08:06:04+00:00"
       }
     ]
   }
