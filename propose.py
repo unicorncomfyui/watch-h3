@@ -34,6 +34,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import urllib.request
 from pathlib import Path
 
 POD = os.environ.get("POD_REPO", "unicorncomfyui/pod-comfyui-h3").strip()
@@ -48,6 +49,96 @@ def run(*args: str, cwd: str | None = None, check: bool = True) -> str:
     if check and p.returncode:
         raise RuntimeError(f"{' '.join(args[:3])}: {p.stderr.strip()[:400]}")
     return p.stdout.strip()
+
+
+# Reading the diff is a different privilege from writing the pull request, so
+# it uses a different token when one is provided. The Actions GITHUB_TOKEN is
+# the right one: 1000 requests/hour and no write access anywhere. Falls back to
+# the write token, which a fine-grained PAT still lets read public repositories
+# with, and then to anonymous - 60/hour, enough for a handful of pins.
+READ_TOKEN = os.environ.get("READ_TOKEN", "").strip()
+
+# Whether a changed file can move what the image DOES. A registry of node
+# metadata cannot; a sampler can. This is the whole basis of the verdict below,
+# so it errs towards calling things code.
+CODE = re.compile(r"\.(py|pyi|pyx|c|h|cpp|cu|cuh|js|mjs|ts|jsx|tsx|sh|toml|cfg)$", re.I)
+DATA = re.compile(r"\.(json|ya?ml|csv|txt|lock)$", re.I)
+# Things this project has already been bitten by, or is actively working on.
+TENDER = re.compile(r"minimax|\bh3\b|sage|turbo|attention|frontend|web/|requirements", re.I)
+
+
+def api(path: str) -> dict:
+    """One GitHub API read. stdlib only - this runs on a bare runner."""
+    req = urllib.request.Request(
+        "https://api.github.com" + path,
+        headers={"Accept": "application/vnd.github+json",
+                 "User-Agent": "watch-h3-propose"})
+    token = READ_TOKEN or os.environ.get("GH_TOKEN", "").strip()
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
+
+
+def analyse(repo: str, old_sha: str, new_sha: str) -> tuple[str, bool]:
+    """What the drift actually contains, as markdown.
+
+    "12 commits behind" is not reviewable. The same twelve commits are either
+    a registry refresh you merge in ten seconds or a rewritten sampler you
+    bench for an hour, and only the file list tells you which. Without this,
+    every proposal costs a full build to evaluate - which is the surest way to
+    make a bot's pull requests get ignored.
+
+    Never fatal: a failed read degrades to the plain count. A proposal that
+    arrives without its analysis is worth less, but a proposal that never
+    arrives because an API call failed is worth nothing.
+
+    The second return value says whether source changed. Unknown counts as
+    yes: the checklist is allowed to be shortened by evidence, never by the
+    absence of it.
+    """
+    try:
+        cmp = api(f"/repos/{repo}/compare/{old_sha}...{new_sha}")
+    except Exception as e:  # noqa: BLE001
+        return (f"\n  <sub>diff unavailable ({type(e).__name__}); "
+                f"review upstream by hand</sub>\n", True)
+
+    commits = cmp.get("commits") or []
+    files = cmp.get("files") or []
+    code = [f for f in files if CODE.search(f["filename"])]
+    data = [f for f in files if DATA.search(f["filename"]) and f not in code]
+
+    if not files:
+        verdict = "no file list returned by the API"
+    elif not code:
+        verdict = (f"**data only** — {len(data)} of {len(files)} files are "
+                   f"registries or metadata, no source file changed. "
+                   f"Behaviour cannot move; a green build is enough.")
+    else:
+        names = ", ".join(f"`{f['filename']}`" for f in code[:6])
+        verdict = (f"**{len(code)} source file(s) changed** — {names}"
+                   f"{' …' if len(code) > 6 else ''}. Bench before promoting.")
+
+    # Commits that touch what this project is currently working on get pulled
+    # out, because they are levers rather than housekeeping.
+    flagged = [c["commit"]["message"].splitlines()[0]
+               for c in commits if TENDER.search(c["commit"]["message"])]
+
+    out = [f"\n  {verdict}"]
+    if flagged:
+        out.append("\n  Relevant to this project:")
+        out += [f"\n  - ⚑ {s[:100]}" for s in flagged[:5]]
+    out.append("\n\n  <details><summary>"
+               f"{len(commits)} commits, {len(files)} files</summary>\n\n")
+    for c in commits[-15:]:
+        subject = c["commit"]["message"].splitlines()[0][:100]
+        out.append(f"  - `{c['sha'][:8]}` {subject}\n")
+    out.append("\n")
+    for f in files[:20]:
+        out.append(f"  - `{f['filename']}` "
+                   f"+{f.get('additions', 0)}/-{f.get('deletions', 0)}\n")
+    out.append("\n  </details>\n")
+    return "".join(out), bool(code or not files)
 
 
 def candidates(state: dict) -> dict[str, dict]:
@@ -115,13 +206,15 @@ def main() -> int:
 
     dockerfile = Path(repo_dir, "Dockerfile")
     applied: list[str] = []
+    risky = False
     for repo, info in sorted(todo.items()):
         changed = rewrite(dockerfile, repo, info["head"])
         if changed:
             old, new = changed
+            detail, code_touched = analyse(repo, old, new)
+            risky = risky or code_touched
             applied.append(f"- `{repo}` `{old[:12]}` → `{new[:12]}` "
-                           f"({info['behind']} commits, latest: "
-                           f"*{info.get('latest', '?')}*)")
+                           f"({info['behind']} commits)" + detail)
 
     if not applied:
         print("Every pin already matches upstream in the checked-out branch.")
@@ -130,19 +223,30 @@ def main() -> int:
     branch = "watch/bump-pinned-nodes"
     run("git", "checkout", "-B", branch, cwd=repo_dir)
     run("git", "add", "Dockerfile", cwd=repo_dir)
+    # The checklist is only as long as the diff justifies. Asking for a bench
+    # on a registry refresh is how a checklist stops being read at all.
+    checks = ["- [ ] `cu130-develop` builds"]
+    if risky:
+        checks += [
+            "- [ ] a test pod starts and ComfyUI loads every workflow "
+            "(VideoHelperSuite breaks on frontend changes, and a `VHS_` node "
+            "in a graph stops it loading entirely)",
+            "- [ ] `scripts/bench.py --config baseline --config sage` shows "
+            "no regression",
+        ]
+    else:
+        checks.append("- [ ] a test pod starts and ComfyUI loads every "
+                      "workflow — *no source file changed, so this is a "
+                      "smoke test, not a bench*")
+
     body = (
         "Proposed by [watch-h3](https://github.com/unicorncomfyui/watch-h3). "
         "**Not verified — this only moves the pins.**\n\n"
         + "\n".join(applied)
         + "\n\n### Before merging\n\n"
-        "- [ ] `cu130-develop` builds\n"
-        "- [ ] a test pod starts and ComfyUI loads every workflow "
-        "(VideoHelperSuite breaks on frontend changes, and a `VHS_` node in a "
-        "graph stops it loading entirely)\n"
-        "- [ ] `scripts/bench.py --config baseline --config sage` shows no "
-        "regression\n\n"
-        "Targets `" + BASE + "` on purpose: the branch model exists so that "
-        "an unverified change reaches a test pod and never `cu130` or "
+        + "\n".join(checks)
+        + "\n\nTargets `" + BASE + "` on purpose: the branch model exists so "
+        "that an unverified change reaches a test pod and never `cu130` or "
         "`latest`.\n")
 
     if args.dry_run:

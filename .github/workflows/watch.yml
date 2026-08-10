@@ -103,6 +103,10 @@ jobs:
       - name: Propose the mechanical changes
         env:
           GH_TOKEN: ${{ secrets.POD_REPO_TOKEN }}
+          # Reading upstream diffs is a separate privilege from writing the
+          # pull request. The Actions token reads at 1000/hour and can write
+          # nothing anywhere, so the analysis never borrows the PAT's rights.
+          READ_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$GH_TOKEN" ]; then
             echo "POD_REPO_TOKEN not configured; reporting only."; exit 0
