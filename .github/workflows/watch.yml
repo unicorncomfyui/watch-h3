@@ -17,6 +17,11 @@ on:
     # GitHub and get queued behind everyone else's.
     - cron: '10 6 * * *'
   workflow_dispatch:
+    inputs:
+      as_of:
+        description: 'Rebuild the baseline this many hours back (blank = compare against the committed state)'
+        type: string
+        required: false
 
 permissions:
   contents: write        # commit the updated state
@@ -42,17 +47,27 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set +e
-          python watch.py --report report.md
+          ARGS=""
+          if [ -n "${{ github.event.inputs.as_of }}" ]; then
+            ARGS="--as-of ${{ github.event.inputs.as_of }}"
+          fi
+          python watch.py --report report.md $ARGS
           echo "code=$?" >> "$GITHUB_OUTPUT"
 
       - name: Commit the new state
         run: |
-          if git diff --quiet -- state.json; then
-            echo "state unchanged"; exit 0
-          fi
           git config user.name  "watch-h3"
           git config user.email "watch-h3@users.noreply.github.com"
+          # `git add` BEFORE testing, and test the index rather than the
+          # worktree. `git diff` ignores untracked files, so on the very first
+          # run - the one that creates state.json - it reported "unchanged"
+          # and the file was never committed. Every later run then started
+          # without a baseline, announced itself as a first run, and opened
+          # nothing: a workflow permanently green and permanently useless.
           git add state.json
+          if git diff --cached --quiet -- state.json; then
+            echo "state unchanged"; exit 0
+          fi
           git commit -m "watch: state $(date -u +%Y-%m-%d)"
           git push
 
