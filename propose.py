@@ -141,12 +141,25 @@ def analyse(repo: str, old_sha: str, new_sha: str) -> tuple[str, bool]:
     return "".join(out), bool(code or not files)
 
 
-def candidates(state: dict) -> dict[str, dict]:
-    """Pinned nodes far enough behind to be worth a proposal."""
+def candidates(state: dict, only: list[str] | None = None) -> dict[str, dict]:
+    """Pinned nodes worth a proposal.
+
+    `only` names the repositories a person explicitly asked for, by ticking a
+    box in the report. That selection overrides the drift threshold: the
+    threshold exists to guess what deserves attention, and a human having
+    already given it makes the guess irrelevant.
+    """
     pins = state.get("pins/pod-comfyui-h3") or {}
-    return {repo: v for repo, v in pins.items()
-            if isinstance(v, dict) and v.get("head")
-            and v.get("behind", 0) >= THRESHOLD}
+    picked = {}
+    for repo, v in pins.items():
+        if not isinstance(v, dict) or not v.get("head"):
+            continue
+        if only:
+            if repo in only:
+                picked[repo] = v
+        elif v.get("behind", 0) >= THRESHOLD:
+            picked[repo] = v
+    return picked
 
 
 def rewrite(dockerfile: Path, repo: str, new_sha: str) -> tuple[str, str] | None:
@@ -171,6 +184,9 @@ def rewrite(dockerfile: Path, repo: str, new_sha: str) -> tuple[str, str] | None
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--state", default="state.json")
+    ap.add_argument("--only", action="append", default=[], metavar="OWNER/REPO",
+                    help="propose only these pins, whatever their drift "
+                         "(repeatable). This is what a ticked box passes.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -190,9 +206,15 @@ def main() -> int:
         return 0
 
     state = json.loads(Path(args.state).read_text(encoding="utf-8"))
-    todo = candidates(state)
+    todo = candidates(state, args.only)
     if not todo:
-        print(f"No pin is {THRESHOLD}+ commits behind; nothing to propose.")
+        if args.only:
+            # Asked for by name and not found: say which, because silence here
+            # looks exactly like success.
+            print(f"Nothing to propose for {', '.join(args.only)} — not in "
+                  f"the state file, or no upstream head recorded for it.")
+        else:
+            print(f"No pin is {THRESHOLD}+ commits behind; nothing to propose.")
         return 0
 
     work = tempfile.mkdtemp()

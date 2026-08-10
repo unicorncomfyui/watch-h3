@@ -92,26 +92,14 @@ jobs:
             --title "Upstream moved — $(date -u +%Y-%m-%d)" \
             --body-file report.md
 
-      # Opens a pull request on the pod repository for the one change that is
-      # mechanical: moving a pinned node SHA forward. Everything else stays a
-      # checkbox in the issue, because everything else is a judgement.
+      # Nothing is proposed from here. This job reports; apply.yml acts, and
+      # only once a person has ticked a box in the report it produced.
       #
-      # The token is read into a variable and tested there rather than in an
-      # `if:` expression - secrets are not reliably available to those - so a
-      # clone of this repository with no secret configured still runs green
-      # and simply proposes nothing.
-      - name: Propose the mechanical changes
-        env:
-          GH_TOKEN: ${{ secrets.POD_REPO_TOKEN }}
-          # Reading upstream diffs is a separate privilege from writing the
-          # pull request. The Actions token reads at 1000/hour and can write
-          # nothing anywhere, so the analysis never borrows the PAT's rights.
-          READ_TOKEN: ${{ github.token }}
-        run: |
-          if [ -z "$GH_TOKEN" ]; then
-            echo "POD_REPO_TOKEN not configured; reporting only."; exit 0
-          fi
-          python propose.py --state state.json
+      # That split is deliberate. A watcher that opens pull requests on its own
+      # schedule turns into noise you learn to ignore, and the whole value of
+      # this project is that its output still gets read. `main` stays what
+      # production pulls; `develop` is where a reviewed proposal goes to be
+      # tested.
 
       - name: Summary
         if: always()

@@ -1,0 +1,98 @@
+name: Apply a ticked lever
+
+# The human half of the loop. watch.yml reports; this acts, and only on the
+# boxes a person actually ticked.
+#
+# WHY AN ISSUE EDIT IS A SAFE TRIGGER. GitHub only lets an issue body be
+# edited by its author or by someone with write access to the repository. The
+# author here is the Actions bot, so anyone who can tick one of these boxes
+# already had the rights to open the pull request by hand. The `if:` below
+# narrows it further to reports this watcher itself wrote - a hand-written
+# issue containing the same marker does nothing.
+
+on:
+  issues:
+    types: [edited]
+
+permissions:
+  contents: read
+  issues: write          # comment back with what was opened
+
+concurrency:
+  # Per issue, and never cancelling: two quick ticks must both be honoured.
+  group: apply-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: >
+      github.event.issue.user.login == 'github-actions[bot]' &&
+      startsWith(github.event.issue.title, 'Upstream moved')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # The body arrives through the environment, never interpolated into the
+      # script. An issue body is text someone else can influence, and pasting
+      # it into a shell would make it code.
+      - name: Read the ticked boxes
+        id: ticked
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          python - >> "$GITHUB_OUTPUT" <<'PY'
+          import os, re
+          body = os.environ.get("BODY", "")
+          repos = re.findall(
+              r"- \[x\][^\n]*<!--bump:([\w.-]+/[\w.-]+)-->", body, re.I)
+          picked = sorted(set(r for r in repos if ".." not in r))
+          print("repos=" + ",".join(picked))
+          PY
+
+      - name: Nothing ticked
+        if: steps.ticked.outputs.repos == ''
+        run: echo "No marked box is ticked; nothing to do."
+
+      # Re-running is harmless: the branch is force-pushed and an open pull
+      # request is updated rather than duplicated. So an edit that changes a
+      # word in the issue simply refreshes the proposal.
+      - name: Open the proposal
+        if: steps.ticked.outputs.repos != ''
+        env:
+          GH_TOKEN: ${{ secrets.POD_REPO_TOKEN }}
+          READ_TOKEN: ${{ github.token }}
+          PICKED: ${{ steps.ticked.outputs.repos }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "POD_REPO_TOKEN is not configured, so nothing can be opened."
+            echo "POD_REPO_TOKEN is not configured." > proposal.log
+            exit 1
+          fi
+          ARGS=""
+          for repo in $(echo "$PICKED" | tr ',' ' '); do
+            ARGS="$ARGS --only $repo"
+          done
+          python propose.py --state state.json $ARGS | tee proposal.log
+
+      # Always, including on failure: a tick that quietly did nothing is the
+      # one outcome this design cannot afford.
+      - name: Say what happened
+        if: always() && steps.ticked.outputs.repos != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "Ticked: \`${{ steps.ticked.outputs.repos }}\`"
+            echo
+            echo '```'
+            cat proposal.log 2>/dev/null || echo "(no output)"
+            echo '```'
+            echo
+            echo "— [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          } > comment.md
+          gh issue comment "${{ github.event.issue.number }}" \
+            --repo "${{ github.repository }}" --body-file comment.md

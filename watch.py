@@ -519,6 +519,17 @@ def diff(old, new, path: str = "") -> list[str]:
 # --------------------------------------------------------------------------
 
 POD = "unicorncomfyui/pod-comfyui-h3"
+# Never `main`. The branch model is the safety here: a proposal reaches a test
+# pod as `cu130-develop`, and `main` stays what production pulls.
+POD_BASE = os.environ.get("POD_BASE_BRANCH", "develop")
+
+# When a pinned node is worth proposing. See the drift loop below for why
+# there are two numbers rather than one.
+BUMP_AT = int(os.environ.get("BUMP_THRESHOLD", "10"))
+BUMP_AT_RELEVANT = int(os.environ.get("BUMP_THRESHOLD_RELEVANT", "3"))
+RELEVANT = re.compile(r"minimax|\bh3\b|sage|turbo|attention|sampler|vae",
+                      re.I)
+
 
 
 def levers(old: dict, new: dict) -> list[str]:
@@ -542,19 +553,30 @@ def levers(old: dict, new: dict) -> list[str]:
         return (o.get(key), n.get(key)) if key and o.get(key) != n.get(key) \
             else (None if key else (o != n))
 
-    # Pinned nodes drifting. The threshold exists because one commit is
-    # usually a README; ten is a change of behaviour worth a rebuild.
+    # Pinned nodes drifting. Ten commits is a change of behaviour worth a
+    # rebuild - but volume is a poor proxy for relevance, and this project has
+    # already seen it fail both ways: twelve ComfyUI-Manager commits that were
+    # pure registry JSON, against five KJNodes commits containing an H3
+    # memory-efficient Sage fix. So a pin whose newest commit names something
+    # we actually depend on surfaces four times sooner.
+    #
+    # Listing costs nothing now: the line is a proposal, and nothing is opened
+    # until a person ticks it.
     o_pins = (old.get("pins/pod-comfyui-h3") or {})
     for repo, cur in (new.get("pins/pod-comfyui-h3") or {}).items():
         if not isinstance(cur, dict) or "behind" not in cur:
             continue
+        latest = cur.get("latest") or ""
+        limit = BUMP_AT_RELEVANT if RELEVANT.search(latest) else BUMP_AT
+        if cur["behind"] < limit:
+            continue
         was = (o_pins.get(repo) or {}).get("behind")
-        if was is not None and cur["behind"] >= 10 and cur["behind"] > was:
-            out.append(
-                f"- [ ] **{repo}** is {cur['behind']} commits behind "
-                f"(was {was}). Latest: *{cur.get('latest', '?')}*. "
-                f"Bump the SHA in the Dockerfile, build on `develop`, bench "
-                f"before promoting.")
+        moved_by = f" (was {was})" if was is not None and was != cur["behind"] \
+            else ""
+        out.append(
+            f"- [ ] **{repo}** — {cur['behind']} commits behind{moved_by}. "
+            f"Latest: *{latest or '?'}*. Tick to open the bump pull request "
+            f"on `{POD_BASE}`. <!--bump:{repo}-->")
 
     if moved("gh/sageattention", "head"):
         out.append(
@@ -723,6 +745,15 @@ def main() -> int:
                if changes else "Nothing moved.\n")
     if failed:
         report += "\n<sub>unreachable this run: " + ", ".join(failed) + "</sub>\n"
+    # Only the mechanical levers carry a marker. Saying so plainly matters:
+    # an unticked box that silently does nothing and a ticked box that opens a
+    # pull request must not look alike.
+    if "<!--bump:" in report:
+        report += (
+            "\n---\n\n**Ticking a marked box opens the pull request** on "
+            f"`{POD_BASE}` of [{POD}](https://github.com/{POD}) — editing this "
+            "issue is the trigger. Nothing is opened until you do, and nothing "
+            "is ever merged. The other boxes are notes to yourself.\n")
     print(report)
     if args.report:
         Path(args.report).write_text(report, encoding="utf-8")
