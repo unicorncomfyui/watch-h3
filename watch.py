@@ -363,8 +363,35 @@ def page(spec: dict, token: str | None,
             "sha256": hashlib.sha256(body.encode()).hexdigest()[:16]}
 
 
+def civitai(spec: dict, token: str | None, prev: dict | None = None,
+            asof: str | None = None) -> dict:
+    """A workflow published on Civitai, tracked by its versions.
+
+    Workflows are where the community's findings become usable before anyone
+    writes them down: a version bump usually IS the changelog. The page itself
+    is client-rendered and its hash moves on view counts and ratings, so the
+    JSON API is the only stable surface - and it needs no key for a public
+    model.
+
+    Only the version list and its dates are kept. Download counts and ratings
+    change hourly and would report a change every single run, which is how a
+    source becomes noise you stop reading.
+    """
+    d = fetch(f"https://civitai.com/api/v1/models/{spec['model_id']}")
+    versions = d.get("modelVersions") or []
+    out = {
+        "name": d.get("name"),
+        "creator": (d.get("creator") or {}).get("username"),
+        "versions": [v.get("name") for v in versions][:12],
+    }
+    if versions:
+        out["latest"] = versions[0].get("name")
+        out["published"] = (versions[0].get("publishedAt") or "")[:10]
+    return out
+
+
 FETCHERS = {"hf_model": hf_model, "github": github, "pins": pins,
-            "reddit": reddit, "page": page}
+            "reddit": reddit, "page": page, "civitai": civitai}
 
 
 # --------------------------------------------------------------------------
@@ -694,6 +721,21 @@ def levers(old: dict, new: dict) -> list[str]:
                        f"file in the H3 repo: `{f}`{'**' if hot else ''}"
                        + (" — candidate for `models/manifest.json`." if hot
                           else ""))
+
+    ver = moved("civitai/h3-filmmaking", "latest")
+    if ver:
+        out.append(
+            f"- [ ] **The all-in-one workflow moved to {ver[1]}** (was "
+            f"{ver[0]}). Community workflows are where a finding becomes "
+            f"usable before it is written down - diff the graph against "
+            f"`workflows/gui/` and take what applies.")
+
+    if moved("doc/h3-prompt-guide-ref"):
+        out.append(
+            "- [ ] **The reference-mode prompt schema changed.** It defines "
+            "the six sections a ref2v prompt must carry, so an edit here "
+            "changes what a working prompt looks like - and `lambda_enrich` "
+            "generates against it.")
 
     if moved("doc/comfyui-h3"):
         out.append(
