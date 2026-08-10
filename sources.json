@@ -72,13 +72,15 @@
     "subreddit": "StableDiffusion",
     "query": "\"MiniMax H3\"",
     "window": "week",
-    "note": "phrase exacte : un H3 nu ramene des tortues et des serveurs multimedia. C'est ici que les paquets de noeuds et les changements cassants sont annonces en premier."
+    "note": "phrase exacte : un H3 nu ramene des tortues et des serveurs multimedia. C'est ici que les paquets de noeuds et les changements cassants sont annonces en premier. Les six fils les plus recents sont ouverts et notes sur leur contenu : un titre ne distingue pas un banc d'essai documente d'une video postee sans methode.",
+    "deep": 6
   },
   "reddit/r-comfyui": {
     "type": "reddit",
     "subreddit": "comfyui",
     "query": "\"MiniMax H3\"",
     "window": "week",
-    "note": "meme requete, autre public : ici on parle cablage et workflows plutot que resultats."
+    "note": "meme requete, autre public : ici on parle cablage et workflows plutot que resultats. Les six fils les plus recents sont ouverts et notes sur leur contenu : un titre ne distingue pas un banc d'essai documente d'une video postee sans methode.",
+    "deep": 6
   }
 }

@@ -322,6 +322,56 @@ FETCHERS = {"hf_model": hf_model, "github": github, "pins": pins,
             "reddit": reddit, "page": page}
 
 
+# --------------------------------------------------------------------------
+# Ranking
+# --------------------------------------------------------------------------
+
+# What separates a documented benchmark from "look at my video". Weights are
+# blunt on purpose: this decides reading ORDER, not truth, and a scorer with
+# thirty tuned coefficients would be a second thing to maintain.
+#
+# The signals are all marks of someone showing their work - measurements with
+# units, exact versions, a seed, a link to the artefacts. A post that carries
+# four of them is worth more than a hundred that carry none, and that ratio is
+# roughly what the subreddit actually contains.
+SIGNALS: list[tuple[str, str, int]] = [
+    (r"\b\d+(?:[.,]\d+)?\s*(?:s|sec|seconds|ms)\b", "timings", 3),
+    (r"\b\d+(?:[.,]\d+)?\s*%", "percentages", 3),
+    (r"\b\d+\s*(?:GB|GiB|VRAM)\b", "memory figures", 2),
+    (r"\b(?:seed|même graine|same seed)\b", "a fixed seed", 3),
+    (r"\b\d+\s*steps?\b", "step counts", 2),
+    (r"\bgithub\.com/[\w.-]+/[\w.-]+", "a repository link", 2),
+    (r"\bhuggingface\.co/[\w.-]+", "a HuggingFace link", 2),
+    (r"\b(?:benchmark|comparison|A/B|same prompt)\b", "a comparison", 3),
+    (r"\b(?:workflow|\.json|API graph)\b", "a workflow", 2),
+    (r"\b(?:torch|cuda|sm_?\d{2,3}|v\d+\.\d+\.\d+)\b", "exact versions", 2),
+    (r"\|.+\|.+\|", "a table", 2),
+]
+
+# Words that mark a post as a result rather than a method. Not a penalty for
+# being pretty - just a demotion below anything that measured something.
+NOISE = re.compile(r"\b(?:my first|just joining|thank you|incredible|amazing|"
+                   r"insane|check out|lol)\b", re.I)
+
+
+def score_body(text: str) -> tuple[int, list[str]]:
+    """Rank a post by how much of its method it shows."""
+    found, total = [], 0
+    for pattern, label, weight in SIGNALS:
+        hits = len(re.findall(pattern, text, re.I))
+        if hits:
+            # Sub-linear: ten timings are better than one, not ten times
+            # better, and without this a post listing every frame time would
+            # outrank a genuine comparison.
+            total += weight * min(hits, 3)
+            found.append(label)
+    if NOISE.search(text[:400]):
+        total -= 4
+    if len(text) > 1500:
+        total += 2                      # someone wrote at length about method
+    return total, found
+
+
 def read_thread(url: str) -> str:
     """One Reddit thread - body and comments - rendered as markdown.
 
@@ -358,13 +408,43 @@ def read_thread(url: str) -> str:
 # Diff
 # --------------------------------------------------------------------------
 
-def diff_reddit(old: dict, new: dict) -> list[str]:
-    """Only new threads. Never removals: a thread leaving a one-week window is
-    the window sliding, not an event, and reporting it would bury the ones
-    that matter under a daily list of things that merely aged."""
+def diff_reddit(old: dict, new: dict, deep: int = 0) -> list[str]:
+    """New threads, best first, with the good ones opened and weighed.
+
+    Never removals: a thread leaving a one-week window is the window sliding,
+    not an event, and reporting it would bury what matters under a daily list
+    of things that merely aged.
+
+    `deep` caps how many bodies are read. Each costs a throttled request, and
+    the point is not to mirror the subreddit - it is to find the two posts a
+    week that carry a measurement. Titles alone cannot tell those apart:
+    "MiniMax H3 RTX PRO 6000 follow-up" and "just joining in the fun, minimax
+    H3" look equally promising until you open them.
+    """
     seen = {p["id"] for p in (old or {}).get("posts", [])}
-    return [f"  - [{p['title']}]({p['url']}) — {p.get('author', '?')}"
-            for p in new.get("posts", []) if p["id"] not in seen]
+    fresh = [p for p in new.get("posts", []) if p["id"] not in seen]
+    if not fresh:
+        return []
+
+    ranked = []
+    for p in fresh[:deep]:
+        try:
+            body = read_thread(p["url"])
+            n, why = score_body(body)
+        except Exception:  # noqa: BLE001 - an unread body is only a lost rank
+            n, why = 0, []
+        ranked.append((n, why, p))
+    for p in fresh[deep:]:
+        n, why = score_body(p["title"])
+        ranked.append((n, why, p))
+
+    lines = []
+    for n, why, p in sorted(ranked, key=lambda r: -r[0]):
+        mark = "**" if n >= 12 else ""
+        lines.append(f"  - {mark}[{p['title']}]({p['url']}){mark}"
+                     + (f" — *{n} pts: {', '.join(why[:4])}*" if why else "")
+                     + f" — {p.get('author', '?')}")
+    return lines
 
 
 def diff(old, new, path: str = "") -> list[str]:
@@ -391,6 +471,91 @@ def diff(old, new, path: str = "") -> list[str]:
         else:
             lines.append(f"  - `{path}`: `{old}` → `{new}`")
     return lines
+
+
+# --------------------------------------------------------------------------
+# Levers
+# --------------------------------------------------------------------------
+
+POD = "unicorncomfyui/pod-comfyui-h3"
+
+
+def levers(old: dict, new: dict) -> list[str]:
+    """Turn what moved into what to do about it.
+
+    A watcher that only reports leaves the translation to a human every
+    morning, and that translation is the part that gets skipped. These are
+    checkboxes, phrased as the next concrete step, with the file or the button
+    named - not "SageAttention moved" but "rebuild the wheel, here".
+
+    Nothing here decides anything. Every lever ends at a bench on the actual
+    hardware, because every measurement this project has made contradicted at
+    least one confident expectation.
+    """
+    out: list[str] = []
+
+    def moved(name, key=None):
+        o, n = old.get(name) or {}, new.get(name) or {}
+        if not o or not n:
+            return None                     # no baseline: not a movement
+        return (o.get(key), n.get(key)) if key and o.get(key) != n.get(key) \
+            else (None if key else (o != n))
+
+    # Pinned nodes drifting. The threshold exists because one commit is
+    # usually a README; ten is a change of behaviour worth a rebuild.
+    o_pins = (old.get("pins/pod-comfyui-h3") or {})
+    for repo, cur in (new.get("pins/pod-comfyui-h3") or {}).items():
+        if not isinstance(cur, dict) or "behind" not in cur:
+            continue
+        was = (o_pins.get(repo) or {}).get("behind")
+        if was is not None and cur["behind"] >= 10 and cur["behind"] > was:
+            out.append(
+                f"- [ ] **{repo}** is {cur['behind']} commits behind "
+                f"(was {was}). Latest: *{cur.get('latest', '?')}*. "
+                f"Bump the SHA in the Dockerfile, build on `develop`, bench "
+                f"before promoting.")
+
+    if moved("gh/sageattention", "head"):
+        out.append(
+            "- [ ] **SageAttention moved.** Our wheel is compiled from that "
+            "branch, so it is now stale. Run *Build SageAttention wheel* on "
+            f"[{POD}](https://github.com/{POD}/actions), paste the new URL "
+            "into the `sa_wheel` matrix entry.")
+
+    rel = moved("gh/comfyui", "release")
+    if rel:
+        out.append(
+            f"- [ ] **ComfyUI {rel[1]}** released (was {rel[0]}). Re-test the "
+            "pinned node set before bumping `COMFYUI_VERSION` - "
+            "VideoHelperSuite already breaks on a frontend change.")
+
+    for src, what in (("gh/h3-turbo", "the step-distillation LoRA"),
+                      ("gh/h3-spectrum", "the Spectrum sampler accelerator"),
+                      ("gh/h3-motion-context", "the clip chaining pack")):
+        r = moved(src, "release")
+        if r:
+            out.append(f"- [ ] **{src.split('/')[-1]} {r[1]}** released — "
+                       f"{what}. Read the notes before updating: these packs "
+                       f"patch ComfyUI internals and only one can own them.")
+
+    # New weights. The file list is the earliest possible signal.
+    o_files = set((old.get("hf/minimax-h3") or {}).get("files", []))
+    n_files = set((new.get("hf/minimax-h3") or {}).get("files", []))
+    for f in sorted(n_files - o_files):
+        if o_files:
+            hot = re.search(r"turbo|lora|2k|regenerate|distill|step", f, re.I)
+            out.append(f"- [{'x' if hot else ' '}] {'**' if hot else ''}New "
+                       f"file in the H3 repo: `{f}`{'**' if hot else ''}"
+                       + (" — candidate for `models/manifest.json`." if hot
+                          else ""))
+
+    if moved("doc/comfyui-h3"):
+        out.append(
+            "- [ ] **The ComfyUI H3 tutorial changed.** It carries the Sage "
+            "Attention instructions and the required model list; diff it "
+            "against what the image installs.")
+
+    return out
 
 
 # --------------------------------------------------------------------------
@@ -490,7 +655,8 @@ def main() -> int:
     for name in specs:
         if name in no_baseline:
             continue
-        d = (diff_reddit(old.get(name, {}), new.get(name, {}))
+        d = (diff_reddit(old.get(name, {}), new.get(name, {}),
+                         specs[name].get("deep", 0))
              if specs[name]["type"] == "reddit"
              else diff(old.get(name), new.get(name)))
         if d:
@@ -507,8 +673,13 @@ def main() -> int:
         print("First run: baseline recorded, nothing to compare against.")
         return 0
 
-    report = ("## Upstream moved\n\n" + "\n\n".join(changes) + "\n"
-              if changes else "Nothing moved.\n")
+    # The action list comes first, because it is the only part that asks
+    # something of a person. A report that opens with forty lines of SHAs
+    # buries the one line that matters under the evidence for it.
+    todo = levers(old, new)
+    report = ("## Do this\n\n" + "\n".join(todo) + "\n\n") if todo else ""
+    report += ("## What moved\n\n" + "\n\n".join(changes) + "\n"
+               if changes else "Nothing moved.\n")
     if failed:
         report += "\n<sub>unreachable this run: " + ", ".join(failed) + "</sub>\n"
     print(report)

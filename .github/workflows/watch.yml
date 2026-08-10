@@ -69,7 +69,17 @@ jobs:
             echo "state unchanged"; exit 0
           fi
           git commit -m "watch: state $(date -u +%Y-%m-%d)"
-          git push
+          # Rebase and retry rather than push once. The run reads the branch
+          # at checkout and pushes minutes later; anything landing in between
+          # rejects it, and a watcher that fails because someone committed
+          # while it worked is a watcher you start ignoring. Only this job
+          # writes state.json, so the rebase has nothing to conflict with.
+          for attempt in 1 2 3; do
+            git push && exit 0
+            echo "push rejected, rebasing (attempt $attempt)"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          done
+          echo "could not push after three attempts"; exit 1
 
       # Only when the watcher reports a real change. An issue per quiet day
       # would train you to close them unread, which defeats the entire point.
