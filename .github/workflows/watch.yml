@@ -92,6 +92,23 @@ jobs:
             --title "Upstream moved — $(date -u +%Y-%m-%d)" \
             --body-file report.md
 
+      # Opens a pull request on the pod repository for the one change that is
+      # mechanical: moving a pinned node SHA forward. Everything else stays a
+      # checkbox in the issue, because everything else is a judgement.
+      #
+      # The token is read into a variable and tested there rather than in an
+      # `if:` expression - secrets are not reliably available to those - so a
+      # clone of this repository with no secret configured still runs green
+      # and simply proposes nothing.
+      - name: Propose the mechanical changes
+        env:
+          GH_TOKEN: ${{ secrets.POD_REPO_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "POD_REPO_TOKEN not configured; reporting only."; exit 0
+          fi
+          python propose.py --state state.json
+
       - name: Summary
         if: always()
         run: cat report.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true

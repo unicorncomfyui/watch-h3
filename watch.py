@@ -234,6 +234,10 @@ def pins(spec: dict, token: str | None, prev: dict | None = None,
             commits = cmp.get("commits") or []
             entry = {"pinned": sha[:12], "behind": cmp.get("ahead_by", 0)}
             if commits:
+                # The full upstream SHA, because a bump has to write forty
+                # characters into the Dockerfile. Storing the short form
+                # would make the proposal step fetch it all over again.
+                entry["head"] = commits[-1]["sha"]
                 # The newest subject line, free of charge - the compare
                 # response already carries it. A count says how far we have
                 # drifted; this says whether the drift is a README tweak or a
