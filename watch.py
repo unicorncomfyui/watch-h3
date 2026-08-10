@@ -49,7 +49,7 @@ TIMEOUT = 30
 _last_hit: dict[str, float] = {}
 
 
-def throttle(url: str, seconds: float = 12.0) -> None:
+def throttle(url: str, seconds: float = 20.0) -> None:
     """Space out requests to the same host.
 
     Reddit's anonymous budget is small enough that four searches fired back to
@@ -110,7 +110,8 @@ def fetch(url: str, token: str | None = None, raw: bool = False):
 # Fetchers. Each returns a flat-ish dict; the differ walks it.
 # --------------------------------------------------------------------------
 
-def hf_model(spec: dict, token: str | None) -> dict:
+def hf_model(spec: dict, token: str | None,
+             prev: dict | None = None) -> dict:
     """A HuggingFace repo: revision, timestamp, and the file list.
 
     The file list is the point. A new entry is how Regenerate-2K, an official
@@ -127,7 +128,8 @@ def hf_model(spec: dict, token: str | None) -> dict:
             "files": files}
 
 
-def github(spec: dict, token: str | None) -> dict:
+def github(spec: dict, token: str | None,
+           prev: dict | None = None) -> dict:
     """A GitHub repo: head of default branch, latest release, chosen blobs.
 
     Per-file blob SHAs matter more than the head commit for documentation:
@@ -159,7 +161,7 @@ def github(spec: dict, token: str | None) -> dict:
     return out
 
 
-def pins(spec: dict, token: str | None) -> dict:
+def pins(spec: dict, token: str | None, prev: dict | None = None) -> dict:
     """How far a pinned custom node sits behind its upstream head.
 
     The pins are read from the Dockerfile that actually builds the image,
@@ -175,21 +177,33 @@ def pins(spec: dict, token: str | None) -> dict:
     pairs = re.findall(
         r"github\.com/([\w.-]+/[\w.-]+)\.git\s*\\\s*"
         r"&& git -C [\w.-]+ checkout -q ([0-9a-f]{40})", src)
+    prev = prev or {}
     out: dict = {}
+    failures = 0
     for repo, sha in pairs:
         repo = repo.removesuffix(".git")
         try:
             cmp = fetch(f"https://api.github.com/repos/{repo}/compare/"
                         f"{sha}...HEAD", token)
             out[repo] = {"pinned": sha[:12], "behind": cmp.get("ahead_by", 0)}
-        except Exception as e:  # noqa: BLE001 - one node must not sink the run
-            out[repo] = {"pinned": sha[:12], "error": type(e).__name__}
-    if not out:
-        out["_error"] = "no pins matched - the Dockerfile layout changed"
+        except Exception:  # noqa: BLE001 - one node must not sink the run
+            # Carry the last known answer rather than recording the failure.
+            # Storing an error here would report the outage as a change, then
+            # report the recovery as a second one - and the first version of
+            # this function did exactly that, silently, while announcing
+            # itself as a successful source.
+            failures += 1
+            if repo in prev:
+                out[repo] = prev[repo]
+    if not pairs:
+        raise RuntimeError("no pins matched - the Dockerfile layout changed")
+    if failures == len(pairs):
+        raise RuntimeError(f"every pin lookup failed ({failures})")
     return out
 
 
-def reddit(spec: dict, token: str | None) -> dict:
+def reddit(spec: dict, token: str | None,
+           prev: dict | None = None) -> dict:
     """Threads matching a query, newest first, over the Atom feed.
 
     Not the .json endpoint: Reddit now answers it with 403 Blocked for
@@ -225,7 +239,8 @@ def reddit(spec: dict, token: str | None) -> dict:
     return {"posts": posts}
 
 
-def page(spec: dict, token: str | None) -> dict:
+def page(spec: dict, token: str | None,
+         prev: dict | None = None) -> dict:
     """Any URL, reduced to a length and a hash.
 
     For pages with no API - a docs page, a model card rendered as HTML. It
@@ -366,7 +381,7 @@ def main() -> int:
             failed.append(name)
             continue
         try:
-            new[name] = fn(spec, token)
+            new[name] = fn(spec, token, old.get(name))
             print(f"[ok]   {name}", file=sys.stderr)
         except Exception as e:  # noqa: BLE001
             # Keep the PREVIOUS value on failure. Overwriting it with an error
