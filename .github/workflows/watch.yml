@@ -1,0 +1,72 @@
+name: Watch upstream
+
+# Runs the watcher, commits the new state, and opens an issue when something
+# actually moved.
+#
+# The state file is committed rather than cached. Its diff IS the changelog:
+# attributable, reviewable, and still there in six months when you want to
+# know when a node pack started drifting. A cache would give none of that and
+# would expire on its own.
+#
+# Nothing here needs a secret. Every endpoint is public; GITHUB_TOKEN is
+# provided by Actions, is scoped to this repository, and dies with the job.
+
+on:
+  schedule:
+    # 06:10 UTC. Not on the hour: scheduled runs cluster there across all of
+    # GitHub and get queued behind everyone else's.
+    - cron: '10 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write        # commit the updated state
+  issues: write          # open the report
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Fetch and diff
+        id: watch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python watch.py --report report.md
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Commit the new state
+        run: |
+          if git diff --quiet -- state.json; then
+            echo "state unchanged"; exit 0
+          fi
+          git config user.name  "watch-h3"
+          git config user.email "watch-h3@users.noreply.github.com"
+          git add state.json
+          git commit -m "watch: state $(date -u +%Y-%m-%d)"
+          git push
+
+      # Only when the watcher reports a real change. An issue per quiet day
+      # would train you to close them unread, which defeats the entire point.
+      - name: Report
+        if: steps.watch.outputs.code == '10'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Upstream moved — $(date -u +%Y-%m-%d)" \
+            --body-file report.md
+
+      - name: Summary
+        if: always()
+        run: cat report.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true

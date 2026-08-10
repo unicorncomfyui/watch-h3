@@ -1,0 +1,411 @@
+#!/usr/bin/env python3
+"""Watch a fast-moving stack and report only what actually moved.
+
+The MiniMax H3 ecosystem changes faster than anyone can follow by hand:
+weights, prompt guides, ComfyUI itself, a dozen custom-node packs, an
+attention library that gained a 3x kernel between two Fridays, and a Reddit
+thread that is often the only place a breaking change is announced.
+
+Sources are declared in sources.json, not in this file. Adding one should be
+an edit to data, not to code - that is the difference between a watcher that
+grows with the stack and one that is abandoned after three months.
+
+State is a JSON file committed to the repository. The diff of that file IS
+the changelog: reviewable, attributable, no database, no credential. A
+watcher that needs infrastructure is a watcher that stops working the month
+you stop paying attention to it.
+
+Every source is isolated. One rate-limited endpoint reports itself and the
+run continues; a watcher that fails whole because Reddit throttled it teaches
+you to ignore its failures, which is worse than having none.
+
+    python watch.py                       # fetch, diff against state.json
+    python watch.py --source hf/h3        # one source, for debugging
+    python watch.py --dry-run             # fetch and print, never write state
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+UA = "watch-h3/1.0 (upstream release watcher; contact via repo issues)"
+TIMEOUT = 30
+
+
+# --------------------------------------------------------------------------
+# HTTP
+# --------------------------------------------------------------------------
+
+_last_hit: dict[str, float] = {}
+
+
+def throttle(url: str, seconds: float = 12.0) -> None:
+    """Space out requests to the same host.
+
+    Reddit's anonymous budget is small enough that four searches fired back to
+    back earn a 429, and the retry then costs more time than the pause would
+    have. Politeness here is not manners, it is the fastest path.
+    """
+    host = urllib.parse.urlparse(url).netloc
+    if "reddit" not in host:
+        return
+    wait = seconds - (time.monotonic() - _last_hit.get(host, 0))
+    if wait > 0:
+        time.sleep(wait)
+    _last_hit[host] = time.monotonic()
+
+
+def fetch(url: str, token: str | None = None, raw: bool = False):
+    """One request, with the two headers that decide whether it works.
+
+    The User-Agent is not politeness: Reddit answers a default urllib UA with
+    429 more or less always. The bearer token only ever goes to GitHub - a
+    token pasted into an arbitrary host is how credentials leak.
+    """
+    throttle(url)
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    if not raw:
+        req.add_header("Accept", "application/json")
+    if token and url.startswith("https://api.github.com/"):
+        req.add_header("Authorization", f"Bearer {token}")
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                body = r.read().decode("utf-8", "replace")
+                return body if raw else json.loads(body)
+        except urllib.error.HTTPError as e:
+            # 429 is a rate limit and resets; retrying costs seconds and often
+            # works. 403 does not: from GitHub it means the hourly budget is
+            # spent, from Reddit it means the endpoint refuses anonymous
+            # clients outright. Retrying either just makes the run slower and
+            # the log longer. 404 is an answer, not a failure.
+            if e.code == 403 and "api.github.com" in url and not token:
+                raise RuntimeError(
+                    "GitHub rate limit: 60 requests/hour without a token. "
+                    "Export GITHUB_TOKEN to raise it to 5000 - Actions "
+                    "provides one automatically, so this only bites locally."
+                ) from e
+            if e.code == 429 and attempt < 2:
+                # Reddit's anonymous budget is small and it says how long to
+                # wait when it feels like it. Honour Retry-After when present
+                # rather than guessing under it and burning the next attempt.
+                wait = int(e.headers.get("Retry-After") or 0) or 15 * (attempt + 1)
+                print(f"[wait] 429, retrying in {wait}s", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            raise
+
+
+# --------------------------------------------------------------------------
+# Fetchers. Each returns a flat-ish dict; the differ walks it.
+# --------------------------------------------------------------------------
+
+def hf_model(spec: dict, token: str | None) -> dict:
+    """A HuggingFace repo: revision, timestamp, and the file list.
+
+    The file list is the point. A new entry is how Regenerate-2K, an official
+    low-step checkpoint or a rewritten prompt guide will first appear -
+    usually days before anyone writes about it.
+    """
+    d = fetch(f"https://huggingface.co/api/models/{spec['repo']}")
+    files = sorted(f["rfilename"] for f in d.get("siblings", []))
+    keep = spec.get("only")
+    if keep:
+        files = [f for f in files if any(k in f for k in keep)]
+    return {"sha": (d.get("sha") or "")[:12],
+            "modified": d.get("lastModified", ""),
+            "files": files}
+
+
+def github(spec: dict, token: str | None) -> dict:
+    """A GitHub repo: head of default branch, latest release, chosen blobs.
+
+    Per-file blob SHAs matter more than the head commit for documentation:
+    they say whether the prompt Skill changed, not merely whether somebody
+    touched the repository.
+    """
+    repo = spec["repo"]
+    out: dict = {}
+    head = fetch(f"https://api.github.com/repos/{repo}/commits?per_page=1", token)
+    if head:
+        out["head"] = head[0]["sha"][:12]
+        out["head_date"] = head[0]["commit"]["committer"]["date"]
+        out["head_msg"] = head[0]["commit"]["message"].splitlines()[0][:100]
+    try:
+        rel = fetch(f"https://api.github.com/repos/{repo}/releases/latest", token)
+        out["release"] = rel.get("tag_name")
+        out["release_date"] = rel.get("published_at")
+        out["release_name"] = (rel.get("name") or "")[:100]
+    except urllib.error.HTTPError as e:
+        if e.code != 404:                    # 404 = this repo cuts no releases
+            raise
+    for p in spec.get("files", []):
+        try:
+            f = fetch(f"https://api.github.com/repos/{repo}/contents/"
+                      f"{urllib.parse.quote(p)}", token)
+            out[f"file:{p}"] = (f.get("sha") or "")[:12]
+        except urllib.error.HTTPError:
+            out[f"file:{p}"] = "absent"
+    return out
+
+
+def pins(spec: dict, token: str | None) -> dict:
+    """How far a pinned custom node sits behind its upstream head.
+
+    The pins are read from the Dockerfile that actually builds the image,
+    fetched raw over HTTP. Copying them into this repo would create a second
+    list, and the drift between the two lists would be invisible - which is
+    precisely the failure this tool exists to prevent.
+
+    Reported as a count, not a boolean. "3 commits behind" is a note; "sixty
+    commits and four months behind" is a decision to take before the next
+    ComfyUI bump.
+    """
+    src = fetch(spec["dockerfile_url"], raw=True)
+    pairs = re.findall(
+        r"github\.com/([\w.-]+/[\w.-]+)\.git\s*\\\s*"
+        r"&& git -C [\w.-]+ checkout -q ([0-9a-f]{40})", src)
+    out: dict = {}
+    for repo, sha in pairs:
+        repo = repo.removesuffix(".git")
+        try:
+            cmp = fetch(f"https://api.github.com/repos/{repo}/compare/"
+                        f"{sha}...HEAD", token)
+            out[repo] = {"pinned": sha[:12], "behind": cmp.get("ahead_by", 0)}
+        except Exception as e:  # noqa: BLE001 - one node must not sink the run
+            out[repo] = {"pinned": sha[:12], "error": type(e).__name__}
+    if not out:
+        out["_error"] = "no pins matched - the Dockerfile layout changed"
+    return out
+
+
+def reddit(spec: dict, token: str | None) -> dict:
+    """Threads matching a query, newest first, over the Atom feed.
+
+    Not the .json endpoint: Reddit now answers it with 403 Blocked for
+    unauthenticated clients, from residential and datacenter addresses alike.
+    The .rss search endpoint still serves anonymously, which buys us the whole
+    source without an OAuth application, a client secret to rotate, and a
+    token refresh to get wrong.
+
+    The trade is that the feed carries no score. We only ever diffed titles -
+    a score moves on every run, and a watcher that reports something every run
+    is a watcher nobody reads - so nothing of value is lost.
+    """
+    import xml.etree.ElementTree as ET
+
+    sub = spec.get("subreddit")
+    base = (f"https://www.reddit.com/r/{sub}/search.rss?restrict_sr=1&"
+            if sub else "https://www.reddit.com/search.rss?")
+    url = base + urllib.parse.urlencode({
+        "q": spec["query"], "sort": spec.get("sort", "new"),
+        "t": spec.get("window", "week"), "limit": spec.get("limit", 25)})
+    body = fetch(url, raw=True)
+    ns = {"a": "http://www.w3.org/2005/Atom"}
+    posts = []
+    for e in ET.fromstring(body).findall("a:entry", ns):
+        link = e.find("a:link", ns)
+        author = e.find("a:author/a:name", ns)
+        posts.append({
+            "id": (e.findtext("a:id", "", ns) or "").rsplit("/", 1)[-1],
+            "title": (e.findtext("a:title", "", ns) or "")[:160],
+            "author": author.text if author is not None else "",
+            "url": link.get("href") if link is not None else "",
+        })
+    return {"posts": posts}
+
+
+def page(spec: dict, token: str | None) -> dict:
+    """Any URL, reduced to a length and a hash.
+
+    For pages with no API - a docs page, a model card rendered as HTML. It
+    cannot say WHAT changed, only that something did, which is enough to send
+    a human to look.
+    """
+    import hashlib
+    body = fetch(spec["url"], raw=True)
+    if spec.get("strip_dynamic", True):
+        # Timestamps, CSRF tokens and build ids change on every fetch and
+        # would make this source cry wolf daily.
+        body = re.sub(r'(nonce|csrf|build|timestamp|_t)="[^"]*"', "", body, flags=re.I)
+        body = re.sub(r"\b\d{10,13}\b", "", body)
+    return {"bytes": len(body),
+            "sha256": hashlib.sha256(body.encode()).hexdigest()[:16]}
+
+
+FETCHERS = {"hf_model": hf_model, "github": github, "pins": pins,
+            "reddit": reddit, "page": page}
+
+
+def read_thread(url: str) -> str:
+    """One Reddit thread - body and comments - rendered as markdown.
+
+    The watcher reports that a thread exists; this reads it. Announcement
+    posts for node packs carry the part that matters in the body and in the
+    author's replies: which ComfyUI internals get patched, what breaks on
+    upgrade, which settings were removed. None of that is in the title.
+
+    Atom again, for the same reason as the search: .json answers 403 to
+    anonymous clients. The feed carries the post and its comments as escaped
+    HTML, which is unescaped and stripped of tags here - crude, but these are
+    plain-text posts and a parser dependency would not earn its place.
+    """
+    import html
+    import xml.etree.ElementTree as ET
+
+    url = url.split("?")[0].rstrip("/")
+    body = fetch(f"{url}/.rss?limit=100", raw=True)
+    ns = {"a": "http://www.w3.org/2005/Atom"}
+    out: list[str] = []
+    for i, e in enumerate(ET.fromstring(body).findall("a:entry", ns)):
+        author = e.find("a:author/a:name", ns)
+        who = author.text if author is not None else "?"
+        content = html.unescape(e.findtext("a:content", "", ns) or "")
+        content = re.sub(r"<[^>]+>", "", content)
+        content = html.unescape(content)
+        content = re.sub(r"\n{3,}", "\n\n", content).strip()
+        head = e.findtext("a:title", "", ns) if i == 0 else f"comment — {who}"
+        out.append(f"### {head}\n\n{content}\n")
+    return "\n".join(out) if out else "(empty feed)"
+
+
+# --------------------------------------------------------------------------
+# Diff
+# --------------------------------------------------------------------------
+
+def diff_reddit(old: dict, new: dict) -> list[str]:
+    """Only new threads. Never removals: a thread leaving a one-week window is
+    the window sliding, not an event, and reporting it would bury the ones
+    that matter under a daily list of things that merely aged."""
+    seen = {p["id"] for p in (old or {}).get("posts", [])}
+    return [f"  - [{p['title']}]({p['url']}) — {p.get('author', '?')}"
+            for p in new.get("posts", []) if p["id"] not in seen]
+
+
+def diff(old, new, path: str = "") -> list[str]:
+    """Leaf-level changes in words. Lists report additions and removals
+    separately, because "one file appeared" and "one file vanished" are not
+    the same event and must not cancel out."""
+    lines: list[str] = []
+    if isinstance(old, dict) and isinstance(new, dict):
+        for key in sorted(set(old) | set(new)):
+            lines += diff(old.get(key), new.get(key),
+                          f"{path}.{key}" if path else key)
+    elif isinstance(old, list) and isinstance(new, list):
+        so, sn = {json.dumps(x, sort_keys=True) for x in old}, \
+                 {json.dumps(x, sort_keys=True) for x in new}
+        for x in sorted(sn - so):
+            lines.append(f"  - `{path}` **+** `{x[:150]}`")
+        for x in sorted(so - sn):
+            lines.append(f"  - `{path}` **−** `{x[:150]}`")
+    elif old != new:
+        if old is None:
+            lines.append(f"  - `{path}` appeared: `{new}`")
+        elif new is None:
+            lines.append(f"  - `{path}` disappeared (was `{old}`)")
+        else:
+            lines.append(f"  - `{path}`: `{old}` → `{new}`")
+    return lines
+
+
+# --------------------------------------------------------------------------
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--sources", default=str(HERE / "sources.json"))
+    ap.add_argument("--state", default=str(HERE / "state.json"))
+    ap.add_argument("--report", help="write the markdown summary here")
+    ap.add_argument("--source", help="run only this source, by name")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="fetch and print, never write state")
+    ap.add_argument("--thread", metavar="URL",
+                    help="print one Reddit thread, comments included, and exit")
+    args = ap.parse_args()
+
+    # Upstream text is full of emoji and typographic quotes, and a Windows
+    # console defaults to cp1252, which raises on the first one. Failing to
+    # PRINT a report we successfully fetched would be an absurd way to lose a
+    # run, so force the stream and let unmappable characters degrade.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+    if args.thread:
+        print(read_thread(args.thread))
+        return 0
+
+    token = os.environ.get("GITHUB_TOKEN", "").strip() or None
+    specs = json.loads(Path(args.sources).read_text(encoding="utf-8"))
+    if args.source:
+        specs = {k: v for k, v in specs.items() if k == args.source}
+        if not specs:
+            return print(f"no source named {args.source!r}") or 1
+
+    state_path = Path(args.state)
+    old = json.loads(state_path.read_text(encoding="utf-8")) \
+        if state_path.is_file() else {}
+
+    new: dict = {}
+    failed: list[str] = []
+    for name, spec in specs.items():
+        fn = FETCHERS.get(spec.get("type", ""))
+        if fn is None:
+            new[name] = {"_error": f"unknown type {spec.get('type')!r}"}
+            failed.append(name)
+            continue
+        try:
+            new[name] = fn(spec, token)
+            print(f"[ok]   {name}", file=sys.stderr)
+        except Exception as e:  # noqa: BLE001
+            # Keep the PREVIOUS value on failure. Overwriting it with an error
+            # would report the outage as a change, and then report the
+            # recovery as a second change - two false alarms per hiccup.
+            new[name] = old.get(name, {})
+            failed.append(f"{name} ({type(e).__name__}: {e})")
+            print(f"[fail] {name}: {type(e).__name__}: {e}", file=sys.stderr)
+
+    changes: list[str] = []
+    for name in specs:
+        d = (diff_reddit(old.get(name, {}), new.get(name, {}))
+             if specs[name]["type"] == "reddit"
+             else diff(old.get(name), new.get(name)))
+        if d:
+            changes.append(f"### {name}\n" + "\n".join(d))
+
+    if args.dry_run:
+        print(json.dumps(new, indent=2, ensure_ascii=False))
+        return 0
+
+    state_path.write_text(json.dumps(new, indent=2, ensure_ascii=False) + "\n",
+                          encoding="utf-8")
+
+    if not old:
+        print("First run: baseline recorded, nothing to compare against.")
+        return 0
+
+    report = ("## Upstream moved\n\n" + "\n\n".join(changes) + "\n"
+              if changes else "Nothing moved.\n")
+    if failed:
+        report += "\n<sub>unreachable this run: " + ", ".join(failed) + "</sub>\n"
+    print(report)
+    if args.report:
+        Path(args.report).write_text(report, encoding="utf-8")
+    # The exit code carries the signal so the workflow branches without
+    # parsing anything: 0 nothing, 10 something moved.
+    return 10 if changes else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,85 @@
+{
+  "hf/minimax-h3": {
+    "type": "hf_model",
+    "repo": "MiniMaxAI/MiniMax-H3",
+    "note": "weights and prompt guides. A new filename here is how Regenerate-2K, an official low-step checkpoint or a rewritten guide will first appear - usually days before anyone writes about it."
+  },
+  "gh/minimax-h3": {
+    "type": "github",
+    "repo": "MiniMax-AI/MiniMax-H3",
+    "files": [
+      "skills/h3-prompt-writing/SKILL.md"
+    ],
+    "note": "reference implementation, plus the consolidated prompt Skill the team said in their AMA they keep iterating on. Our enrichment prompt is built from these guides."
+  },
+  "gh/comfyui": {
+    "type": "github",
+    "repo": "Comfy-Org/ComfyUI",
+    "note": "the image pins a version. A release is the trigger to re-test the pinned node set, not to bump blindly."
+  },
+  "gh/workflow-templates": {
+    "type": "github",
+    "repo": "Comfy-Org/workflow_templates",
+    "files": [
+      "templates/video_minimax_h3_i2v.json",
+      "templates/video_minimax_h3_r2v.json",
+      "templates/video_minimax_h3_t2v.json"
+    ],
+    "note": "the official H3 graphs. A changed blob means the reference wiring moved."
+  },
+  "gh/sageattention": {
+    "type": "github",
+    "repo": "thu-ml/SageAttention",
+    "note": "our wheel is compiled from this main branch. A moved head means the wheel we ship is stale."
+  },
+  "gh/sageattention-wheels": {
+    "type": "github",
+    "repo": "woct0rdho/SageAttention",
+    "note": "third-party prebuilt wheels. Windows only today - a linux asset appearing here would retire our own build workflow."
+  },
+  "gh/h3-motion-context": {
+    "type": "github",
+    "repo": "NikoDemon80/ComfyUI-H3-Motion-Context",
+    "note": "clip chaining past the 8 s ceiling. Patches ComfyUI internals, so its releases matter more than most - only one such pack can own those patches at a time."
+  },
+  "gh/h3-turbo": {
+    "type": "github",
+    "repo": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
+    "note": "the step-distillation LoRA and its sampler. The AMA confirmed no OFFICIAL low-step checkpoint exists, so this pack is the only game in town and its quality trade-offs are ours."
+  },
+  "pins/pod-comfyui-h3": {
+    "type": "pins",
+    "dockerfile_url": "https://raw.githubusercontent.com/unicorncomfyui/pod-comfyui-h3/main/Dockerfile",
+    "note": "how far each pinned custom node has drifted from upstream. Read from the Dockerfile that actually builds the image, never copied here - a second list would drift from the first invisibly."
+  },
+  "gh/h3-spectrum": {
+    "type": "github",
+    "repo": "xmarre/ComfyUI-Spectrum-MiniMax-H3",
+    "note": "sampler-level accelerator: forecasts steps instead of running the transformer, ~45% fewer evaluations on a 20-step Euler run. A different lever from SageAttention, which makes each evaluation cheaper - the two compose. Moves fast and patches ComfyUI internals, like Motion Context, and only one such pack can own them at a time."
+  },
+  "reddit/sd-h3": {
+    "type": "reddit",
+    "subreddit": "StableDiffusion",
+    "query": "\"MiniMax H3\"",
+    "window": "week",
+    "note": "where node packs and breaking changes get announced first. Quoted phrase on purpose: a bare H3 matches turtles."
+  },
+  "reddit/sd-sage": {
+    "type": "reddit",
+    "subreddit": "StableDiffusion",
+    "query": "\"sage attention\"",
+    "window": "month"
+  },
+  "reddit/comfyui-h3": {
+    "type": "reddit",
+    "subreddit": "comfyui",
+    "query": "\"MiniMax H3\"",
+    "window": "week"
+  },
+  "reddit/any-h3": {
+    "type": "reddit",
+    "query": "\"MiniMax H3\"",
+    "window": "week",
+    "note": "site-wide, to catch subreddits we have not thought of."
+  }
+}
