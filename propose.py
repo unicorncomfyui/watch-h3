@@ -39,6 +39,7 @@ from pathlib import Path
 
 POD = os.environ.get("POD_REPO", "unicorncomfyui/pod-comfyui-h3").strip()
 BASE = os.environ.get("POD_BASE_BRANCH", "develop").strip()
+IMAGE = os.environ.get("POD_IMAGE", "vlop12ui/pod-comfyui-h3").strip()
 # One commit is a README; ten is a change of behaviour. Below this a pull
 # request costs more attention than the drift it reports.
 THRESHOLD = int(os.environ.get("BUMP_THRESHOLD", "10"))
@@ -265,7 +266,14 @@ def main() -> int:
         "Proposed by [watch-h3](https://github.com/unicorncomfyui/watch-h3). "
         "**Not verified — this only moves the pins.**\n\n"
         + "\n".join(applied)
-        + "\n\n### Before merging\n\n"
+        + "\n\n### Test it on a pod\n\n"
+        "Pushing this branch builds the primary target. When that run is "
+        "green, start a pod on:\n\n"
+        "```\n" + IMAGE + ":cu130-proposal\n```\n\n"
+        "That tag moves with each proposal; the immutable "
+        "`cu130-<date>-<sha>` from the same run is there if you need to come "
+        "back to this exact build.\n\n"
+        "### Before merging\n\n"
         + "\n".join(checks)
         + "\n\nTargets `" + BASE + "` on purpose: the branch model exists so "
         "that an unverified change reaches a test pod and never `cu130` or "

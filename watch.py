@@ -275,6 +275,16 @@ def pins(spec: dict, token: str | None, prev: dict | None = None,
                 # rewritten sampler, which is the part that decides anything.
                 entry["latest"] = commits[-1]["commit"]["message"] \
                     .splitlines()[0][:100]
+                # The same response already carries the file list, so the
+                # triage below is free. Asking "is this worth a rebuild"
+                # from a commit count alone is how a registry refresh and a
+                # rewritten sampler end up looking identical.
+                subjects = [c["commit"]["message"].splitlines()[0]
+                            for c in commits]
+                code = [f["filename"] for f in (cmp.get("files") or [])
+                        if CODE_FILE.search(f["filename"])]
+                entry["code"] = len(code)
+                entry["kind"], entry["why"] = classify(subjects, len(code))
             out[repo] = entry
         except Exception:  # noqa: BLE001 - one node must not sink the run
             # Carry the last known answer rather than recording the failure.
@@ -530,6 +540,71 @@ BUMP_AT_RELEVANT = int(os.environ.get("BUMP_THRESHOLD_RELEVANT", "3"))
 RELEVANT = re.compile(r"minimax|\bh3\b|sage|turbo|attention|sampler|vae",
                       re.I)
 
+# Whether a changed file can move what the image DOES. A registry of node
+# metadata cannot; a sampler can.
+CODE_FILE = re.compile(
+    r"\.(py|pyi|pyx|c|h|cpp|cu|cuh|js|mjs|ts|jsx|tsx|sh|toml|cfg)$", re.I)
+
+# What a drift is FOR. The question in front of every pin is the same one -
+# is this worth a rebuild - and it splits three ways: something got faster,
+# something was broken, or something upstream now requires it. Anything else
+# can wait for the next bump that isn't optional.
+KINDS: list[tuple[str, re.Pattern]] = [
+    ("perf", re.compile(r"optimi[sz]|faster|speed|perf\b|memory|vram|"
+                        r"attention|quant|fp8|int8|cache|throughput", re.I)),
+    ("fix", re.compile(r"\bfix|crash|error|regress|broken|hotfix|revert|"
+                       r"leak|oom\b", re.I)),
+    ("compat", re.compile(r"compat|support for|requires?|torch|python 3|"
+                          r"comfyui v?\d|frontend|breaking|deprecat|"
+                          r"sm_?\d{2,3}|blackwell|cuda", re.I)),
+    ("feature", re.compile(r"\badd\b|\bfeat\b|new node|implement", re.I)),
+]
+
+
+def classify(subjects: list[str], code_files: int) -> tuple[str, list[str]]:
+    """What this drift contains, and the commit lines that say so.
+
+    Deliberately blunt: it reads commit subjects, so it inherits whatever
+    discipline the upstream author had. It is a triage hint that saves opening
+    twelve commits, never a verdict - which is why the evidence travels with
+    the label instead of being summarised away.
+    """
+    if not code_files:
+        return "registry/docs", []
+    labels, why = [], []
+    for name, rx in KINDS:
+        matched = [s for s in subjects if rx.search(s)]
+        if matched:
+            labels.append(name)
+            why += matched[:2]
+    return ("+".join(labels) if labels else "chore"), why[:3]
+
+
+
+def hygiene(new: dict) -> str:
+    """Every pinned node that has drifted at all, worth-it verdict included.
+
+    The levers list only what crosses a threshold. This is the standing view:
+    seven rows, read in ten seconds, that answer "is any of my pins carrying a
+    fix I don't have" without opening a single upstream repository. A pin at
+    zero is omitted - a table of "nothing to do" teaches you to skip the
+    table.
+    """
+    pins = new.get("pins/pod-comfyui-h3") or {}
+    rows = [(r, v) for r, v in sorted(pins.items())
+            if isinstance(v, dict) and v.get("behind", 0) > 0]
+    if not rows:
+        return ""
+    out = ["## Pins\n",
+           "| node | behind | contains | latest |",
+           "|---|---:|---|---|"]
+    for repo, v in sorted(rows, key=lambda kv: -kv[1].get("behind", 0)):
+        kind = v.get("kind", "?")
+        if v.get("code"):
+            kind = f"**{kind}** ({v['code']} src)"
+        latest = (v.get("latest") or "?").replace("|", "\\|")[:70]
+        out.append(f"| `{repo}` | {v['behind']} | {kind} | {latest} |")
+    return "\n".join(out) + "\n"
 
 
 def levers(old: dict, new: dict) -> list[str]:
@@ -573,10 +648,18 @@ def levers(old: dict, new: dict) -> list[str]:
         was = (o_pins.get(repo) or {}).get("behind")
         moved_by = f" (was {was})" if was is not None and was != cur["behind"] \
             else ""
+        kind = cur.get("kind", "?")
+        code = cur.get("code")
+        weight = "no source file changed" if code == 0 else \
+            f"{code} source file(s)" if code else "contents unread"
         out.append(
-            f"- [ ] **{repo}** — {cur['behind']} commits behind{moved_by}. "
-            f"Latest: *{latest or '?'}*. Tick to open the bump pull request "
-            f"on `{POD_BASE}`. <!--bump:{repo}-->")
+            f"- [ ] **{repo}** — {cur['behind']} commits behind{moved_by}, "
+            f"**{kind}**, {weight}. Tick to open the bump pull request on "
+            f"`{POD_BASE}`. <!--bump:{repo}-->")
+        for line in (cur.get("why") or [])[:2]:
+            out.append(f"      - {line[:110]}")
+        if not cur.get("why"):
+            out.append(f"      - latest: *{latest or '?'}*")
 
     if moved("gh/sageattention", "head"):
         out.append(
@@ -741,6 +824,11 @@ def main() -> int:
     # buries the one line that matters under the evidence for it.
     todo = levers(old, new)
     report = ("## Do this\n\n" + "\n".join(todo) + "\n\n") if todo else ""
+    # Between the decisions and the evidence: the standing state of the pins.
+    # It is the part that gets read on a day when nothing needs doing.
+    table = hygiene(new)
+    if table:
+        report += table + "\n"
     report += ("## What moved\n\n" + "\n\n".join(changes) + "\n"
                if changes else "Nothing moved.\n")
     if failed:
