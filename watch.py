@@ -111,14 +111,23 @@ def fetch(url: str, token: str | None = None, raw: bool = False):
 # --------------------------------------------------------------------------
 
 def hf_model(spec: dict, token: str | None,
-             prev: dict | None = None) -> dict:
+             prev: dict | None = None, asof: str | None = None) -> dict:
     """A HuggingFace repo: revision, timestamp, and the file list.
 
     The file list is the point. A new entry is how Regenerate-2K, an official
     low-step checkpoint or a rewritten prompt guide will first appear -
     usually days before anyone writes about it.
     """
-    d = fetch(f"https://huggingface.co/api/models/{spec['repo']}")
+    url = f"https://huggingface.co/api/models/{spec['repo']}"
+    if asof:
+        # Rewind by asking for the revision that was current then. If the repo
+        # has not moved since, the answer is identical to now - which is the
+        # correct baseline, not a missing one.
+        hist = fetch(f"{url}/commits/main?limit=50")
+        older = [c for c in hist if c.get("date", "") <= asof]
+        if older:
+            url += f"?revision={older[0]['id']}"
+    d = fetch(url)
     files = sorted(f["rfilename"] for f in d.get("siblings", []))
     keep = spec.get("only")
     if keep:
@@ -129,7 +138,7 @@ def hf_model(spec: dict, token: str | None,
 
 
 def github(spec: dict, token: str | None,
-           prev: dict | None = None) -> dict:
+           prev: dict | None = None, asof: str | None = None) -> dict:
     """A GitHub repo: head of default branch, latest release, chosen blobs.
 
     Per-file blob SHAs matter more than the head commit for documentation:
@@ -138,13 +147,28 @@ def github(spec: dict, token: str | None,
     """
     repo = spec["repo"]
     out: dict = {}
-    head = fetch(f"https://api.github.com/repos/{repo}/commits?per_page=1", token)
+    until = f"&until={asof}" if asof else ""
+    head = fetch(f"https://api.github.com/repos/{repo}/commits?per_page=1{until}",
+                 token)
+    ref = ""
     if head:
-        out["head"] = head[0]["sha"][:12]
+        ref = head[0]["sha"]
+        out["head"] = ref[:12]
         out["head_date"] = head[0]["commit"]["committer"]["date"]
         out["head_msg"] = head[0]["commit"]["message"].splitlines()[0][:100]
     try:
-        rel = fetch(f"https://api.github.com/repos/{repo}/releases/latest", token)
+        if asof:
+            # /releases/latest has no time filter, so take the newest release
+            # that had already been published then.
+            rels = fetch(f"https://api.github.com/repos/{repo}/releases"
+                         f"?per_page=30", token)
+            past = [r for r in rels if (r.get("published_at") or "") <= asof]
+            rel = past[0] if past else None
+            if rel is None:
+                raise urllib.error.HTTPError("", 404, "none yet", {}, None)
+        else:
+            rel = fetch(f"https://api.github.com/repos/{repo}/releases/latest",
+                        token)
         out["release"] = rel.get("tag_name")
         out["release_date"] = rel.get("published_at")
         out["release_name"] = (rel.get("name") or "")[:100]
@@ -153,15 +177,19 @@ def github(spec: dict, token: str | None,
             raise
     for p in spec.get("files", []):
         try:
+            # Pinned to the commit chosen above, so a file's SHA belongs to
+            # the same instant as the head it is reported next to.
+            at = f"?ref={ref}" if ref else ""
             f = fetch(f"https://api.github.com/repos/{repo}/contents/"
-                      f"{urllib.parse.quote(p)}", token)
+                      f"{urllib.parse.quote(p)}{at}", token)
             out[f"file:{p}"] = (f.get("sha") or "")[:12]
         except urllib.error.HTTPError:
             out[f"file:{p}"] = "absent"
     return out
 
 
-def pins(spec: dict, token: str | None, prev: dict | None = None) -> dict:
+def pins(spec: dict, token: str | None, prev: dict | None = None,
+         asof: str | None = None) -> dict:
     """How far a pinned custom node sits behind its upstream head.
 
     The pins are read from the Dockerfile that actually builds the image,
@@ -182,9 +210,27 @@ def pins(spec: dict, token: str | None, prev: dict | None = None) -> dict:
     failures = 0
     for repo, sha in pairs:
         repo = repo.removesuffix(".git")
+        # The repository name comes from a file fetched over the network and
+        # is then pasted into a URL path. `[\w.-]+` happily matches `..`, so
+        # a name of `../..` would walk out of /repos/ and the server would
+        # normalise it away - a request to a path we never intended. It takes
+        # control of that Dockerfile to exploit, which is a high bar, but a
+        # value from the network belongs in a URL only after it has been
+        # checked, not because reaching it looked difficult.
+        if ".." in repo or not re.fullmatch(r"[\w.-]+/[\w.-]+", repo):
+            print(f"[skip] refusing suspicious repo name {repo!r}",
+                  file=sys.stderr)
+            continue
         try:
+            target = "HEAD"
+            if asof:
+                # Compare against where the node stood then, so the drift we
+                # report is the drift that existed at that moment.
+                h = fetch(f"https://api.github.com/repos/{repo}/commits"
+                          f"?per_page=1&until={asof}", token)
+                target = h[0]["sha"] if h else "HEAD"
             cmp = fetch(f"https://api.github.com/repos/{repo}/compare/"
-                        f"{sha}...HEAD", token)
+                        f"{sha}...{target}", token)
             commits = cmp.get("commits") or []
             entry = {"pinned": sha[:12], "behind": cmp.get("ahead_by", 0)}
             if commits:
@@ -212,7 +258,7 @@ def pins(spec: dict, token: str | None, prev: dict | None = None) -> dict:
 
 
 def reddit(spec: dict, token: str | None,
-           prev: dict | None = None) -> dict:
+           prev: dict | None = None, asof: str | None = None) -> dict:
     """Threads matching a query, newest first, over the Atom feed.
 
     Not the .json endpoint: Reddit now answers it with 403 Blocked for
@@ -244,12 +290,17 @@ def reddit(spec: dict, token: str | None,
             "title": (e.findtext("a:title", "", ns) or "")[:160],
             "author": author.text if author is not None else "",
             "url": link.get("href") if link is not None else "",
+            "updated": e.findtext("a:updated", "", ns) or "",
         })
+    if asof:
+        # Keep only what already existed then; the diff is therefore exactly
+        # the threads opened since.
+        posts = [p for p in posts if p.get("updated", "") <= asof]
     return {"posts": posts}
 
 
 def page(spec: dict, token: str | None,
-         prev: dict | None = None) -> dict:
+         prev: dict | None = None, asof: str | None = None) -> dict:
     """Any URL, reduced to a length and a hash.
 
     For pages with no API - a docs page, a model card rendered as HTML. It
@@ -354,6 +405,12 @@ def main() -> int:
                     help="fetch and print, never write state")
     ap.add_argument("--thread", metavar="URL",
                     help="print one Reddit thread, comments included, and exit")
+    ap.add_argument("--as-of", type=float, metavar="HOURS",
+                    help="build the baseline as it stood HOURS ago and report "
+                         "what has changed since. Makes a first run useful "
+                         "instead of silent, and is the only way to test the "
+                         "reporting path against real movement rather than a "
+                         "hand-edited state file.")
     args = ap.parse_args()
 
     # Upstream text is full of emoji and typographic quotes, and a Windows
@@ -381,6 +438,35 @@ def main() -> int:
     old = json.loads(state_path.read_text(encoding="utf-8")) \
         if state_path.is_file() else {}
 
+    # --as-of reconstructs the baseline instead of reading it. Sources that
+    # cannot be rewound - a rendered page has no history - return their current
+    # value, so they report no change rather than a false one.
+    asof = None
+    no_baseline: set[str] = set()
+    if args.as_of:
+        from datetime import datetime, timedelta, timezone
+        asof = (datetime.now(timezone.utc)
+                - timedelta(hours=args.as_of)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        print(f"Baseline rebuilt as of {asof} ({args.as_of:g} h ago)",
+              file=sys.stderr)
+        old = {}
+        for name, spec in specs.items():
+            fn = FETCHERS.get(spec.get("type", ""))
+            if fn is None:
+                continue
+            try:
+                old[name] = fn(spec, token, None, asof)
+                print(f"[was]  {name}", file=sys.stderr)
+            except Exception as e:  # noqa: BLE001
+                # No baseline means nothing to compare against, which is not
+                # the same as "everything is new". Leaving the source out of
+                # `old` would make the differ announce it as having appeared -
+                # which is exactly what the first version did, once per source
+                # the rate limit had blocked.
+                no_baseline.add(name)
+                print(f"[was]  {name}: {type(e).__name__}: {e}", file=sys.stderr)
+        asof = None                   # the second pass must fetch the present
+
     new: dict = {}
     failed: list[str] = []
     for name, spec in specs.items():
@@ -390,7 +476,7 @@ def main() -> int:
             failed.append(name)
             continue
         try:
-            new[name] = fn(spec, token, old.get(name))
+            new[name] = fn(spec, token, old.get(name), asof)
             print(f"[ok]   {name}", file=sys.stderr)
         except Exception as e:  # noqa: BLE001
             # Keep the PREVIOUS value on failure. Overwriting it with an error
@@ -402,6 +488,8 @@ def main() -> int:
 
     changes: list[str] = []
     for name in specs:
+        if name in no_baseline:
+            continue
         d = (diff_reddit(old.get(name, {}), new.get(name, {}))
              if specs[name]["type"] == "reddit"
              else diff(old.get(name), new.get(name)))
