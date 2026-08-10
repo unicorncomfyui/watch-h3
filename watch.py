@@ -48,17 +48,42 @@ TIMEOUT = 30
 
 _last_hit: dict[str, float] = {}
 
+# Reddit refuses anonymous clients hard from a datacenter address, and once it
+# starts refusing it keeps refusing for a while. Two guards, because pacing
+# alone was not enough:
+#
+#   BUDGET   an upper bound on requests per run. Sixteen were being fired -
+#            four searches plus twelve thread bodies - and the run spent five
+#            minutes mostly sleeping.
+#   BLOCKED  a circuit breaker. When a request exhausts its retries, every
+#            later Reddit call fails instantly instead of queueing behind
+#            another two minutes of backoff. The log that prompted this had
+#            fifteen [wait] lines AFTER the source had already given up.
+REDDIT_BUDGET = int(os.environ.get("REDDIT_BUDGET", "10"))
+_reddit_spent = 0
+_reddit_blocked = False
 
-def throttle(url: str, seconds: float = 20.0) -> None:
+
+class RedditUnavailable(RuntimeError):
+    """Reddit is refusing us for now; stop asking within this run."""
+
+
+def throttle(url: str, seconds: float = 30.0) -> None:
     """Space out requests to the same host.
 
     Reddit's anonymous budget is small enough that four searches fired back to
     back earn a 429, and the retry then costs more time than the pause would
     have. Politeness here is not manners, it is the fastest path.
     """
+    global _reddit_spent
     host = urllib.parse.urlparse(url).netloc
     if "reddit" not in host:
         return
+    if _reddit_blocked:
+        raise RedditUnavailable("circuit open after a refused request")
+    if _reddit_spent >= REDDIT_BUDGET:
+        raise RedditUnavailable(f"budget of {REDDIT_BUDGET} requests spent")
+    _reddit_spent += 1
     wait = seconds - (time.monotonic() - _last_hit.get(host, 0))
     if wait > 0:
         time.sleep(wait)
@@ -95,14 +120,20 @@ def fetch(url: str, token: str | None = None, raw: bool = False):
                     "Export GITHUB_TOKEN to raise it to 5000 - Actions "
                     "provides one automatically, so this only bites locally."
                 ) from e
-            if e.code == 429 and attempt < 2:
-                # Reddit's anonymous budget is small and it says how long to
-                # wait when it feels like it. Honour Retry-After when present
-                # rather than guessing under it and burning the next attempt.
-                wait = int(e.headers.get("Retry-After") or 0) or 15 * (attempt + 1)
-                print(f"[wait] 429, retrying in {wait}s", file=sys.stderr)
+            if e.code == 429 and attempt < 1:
+                # One retry, not two. A second one doubled the wall clock and
+                # never once succeeded in the runs that produced this comment;
+                # Reddit's refusal outlasts any backoff worth sitting through.
+                wait = int(e.headers.get("Retry-After") or 0) or 45
+                print(f"[wait] 429, one retry in {wait}s", file=sys.stderr)
                 time.sleep(wait)
                 continue
+            if e.code in (429, 403) and "reddit" in url:
+                global _reddit_blocked
+                _reddit_blocked = True
+                print("[stop] Reddit refused; skipping it for the rest of "
+                      "this run", file=sys.stderr)
+                raise RedditUnavailable(f"HTTP {e.code}") from e
             raise
 
 
@@ -430,15 +461,21 @@ def diff_reddit(old: dict, new: dict, deep: int = 0) -> list[str]:
     if not fresh:
         return []
 
-    ranked = []
-    for p in fresh[:deep]:
-        try:
-            body = read_thread(p["url"])
-            n, why = score_body(body)
-        except Exception:  # noqa: BLE001 - an unread body is only a lost rank
-            n, why = 0, []
-        ranked.append((n, why, p))
-    for p in fresh[deep:]:
+    ranked, read = [], 0
+    for p in fresh:
+        # Bodies are read while Reddit allows it, then the rest fall back to
+        # their titles. Degrading the RANKING is a small loss; losing the
+        # whole source to a refused body read is not.
+        if read < deep and not _reddit_blocked:
+            try:
+                n, why = score_body(read_thread(p["url"]))
+                read += 1
+                ranked.append((n, why, p))
+                continue
+            except RedditUnavailable:
+                pass
+            except Exception:  # noqa: BLE001 - an unread body is a lost rank
+                pass
         n, why = score_body(p["title"])
         ranked.append((n, why, p))
 
