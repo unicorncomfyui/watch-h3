@@ -185,7 +185,16 @@ def pins(spec: dict, token: str | None, prev: dict | None = None) -> dict:
         try:
             cmp = fetch(f"https://api.github.com/repos/{repo}/compare/"
                         f"{sha}...HEAD", token)
-            out[repo] = {"pinned": sha[:12], "behind": cmp.get("ahead_by", 0)}
+            commits = cmp.get("commits") or []
+            entry = {"pinned": sha[:12], "behind": cmp.get("ahead_by", 0)}
+            if commits:
+                # The newest subject line, free of charge - the compare
+                # response already carries it. A count says how far we have
+                # drifted; this says whether the drift is a README tweak or a
+                # rewritten sampler, which is the part that decides anything.
+                entry["latest"] = commits[-1]["commit"]["message"] \
+                    .splitlines()[0][:100]
+            out[repo] = entry
         except Exception:  # noqa: BLE001 - one node must not sink the run
             # Carry the last known answer rather than recording the failure.
             # Storing an error here would report the outage as a change, then

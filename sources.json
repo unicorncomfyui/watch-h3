@@ -47,15 +47,25 @@
     "repo": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
     "note": "the step-distillation LoRA and its sampler. The AMA confirmed no OFFICIAL low-step checkpoint exists, so this pack is the only game in town and its quality trade-offs are ours."
   },
-  "pins/pod-comfyui-h3": {
-    "type": "pins",
-    "dockerfile_url": "https://raw.githubusercontent.com/unicorncomfyui/pod-comfyui-h3/main/Dockerfile",
-    "note": "how far each pinned custom node has drifted from upstream. Read from the Dockerfile that actually builds the image, never copied here - a second list would drift from the first invisibly."
-  },
   "gh/h3-spectrum": {
     "type": "github",
     "repo": "xmarre/ComfyUI-Spectrum-MiniMax-H3",
     "note": "sampler-level accelerator: forecasts steps instead of running the transformer, ~45% fewer evaluations on a 20-step Euler run. A different lever from SageAttention, which makes each evaluation cheaper - the two compose. Moves fast and patches ComfyUI internals, like Motion Context, and only one such pack can own them at a time."
+  },
+  "doc/comfyui-h3": {
+    "type": "page",
+    "url": "https://raw.githubusercontent.com/Comfy-Org/docs/main/tutorials/video/minimax/minimax-h3.mdx",
+    "note": "the ComfyUI H3 tutorial, watched at its SOURCE rather than as a rendered page: 15 kB of markdown instead of a 567 kB HTML hash, no API quota, and a byte delta that hints at the size of the change. This page is where the Sage Attention instructions and the model file list live."
+  },
+  "doc/minimax-api": {
+    "type": "page",
+    "url": "https://platform.minimax.io/docs/api-reference/video-generation-v2-h3-context-ir",
+    "note": "Context-IR is API-only and the team says so plainly. Changes here are the closest thing to a roadmap signal for what the open weights cannot do yet. Verified stable across two fetches before being added."
+  },
+  "pins/pod-comfyui-h3": {
+    "type": "pins",
+    "dockerfile_url": "https://raw.githubusercontent.com/unicorncomfyui/pod-comfyui-h3/main/Dockerfile",
+    "note": "how far each pinned custom node has drifted from upstream. Read from the Dockerfile that actually builds the image, never copied here - a second list would drift from the first invisibly."
   },
   "reddit/sd-h3": {
     "type": "reddit",
