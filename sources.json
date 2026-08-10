@@ -67,29 +67,18 @@
     "dockerfile_url": "https://raw.githubusercontent.com/unicorncomfyui/pod-comfyui-h3/main/Dockerfile",
     "note": "how far each pinned custom node has drifted from upstream. Read from the Dockerfile that actually builds the image, never copied here - a second list would drift from the first invisibly."
   },
-  "reddit/sd-h3": {
+  "reddit/r-StableDiffusion": {
     "type": "reddit",
     "subreddit": "StableDiffusion",
     "query": "\"MiniMax H3\"",
     "window": "week",
-    "note": "where node packs and breaking changes get announced first. Quoted phrase on purpose: a bare H3 matches turtles."
+    "note": "phrase exacte : un H3 nu ramene des tortues et des serveurs multimedia. C'est ici que les paquets de noeuds et les changements cassants sont annonces en premier."
   },
-  "reddit/sd-sage": {
-    "type": "reddit",
-    "subreddit": "StableDiffusion",
-    "query": "\"sage attention\"",
-    "window": "month"
-  },
-  "reddit/comfyui-h3": {
+  "reddit/r-comfyui": {
     "type": "reddit",
     "subreddit": "comfyui",
     "query": "\"MiniMax H3\"",
-    "window": "week"
-  },
-  "reddit/any-h3": {
-    "type": "reddit",
-    "query": "\"MiniMax H3\"",
     "window": "week",
-    "note": "site-wide, to catch subreddits we have not thought of."
+    "note": "meme requete, autre public : ici on parle cablage et workflows plutot que resultats."
   }
 }
