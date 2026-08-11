@@ -60,6 +60,9 @@ _last_hit: dict[str, float] = {}
 #            another two minutes of backoff. The log that prompted this had
 #            fifteen [wait] lines AFTER the source had already given up.
 REDDIT_BUDGET = int(os.environ.get("REDDIT_BUDGET", "10"))
+# How many scored threads a subreddit may contribute to one report.
+# Beyond this the section stops being read at all.
+TITLES_KEPT = int(os.environ.get("TITLES_KEPT", "8"))
 _reddit_spent = 0
 _reddit_blocked = False
 
@@ -516,12 +519,22 @@ def diff_reddit(old: dict, new: dict, deep: int = 0) -> list[str]:
         n, why = score_body(p["title"])
         ranked.append((n, why, p))
 
+    # A busy day on a busy subreddit produced twenty-five links, of which
+    # twenty carried no measurable signal at all. Listing them in full buries
+    # the two that do and trains the reader to skip the section. The scored
+    # ones are always shown; the rest are counted, not enumerated.
+    ranked.sort(key=lambda r: -r[0])
+    keep = [r for r in ranked if r[0] > 0][:TITLES_KEPT]
     lines = []
-    for n, why, p in sorted(ranked, key=lambda r: -r[0]):
+    for n, why, p in keep:
         mark = "**" if n >= 12 else ""
         lines.append(f"  - {mark}[{p['title']}]({p['url']}){mark}"
                      + (f" — *{n} pts: {', '.join(why[:4])}*" if why else "")
                      + f" — {p.get('author', '?')}")
+    rest = len(ranked) - len(keep)
+    if rest:
+        lines.append(f"  - <sub>{rest} more with no measurable signal, "
+                     f"not listed</sub>")
     return lines
 
 
@@ -564,6 +577,12 @@ POD_BASE = os.environ.get("POD_BASE_BRANCH", "develop")
 # there are two numbers rather than one.
 BUMP_AT = int(os.environ.get("BUMP_THRESHOLD", "10"))
 BUMP_AT_RELEVANT = int(os.environ.get("BUMP_THRESHOLD_RELEVANT", "3"))
+# One commit is enough when it closes a hole in code this image ships, whatever
+# else is or is not in the drift.
+BUMP_AT_SECURITY = 1
+SECURITY = re.compile(r"arbitrary code|code execution|\bRCE\b|CVE-\d|"
+                      r"pickle\.load|path traversal|sanitiz|unsafe (?:eval|load)",
+                      re.I)
 RELEVANT = re.compile(r"minimax|\bh3\b|sage|turbo|attention|sampler|vae",
                       re.I)
 
@@ -669,7 +688,17 @@ def levers(old: dict, new: dict) -> list[str]:
         if not isinstance(cur, dict) or "behind" not in cur:
             continue
         latest = cur.get("latest") or ""
-        limit = BUMP_AT_RELEVANT if RELEVANT.search(latest) else BUMP_AT
+        # Scan every subject, not only the newest. KJNodes carried a fix for
+        # arbitrary code execution while its head commit was an anodyne merge,
+        # so reading `latest` alone left a shipped vulnerability below the
+        # threshold and out of the report entirely.
+        subjects = latest + " " + " ".join(cur.get("why") or [])
+        if SECURITY.search(subjects):
+            limit = BUMP_AT_SECURITY
+        elif RELEVANT.search(subjects):
+            limit = BUMP_AT_RELEVANT
+        else:
+            limit = BUMP_AT
         if cur["behind"] < limit:
             continue
         was = (o_pins.get(repo) or {}).get("behind")
@@ -842,6 +871,14 @@ def main() -> int:
     changes: list[str] = []
     for name in specs:
         if name in no_baseline:
+            continue
+        # A source added since the last run has nothing to compare against.
+        # Diffing it against nothing dumped its whole state as "appeared"
+        # lines, burying the run that introduced it under the one thing in it
+        # that was not news.
+        if name not in old and name in new:
+            changes.append(f"### {name}\n"
+                           f"  - first observation, nothing to compare yet")
             continue
         d = (diff_reddit(old.get(name, {}), new.get(name, {}),
                          specs[name].get("deep", 0))
