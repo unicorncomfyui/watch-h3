@@ -292,17 +292,17 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "95d755cd8107",
-    "head_date": "2026-08-31T03:19:14Z",
-    "head_msg": "Disable push event trigger for failing workflow. (#15995)",
+    "head": "3216c62e9962",
+    "head_date": "2026-09-01T03:05:53Z",
+    "head_msg": "Support SenseNova U1.5 (CORE-411) (#15922)",
     "release": "v0.34.0",
     "release_date": "2026-08-26T02:09:08Z",
     "release_name": "v0.34.0"
   },
   "gh/workflow-templates": {
-    "head": "d3b4a9e89573",
-    "head_date": "2026-08-29T20:03:57Z",
-    "head_msg": "Fix 404 when running the MiniMax-H3 demo on comfy.org (#1213)",
+    "head": "7f1009d5f900",
+    "head_date": "2026-09-01T09:22:38Z",
+    "head_msg": "fix(site): stop advertising hreflang=it, an unbuilt route that 404s (#1217)",
     "release": "v0.11.50",
     "release_date": "2026-08-27T19:01:46Z",
     "release_name": "v0.11.50",
@@ -337,9 +337,9 @@
     "head_msg": "Merge pull request #16 from afkaf/main"
   },
   "gh/h3-spectrum": {
-    "head": "24353c01ce64",
-    "head_date": "2026-08-30T23:00:54Z",
-    "head_msg": "Document multistage sampler step counts",
+    "head": "beb32dd210ef",
+    "head_date": "2026-08-31T23:29:54Z",
+    "head_msg": "Restore Spectrum attribution and credits",
     "release": "v0.2.23",
     "release_date": "2026-08-30T21:52:48Z",
     "release_name": "Spectrum MiniMax H3 v0.2.23"
@@ -349,15 +349,15 @@
     "sha256": "3919fc451121add8"
   },
   "doc/minimax-api": {
-    "bytes": 450036,
-    "sha256": "0dd102f579752225"
+    "bytes": 450309,
+    "sha256": "dc289b2cc653b023"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 35,
-      "head": "f39cbd56fecae0b27a446c0cd450cd591f3a8bea",
-      "latest": "fix(custom-node-list): demote mickmumpitz/ComfyUI-SplatKit from default to dev channel (security hol",
+      "behind": 36,
+      "head": "36b878b19225a76e64c5348dbc42791651d11e4b",
+      "latest": "update DB",
       "code": 5,
       "kind": "fix+feature",
       "why": [
@@ -392,15 +392,15 @@
     },
     "rgthree/rgthree-comfy": {
       "pinned": "6b76ee6f2c5a",
-      "behind": 6,
-      "head": "35c9f1e186603ba312d3b15350e89aa50b860ee6",
-      "latest": "Fix ComfyUI changing loadApiJson to async without updated types. Fixes #760",
-      "code": 42,
-      "kind": "fix+feature",
+      "behind": 7,
+      "head": "2c5342a8cb0eaecaabf61435a5f37dd594c510ba",
+      "latest": "Cache head branch for updating extensions from git.",
+      "code": 44,
+      "kind": "perf+fix+feature",
       "why": [
+        "Cache head branch for updating extensions from git.",
         "Lora Loader fixes: mute video audio, add option for autoplay previews, fix wrapping in notes, etc.",
-        "ComfyUI switched id types again; fixing drag and drop widgets check to allow for either. Fixes #755",
-        "Lora Loader fixes: mute video audio, add option for autoplay previews, fix wrapping in notes, etc."
+        "ComfyUI switched id types again; fixing drag and drop widgets check to allow for either. Fixes #755"
       ]
     },
     "Fannovel16/ComfyUI-Frame-Interpolation": {
@@ -428,184 +428,296 @@
   "reddit/r-StableDiffusion": {
     "posts": [
       {
-        "id": "t3_1w3dojs",
-        "title": "Minimax H3: Consistent face, body & cloths via reference identity",
-        "author": "/u/ashishsanu",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3dojs/minimax_h3_consistent_face_body_cloths_via/",
-        "updated": "2026-08-31T13:21:49+00:00"
+        "id": "t3_1w47mtg",
+        "title": "MATLOWAI/minimax-h3-fused-turbo-int8-convrot · Hugging Face",
+        "author": "/u/AiCreatorCamp",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w47mtg/matlowaiminimaxh3fusedturboint8convrot_hugging/",
+        "updated": "2026-09-01T10:10:04+00:00"
       },
       {
-        "id": "t3_1w3det2",
-        "title": "IN TRANSIT | A Minimax H3 Short Film (ComfyUI Challenge)",
-        "author": "/u/CommentSignal9029",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3det2/in_transit_a_minimax_h3_short_film_comfyui/",
-        "updated": "2026-08-31T13:11:24+00:00"
+        "id": "t3_1w47bsb",
+        "title": "Minimax H3 temporal noise & perceived resolution",
+        "author": "/u/Dumperandumper",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w47bsb/minimax_h3_temporal_noise_perceived_resolution/",
+        "updated": "2026-09-01T09:53:46+00:00"
       },
       {
-        "id": "t3_1w3c68d",
-        "title": "Long-form content generation",
-        "author": "/u/roobiestones",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3c68d/longform_content_generation/",
-        "updated": "2026-08-31T12:21:29+00:00"
+        "id": "t3_1w45stt",
+        "title": "What's the fuss with hybrid Minimax H3 models ?",
+        "author": "/u/Tablaski",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w45stt/whats_the_fuss_with_hybrid_minimax_h3_models/",
+        "updated": "2026-09-01T08:27:46+00:00"
       },
       {
-        "id": "t3_1w3a772",
-        "title": "What Image Edit model you use nowadays?",
-        "author": "/u/Mr_Unknown_Hero",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3a772/what_image_edit_model_you_use_nowadays/",
-        "updated": "2026-08-31T10:49:38+00:00"
-      },
-      {
-        "id": "t3_1w39r6m",
-        "title": "Spreadsheets for multi-video generation",
-        "author": "/u/GeroldMeisinger",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w39r6m/spreadsheets_for_multivideo_generation/",
-        "updated": "2026-08-31T10:26:32+00:00"
-      },
-      {
-        "id": "t3_1w39c4k",
-        "title": "Mini max h3 - image generator",
+        "id": "t3_1w45ftd",
+        "title": "Mini max h3 long video generation",
         "author": "/u/Complete-Box-3030",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w39c4k/mini_max_h3_image_generator/",
-        "updated": "2026-08-31T10:04:33+00:00"
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w45ftd/mini_max_h3_long_video_generation/",
+        "updated": "2026-09-01T08:06:52+00:00"
       },
       {
-        "id": "t3_1w39bu3",
-        "title": "Radeon AI PRO R9700 32GB + RTX 3060: 50 real 1MP H3 renders, ROCm 10, and ~22 tok/s Qwen",
-        "author": "/u/Master-Client6682",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w39bu3/radeon_ai_pro_r9700_32gb_rtx_3060_50_real_1mp_h3/",
-        "updated": "2026-08-31T10:04:06+00:00"
+        "id": "t3_1w44ie0",
+        "title": "Launching: Highlander - Cheapest Realtime Video with Minimax FastH3",
+        "author": "/u/Small-Term672",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w44ie0/launching_highlander_cheapest_realtime_video_with/",
+        "updated": "2026-09-01T07:12:32+00:00"
       },
       {
-        "id": "t3_1w395r2",
-        "title": "Minimax h3 lora training",
-        "author": "/u/mannu67",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w395r2/minimax_h3_lora_training/",
-        "updated": "2026-08-31T09:55:19+00:00"
+        "id": "t3_1w43syg",
+        "title": "MiniMax H3 Ref2VA neural 3D latent upscaling and gentle refinementworkflow Help me push this further on an RTX 4080 16gb 64gb ram",
+        "author": "/u/KimSwallowsMD",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w43syg/minimax_h3_ref2va_neural_3d_latent_upscaling_and/",
+        "updated": "2026-09-01T06:32:40+00:00"
       },
       {
-        "id": "t3_1w388ji",
-        "title": "Is there a way to control character actions sequentially over time within a single [Shot 1] without cutting to a new shot in Minimax H3?",
-        "author": "/u/Optimal_Map_5236",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w388ji/is_there_a_way_to_control_character_actions/",
-        "updated": "2026-08-31T09:03:24+00:00"
+        "id": "t3_1w437jy",
+        "title": "A new AI step: Immersive worlds with Minimax H3",
+        "author": "/u/listopalafoto",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w437jy/a_new_ai_step_immersive_worlds_with_minimax_h3/",
+        "updated": "2026-09-01T05:59:15+00:00"
       },
       {
-        "id": "t3_1w382vo",
-        "title": "Minimax Music 3 + Minimax H3 Ref2VA = Music videos",
-        "author": "/u/thefierysheep",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w382vo/minimax_music_3_minimax_h3_ref2va_music_videos/",
-        "updated": "2026-08-31T08:54:33+00:00"
+        "id": "t3_1w3z0xc",
+        "title": "Up at atom! - Behind the scenes of the new Radioactive Man movie",
+        "author": "/u/TheOrangeSplat",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3z0xc/up_at_atom_behind_the_scenes_of_the_new/",
+        "updated": "2026-09-01T02:29:10+00:00"
       },
       {
-        "id": "t3_1w36482",
-        "title": "Is 20 second generation on minimax h3 possible?",
-        "author": "/u/Popular-Ad-2417",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w36482/is_20_second_generation_on_minimax_h3_possible/",
-        "updated": "2026-08-31T07:01:55+00:00"
+        "id": "t3_1w3y6jw",
+        "title": "Minimax H3, TenStrip eros Beta 4 checkpoint with PK Parasyte 0.5 str, I really like it.",
+        "author": "/u/rm_rf_all_files",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3y6jw/minimax_h3_tenstrip_eros_beta_4_checkpoint_with/",
+        "updated": "2026-09-01T01:51:39+00:00"
       },
       {
-        "id": "t3_1w30zb1",
-        "title": "Minimax H3 Case Study: The Dinner Party",
-        "author": "/u/DG86",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w30zb1/minimax_h3_case_study_the_dinner_party/",
-        "updated": "2026-08-31T02:37:46+00:00"
+        "id": "t3_1w3xcw1",
+        "title": "Transformers: Starscream Test #2 - Prompt Below",
+        "author": "/u/darthfurbyyoutube",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3xcw1/transformers_starscream_test_2_prompt_below/",
+        "updated": "2026-09-01T01:14:06+00:00"
       },
       {
-        "id": "t3_1w30rsj",
-        "title": "Has anyone tried fine tuning Minimax H3 for a character?",
-        "author": "/u/MoneyKenny",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w30rsj/has_anyone_tried_fine_tuning_minimax_h3_for_a/",
-        "updated": "2026-08-31T02:27:57+00:00"
+        "id": "t3_1w3wwlf",
+        "title": "Graphics Card Captor Sakura - MiniMAX H3 Test #6 (FastH3 Lora! 720p in minutes!)",
+        "author": "/u/dramaton42",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3wwlf/graphics_card_captor_sakura_minimax_h3_test_6/",
+        "updated": "2026-09-01T00:54:28+00:00"
       },
       {
-        "id": "t3_1w30ily",
-        "title": "TWEEDLE TEST - Minimax H3 27 seconds in just over 9 minutes:",
-        "author": "/u/Tokyo_Jab",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w30ily/tweedle_test_minimax_h3_27_seconds_in_just_over_9/",
-        "updated": "2026-08-31T02:16:13+00:00"
+        "id": "t3_1w3wvco",
+        "title": "the bird-king (my first fully local AI short film) TW: self-harm.",
+        "author": "/u/flatfifve31",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3wvco/the_birdking_my_first_fully_local_ai_short_film/",
+        "updated": "2026-09-01T00:52:56+00:00"
       },
       {
-        "id": "t3_1w2zz0h",
-        "title": "Minimax H3 - transferring dancer to a new environment with ref workflow",
-        "author": "/u/CQDSN",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2zz0h/minimax_h3_transferring_dancer_to_a_new/",
-        "updated": "2026-08-31T01:50:54+00:00"
+        "id": "t3_1w3wu0n",
+        "title": "This week on \"McGarnagle\"",
+        "author": "/u/TheOrangeSplat",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3wu0n/this_week_on_mcgarnagle/",
+        "updated": "2026-09-01T00:51:16+00:00"
       },
       {
-        "id": "t3_1w2zsf3",
-        "title": "Someone's running FastH3 (the distilled MiniMax H3) as an actual infinite livestream!!!",
-        "author": "/u/boudaboy",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2zsf3/someones_running_fasth3_the_distilled_minimax_h3/",
-        "updated": "2026-08-31T01:42:29+00:00"
+        "id": "t3_1w3uywc",
+        "title": "Can I render in MiniMax H3 only the audio of a Ref2V workflow?",
+        "author": "/u/Mad4reds",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3uywc/can_i_render_in_minimax_h3_only_the_audio_of_a/",
+        "updated": "2026-08-31T23:33:52+00:00"
       },
       {
-        "id": "t3_1w2xr12",
-        "title": "H3 Default Template vs Larry's Turbo with optimized settings",
-        "author": "/u/desktop4070",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2xr12/h3_default_template_vs_larrys_turbo_with/",
-        "updated": "2026-08-31T00:08:40+00:00"
+        "id": "t3_1w3tsqg",
+        "title": "This One Is Simple With No Bells and Whistles",
+        "author": "/u/dennismfrancisart",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3tsqg/this_one_is_simple_with_no_bells_and_whistles/",
+        "updated": "2026-08-31T22:48:07+00:00"
       },
       {
-        "id": "t3_1w2v6cr",
-        "title": "Audio preview during video generation?",
-        "author": "/u/mukyuuuu",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2v6cr/audio_preview_during_video_generation/",
-        "updated": "2026-08-30T22:17:19+00:00"
+        "id": "t3_1w3tofp",
+        "title": "ref or fl2va - prompt enchancer with 100% of aderence",
+        "author": "/u/Friendly-Fig-6015",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3tofp/ref_or_fl2va_prompt_enchancer_with_100_of_aderence/",
+        "updated": "2026-08-31T22:43:32+00:00"
       },
       {
-        "id": "t3_1w2uwdi",
-        "title": "5070 Ti GPU Benchmark Data for MiniMax H3 using Comfy Kitchen Attention & Larry's Turbo Lora",
-        "author": "/u/desktop4070",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2uwdi/5070_ti_gpu_benchmark_data_for_minimax_h3_using/",
-        "updated": "2026-08-30T22:05:32+00:00"
+        "id": "t3_1w3rwoe",
+        "title": "Local AI News You Missed - August 2026",
+        "author": "/u/vramkickedin",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3rwoe/local_ai_news_you_missed_august_2026/",
+        "updated": "2026-08-31T21:38:26+00:00"
       },
       {
-        "id": "t3_1w2tpzj",
-        "title": "How to make Minimax generate videos faster and with better quality on RTX 5060 Ti 16GB?",
-        "author": "/u/lizamanobau",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2tpzj/how_to_make_minimax_generate_videos_faster_and/",
-        "updated": "2026-08-30T21:17:14+00:00"
+        "id": "t3_1w3q4gh",
+        "title": "why mini max ref are so bad comparing to fl2va?",
+        "author": "/u/Friendly-Fig-6015",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3q4gh/why_mini_max_ref_are_so_bad_comparing_to_fl2va/",
+        "updated": "2026-08-31T20:35:27+00:00"
       },
       {
-        "id": "t3_1w2ssyd",
-        "title": "FastVideo's new 4-step H3 LoRA doesn't work in ComfyUI. I made a converter. 6 steps, ~3x faster than stock, and honestly better looking.",
-        "author": "/u/Sad_Berry_4621",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2ssyd/fastvideos_new_4step_h3_lora_doesnt_work_in/",
-        "updated": "2026-08-30T20:41:28+00:00"
+        "id": "t3_1w3pgjx",
+        "title": "Starting over with new ComfyUI install for MiniMax H3...what do you recommend?",
+        "author": "/u/0260n4s",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3pgjx/starting_over_with_new_comfyui_install_for/",
+        "updated": "2026-08-31T20:12:40+00:00"
       },
       {
-        "id": "t3_1w2ssmm",
-        "title": "1girl music video demo with minimax h3",
-        "author": "/u/TheDerminator1337",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2ssmm/1girl_music_video_demo_with_minimax_h3/",
-        "updated": "2026-08-30T20:41:09+00:00"
+        "id": "t3_1w3p0i8",
+        "title": "[CLSS] Closed-Loop Streaming Synthesis for MiniMax H3 (Infinite video generation with prompt fallowing)",
+        "author": "/u/nazgut",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3p0i8/clss_closedloop_streaming_synthesis_for_minimax/",
+        "updated": "2026-08-31T19:57:38+00:00"
       },
       {
-        "id": "t3_1w2pb48",
-        "title": "H3 has surpassed Seedance 2.5 ???",
-        "author": "/u/l3luel3ill",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2pb48/h3_has_surpassed_seedance_25/",
-        "updated": "2026-08-30T18:29:42+00:00"
+        "id": "t3_1w3li1o",
+        "title": "H3 VFX",
+        "author": "/u/rynaleopard",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3li1o/h3_vfx/",
+        "updated": "2026-08-31T17:58:33+00:00"
       },
       {
-        "id": "t3_1w2nonb",
-        "title": "Finally! Minimax H3 on Mac!",
-        "author": "/u/Nice-Pair-2802",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2nonb/finally_minimax_h3_on_mac/",
-        "updated": "2026-08-30T17:28:28+00:00"
+        "id": "t3_1w3ks27",
+        "title": "How do I make character actions in MiniMax H3 faster?",
+        "author": "/u/zecbmo",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3ks27/how_do_i_make_character_actions_in_minimax_h3/",
+        "updated": "2026-08-31T17:34:52+00:00"
       },
       {
-        "id": "t3_1w2mvtv",
-        "title": "MiniMax H3 Prompt Writer v0.4.3: Windows Standalone + Qwen 3.8 support",
-        "author": "/u/nnorbbi",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w2mvtv/minimax_h3_prompt_writer_v043_windows_standalone/",
-        "updated": "2026-08-30T16:58:31+00:00"
+        "id": "t3_1w3kd0j",
+        "title": "MiniMax H3 matches Toonami perfectly (90's anime)",
+        "author": "/u/Phaethon360",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3kd0j/minimax_h3_matches_toonami_perfectly_90s_anime/",
+        "updated": "2026-08-31T17:20:42+00:00"
+      },
+      {
+        "id": "t3_1w3k9ti",
+        "title": "Trying out a consistent point-of-view shot with MiniMax H3",
+        "author": "/u/Peregrine2976",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3k9ti/trying_out_a_consistent_pointofview_shot_with/",
+        "updated": "2026-08-31T17:17:44+00:00"
+      },
+      {
+        "id": "t3_1w3jyxb",
+        "title": "[MiniMax H3] LEGO movie style",
+        "author": "/u/RageshAntony",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1w3jyxb/minimax_h3_lego_movie_style/",
+        "updated": "2026-08-31T17:07:28+00:00"
       }
     ]
   },
   "reddit/r-comfyui": {
     "posts": [
+      {
+        "id": "t3_1w47nq1",
+        "title": "MiniMax H3 2 reference images with 1 reference video",
+        "author": "/u/webAd-8847",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w47nq1/minimax_h3_2_reference_images_with_1_reference/",
+        "updated": "2026-09-01T10:11:26+00:00"
+      },
+      {
+        "id": "t3_1w44z9n",
+        "title": "Finally found a practical way to manage multi-shot MiniMax H3 videos in ComfyUI",
+        "author": "/u/ethanchen20250322",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w44z9n/finally_found_a_practical_way_to_manage_multishot/",
+        "updated": "2026-09-01T07:40:29+00:00"
+      },
+      {
+        "id": "t3_1w3zv85",
+        "title": "Finally I can see a truly huge jump in speed",
+        "author": "/u/Jesus__Skywalker",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3zv85/finally_i_can_see_a_truly_huge_jump_in_speed/",
+        "updated": "2026-09-01T03:07:56+00:00"
+      },
+      {
+        "id": "t3_1w3uze8",
+        "title": "Can I render in MiniMax H3 only the audio of a Ref2V workflow?",
+        "author": "/u/Mad4reds",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3uze8/can_i_render_in_minimax_h3_only_the_audio_of_a/",
+        "updated": "2026-08-31T23:34:26+00:00"
+      },
+      {
+        "id": "t3_1w3u242",
+        "title": "Suddenly very bad quality using MiniMax H3 on RTX 3090",
+        "author": "/u/lIlIIlIIIlllllIIlIIl",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3u242/suddenly_very_bad_quality_using_minimax_h3_on_rtx/",
+        "updated": "2026-08-31T22:58:10+00:00"
+      },
+      {
+        "id": "t3_1w3rgh6",
+        "title": "A quick Minimax H3 news round-up - 31st August 2026",
+        "author": "/u/optimisticalish",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3rgh6/a_quick_minimax_h3_news_roundup_31st_august_2026/",
+        "updated": "2026-08-31T21:22:06+00:00"
+      },
+      {
+        "id": "t3_1w3q2bz",
+        "title": "[CLSS] Closed-Loop Streaming Synthesis for MiniMax H3 (Infinite video generation with prompt fallowing)",
+        "author": "/u/nazgut",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3q2bz/clss_closedloop_streaming_synthesis_for_minimax/",
+        "updated": "2026-08-31T20:33:29+00:00"
+      },
+      {
+        "id": "t3_1w3p5bo",
+        "title": "Minimax h3 ref2vid characters wont transfer",
+        "author": "/u/laniepartyxo",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3p5bo/minimax_h3_ref2vid_characters_wont_transfer/",
+        "updated": "2026-08-31T20:02:00+00:00"
+      },
+      {
+        "id": "t3_1w3ml23",
+        "title": "Load multiple videos from disk for multi ref2video generation [workflow]",
+        "author": "/u/GeroldMeisinger",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3ml23/load_multiple_videos_from_disk_for_multi/",
+        "updated": "2026-08-31T18:34:40+00:00"
+      },
+      {
+        "id": "t3_1w3liv9",
+        "title": "H3 VFX",
+        "author": "/u/rynaleopard",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3liv9/h3_vfx/",
+        "updated": "2026-08-31T17:59:22+00:00"
+      },
+      {
+        "id": "t3_1w3jlpg",
+        "title": "Continuity (was the H3 node): six model families, one prompt box, and a blockout bench that writes your camera move for you",
+        "author": "/u/Fine_Rhubarb3786",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3jlpg/continuity_was_the_h3_node_six_model_families_one/",
+        "updated": "2026-08-31T16:54:53+00:00"
+      },
+      {
+        "id": "t3_1w3iotu",
+        "title": "testing kijai fast h3 model with 8 steps",
+        "author": "/u/aziib",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3iotu/testing_kijai_fast_h3_model_with_8_steps/",
+        "updated": "2026-08-31T16:22:54+00:00"
+      },
+      {
+        "id": "t3_1w3i7eu",
+        "title": "Taming ambient audio in Minimax H3 ref2va with Empty Audio node",
+        "author": "/u/5korpi0n",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3i7eu/taming_ambient_audio_in_minimax_h3_ref2va_with/",
+        "updated": "2026-08-31T16:06:39+00:00"
+      },
+      {
+        "id": "t3_1w3fbkx",
+        "title": "Problema volti minimax h3",
+        "author": "/u/robertpalmsss",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3fbkx/problema_volti_minimax_h3/",
+        "updated": "2026-08-31T14:24:06+00:00"
+      },
+      {
+        "id": "t3_1w3e5kv",
+        "title": "Can MiniMax H3 actually run on 8GB VRAM and 16GB RAM or is it completely pointless?",
+        "author": "/u/Shanq123",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3e5kv/can_minimax_h3_actually_run_on_8gb_vram_and_16gb/",
+        "updated": "2026-08-31T13:40:35+00:00"
+      },
+      {
+        "id": "t3_1w3ccfi",
+        "title": "How I stop facial geometry (kinda) from melting during audio-driven video dialogue",
+        "author": "/u/Fragrant-Cheek-4273",
+        "url": "https://www.reddit.com/r/comfyui/comments/1w3ccfi/how_i_stop_facial_geometry_kinda_from_melting/",
+        "updated": "2026-08-31T12:29:03+00:00"
+      },
       {
         "id": "t3_1w3bbqx",
         "title": "IN TRANSIT | A Minimax H3 Short Film (ComfyUI Challenge)",
@@ -668,118 +780,6 @@
         "author": "/u/optimisticalish",
         "url": "https://www.reddit.com/r/comfyui/comments/1w2mfd9/a_quick_minimax_h3_news_roundup_30th_august_2026/",
         "updated": "2026-08-30T16:40:57+00:00"
-      },
-      {
-        "id": "t3_1w2khhh",
-        "title": "PSA: NVIDIA Studio Driver 616.56 specifically mentions ComfyUI performance updates for MiniMax-H3, WAN-Animate-2 and LTX-2.5",
-        "author": "/u/PixWizardry",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w2khhh/psa_nvidia_studio_driver_61656_specifically/",
-        "updated": "2026-08-30T15:25:34+00:00"
-      },
-      {
-        "id": "t3_1w2hp4u",
-        "title": "MiniMax H3 on RTX 5090 (32GB) — 2MP is 8.7× slower than it should be. VRAM thrashing or a config mistake?",
-        "author": "/u/Suspicious-Walk-815",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w2hp4u/minimax_h3_on_rtx_5090_32gb_2mp_is_87_slower_than/",
-        "updated": "2026-08-30T13:33:04+00:00"
-      },
-      {
-        "id": "t3_1w2g8hc",
-        "title": "Help with character replacement",
-        "author": "/u/AshokManker",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w2g8hc/help_with_character_replacement/",
-        "updated": "2026-08-30T12:26:17+00:00"
-      },
-      {
-        "id": "t3_1w2f4a1",
-        "title": "I stitched MiniMax H3's scattered community pieces into one 8GB-VRAM-ready workflow collection",
-        "author": "/u/KeyAdventurous3113",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w2f4a1/i_stitched_minimax_h3s_scattered_community_pieces/",
-        "updated": "2026-08-30T11:31:17+00:00"
-      },
-      {
-        "id": "t3_1w2d9ud",
-        "title": "local + official 2K workflow, has anyone connected these together?",
-        "author": "/u/OrneryAd9288",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w2d9ud/local_official_2k_workflow_has_anyone_connected/",
-        "updated": "2026-08-30T09:48:59+00:00"
-      },
-      {
-        "id": "t3_1w2apv5",
-        "title": "A pandemic of epic proportions..",
-        "author": "/u/lazarus102",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w2apv5/a_pandemic_of_epic_proportions/",
-        "updated": "2026-08-30T07:20:29+00:00"
-      },
-      {
-        "id": "t3_1w28zjt",
-        "title": "SPEEDing up MiniMax-H3 without retraining (SPEED comfyui node extension)",
-        "author": "/u/antipode_insights",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w28zjt/speeding_up_minimaxh3_without_retraining_speed/",
-        "updated": "2026-08-30T05:43:15+00:00"
-      },
-      {
-        "id": "t3_1w27q18",
-        "title": "Minimax H3 reference to video using 12 GB VRAM",
-        "author": "/u/bsr126",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w27q18/minimax_h3_reference_to_video_using_12_gb_vram/",
-        "updated": "2026-08-30T04:36:25+00:00"
-      },
-      {
-        "id": "t3_1w25giz",
-        "title": "HR Endless Sampler - now you can create Minimax H3 videos of any length with just 16GB of VRAM. You can even render 1080p of any length with just 16GB of VRAM!",
-        "author": "/u/rhradec",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w25giz/hr_endless_sampler_now_you_can_create_minimax_h3/",
-        "updated": "2026-08-30T02:40:57+00:00"
-      },
-      {
-        "id": "t3_1w21t1f",
-        "title": "My mobile game trailer was boring… so I made this instead",
-        "author": "/u/kkwikmick",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w21t1f/my_mobile_game_trailer_was_boring_so_i_made_this/",
-        "updated": "2026-08-29T23:46:56+00:00"
-      },
-      {
-        "id": "t3_1w1wpkz",
-        "title": "A quick Minimax H3 news round-up - 29th August 2026",
-        "author": "/u/optimisticalish",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w1wpkz/a_quick_minimax_h3_news_roundup_29th_august_2026/",
-        "updated": "2026-08-29T20:12:27+00:00"
-      },
-      {
-        "id": "t3_1w1tcy8",
-        "title": "Hi everyone! Here is my submission for the **Comfy H3 Sync Sound Community Challenge**: # \"O Urco e o Polbo: A Galician Story\"",
-        "author": "/u/Pristine-Might-8940",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w1tcy8/hi_everyone_here_is_my_submission_for_the_comfy/",
-        "updated": "2026-08-29T18:01:16+00:00"
-      },
-      {
-        "id": "t3_1w1soey",
-        "title": "MiniMax H3 native 720p→1440p second sampling on one RTX 4090: 112s / 223s / 334s for 5s / 10s / 15s clips",
-        "author": "/u/This_Temporary_8537",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w1soey/minimax_h3_native_720p1440p_second_sampling_on/",
-        "updated": "2026-08-29T17:34:20+00:00"
-      },
-      {
-        "id": "t3_1w1rvz4",
-        "title": "Minimax H3. 1.0mp vs 1.5mp vs 2.0mp vs 2.5mp TEST",
-        "author": "/u/Grinderius",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w1rvz4/minimax_h3_10mp_vs_15mp_vs_20mp_vs_25mp_test/",
-        "updated": "2026-08-29T17:03:25+00:00"
-      },
-      {
-        "id": "t3_1w1rsfk",
-        "title": "MiniMax H3 on 2 GPUs: Raylight community fork + USP, SLA, caching and live TAEH3 preview",
-        "author": "/u/karma3u",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w1rsfk/minimax_h3_on_2_gpus_raylight_community_fork_usp/",
-        "updated": "2026-08-29T16:59:51+00:00"
-      },
-      {
-        "id": "t3_1w1rio5",
-        "title": "Feedback on AI dance video (ComfyUI) — identity drift, motion stability, and what to fix first in the pipeline. Model Minimax H3",
-        "author": "/u/jugernaut126",
-        "url": "https://www.reddit.com/r/comfyui/comments/1w1rio5/feedback_on_ai_dance_video_comfyui_identity_drift/",
-        "updated": "2026-08-29T16:49:01+00:00"
       }
     ]
   },
