@@ -292,9 +292,9 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "bc5f880dbdd4",
-    "head_date": "2026-10-23T09:40:32Z",
-    "head_msg": "Add ACEScg to Convert Image Color Space and Save Image (Advanced) EXR (#17023)",
+    "head": "7cebca52227c",
+    "head_date": "2026-10-24T02:22:35Z",
+    "head_msg": "Update architecture boundaries in AGENTS.md (#17331)",
     "release": "v0.42.1",
     "release_date": "2026-10-19T01:33:54Z",
     "release_name": "v0.42.1"
@@ -349,14 +349,14 @@
     "sha256": "61ec0f825f784533"
   },
   "doc/minimax-api": {
-    "bytes": 705675,
-    "sha256": "f860160d8cd2eb09"
+    "bytes": 703279,
+    "sha256": "351922f920c8702a"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 262,
-      "head": "a74929c65b49d7d7d81b9a6f140de878a818b893",
+      "behind": 263,
+      "head": "7e1af9c202fbd0051df3da43572976acd12857dc",
       "latest": "update DB",
       "code": 34,
       "kind": "perf+fix+compat+feature",
@@ -380,9 +380,9 @@
     },
     "kijai/ComfyUI-KJNodes": {
       "pinned": "35e595619376",
-      "behind": 32,
-      "head": "37a6c45a07bb06cc392431ddbbc741e691c467f4",
-      "latest": "Lora extraction fixes and improvements",
+      "behind": 33,
+      "head": "eaa8fee753faf37d1539804d89a46d3e0f40963d",
+      "latest": "Update model_optimization_nodes.py",
       "code": 20,
       "kind": "perf+fix+compat+feature",
       "why": [
@@ -428,6 +428,83 @@
   },
   "reddit/r-StableDiffusion": {
     "posts": [
+      {
+        "id": "t3_1xdytld",
+        "title": "Higgsfield Genjutsu (Character Replace) made with MiniMax H3 and Comparing with FastH3 Omni",
+        "author": "/u/CeFurkan",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdytld/higgsfield_genjutsu_character_replace_made_with/",
+        "updated": "2026-10-24T04:06:31+00:00"
+      },
+      {
+        "id": "t3_1xdy95o",
+        "title": "18 clip reel of my Minimax H3 LoRA on a 3090",
+        "author": "/u/DeliciousGorilla",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdy95o/18_clip_reel_of_my_minimax_h3_lora_on_a_3090/",
+        "updated": "2026-10-24T03:35:51+00:00"
+      },
+      {
+        "id": "t3_1xdvggj",
+        "title": "I made a full 4-minute music video for The Flaming Lips’ “Pompeii am Götterdämmerung” 100% locally on one RTX 4090: Qwen-Image 2.1 + MiniMax H3 + LatentSync + S",
+        "author": "/u/PatBQc",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdvggj/i_made_a_full_4minute_music_video_for_the_flaming/",
+        "updated": "2026-10-24T01:09:01+00:00"
+      },
+      {
+        "id": "t3_1xdrkfa",
+        "title": "Made on DGX Spark locally with Mini Max H3. Human written, Suno generated",
+        "author": "/u/Ornery-Block-3522",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdrkfa/made_on_dgx_spark_locally_with_mini_max_h3_human/",
+        "updated": "2026-10-23T22:07:22+00:00"
+      },
+      {
+        "id": "t3_1xdoh8k",
+        "title": "I tested the RTX 30-series GPU Unlock: up to 59% higher throughput in ComfyUI (3090 Ti)",
+        "author": "/u/under-_-null",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdoh8k/i_tested_the_rtx_30series_gpu_unlock_up_to_59/",
+        "updated": "2026-10-23T20:02:37+00:00"
+      },
+      {
+        "id": "t3_1xdla8a",
+        "title": "Messing around with MiniMax H3",
+        "author": "/u/renderartist",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdla8a/messing_around_with_minimax_h3/",
+        "updated": "2026-10-23T18:01:38+00:00"
+      },
+      {
+        "id": "t3_1xdky5d",
+        "title": "Testing New Minimax H3 Singularity V2 model",
+        "author": "/u/smereces",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdky5d/testing_new_minimax_h3_singularity_v2_model/",
+        "updated": "2026-10-23T17:49:09+00:00"
+      },
+      {
+        "id": "t3_1xdjr6q",
+        "title": "Performance preservation plus video extension with minimax H3. Is it possible yet?",
+        "author": "/u/ItsLukeHill",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdjr6q/performance_preservation_plus_video_extension/",
+        "updated": "2026-10-23T17:03:55+00:00"
+      },
+      {
+        "id": "t3_1xdj7lk",
+        "title": "Minimax H3 Zoom In/Out control during Arc/Tracking",
+        "author": "/u/Mindless_Adagio_8907",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdj7lk/minimax_h3_zoom_inout_control_during_arctracking/",
+        "updated": "2026-10-23T16:43:32+00:00"
+      },
+      {
+        "id": "t3_1xdidzz",
+        "title": "AbyssBeacon v1.5.1 - Find, track, and download LoRAs and checkpoints across six model sites",
+        "author": "/u/Cjr0420",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdidzz/abyssbeacon_v151_find_track_and_download_loras/",
+        "updated": "2026-10-23T16:12:40+00:00"
+      },
+      {
+        "id": "t3_1xdbso4",
+        "title": "Yes! I'm using ComfyUI as the backend for my app, AI-powered character swapping process.",
+        "author": "/u/Inevitable-Bus-8654",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xdbso4/yes_im_using_comfyui_as_the_backend_for_my_app/",
+        "updated": "2026-10-23T11:47:21+00:00"
+      },
       {
         "id": "t3_1xd9hp7",
         "title": "Pruna shipped a talking portrait model on MiniMax H3, and the 4K in the docs is an upscale",
@@ -525,88 +602,74 @@
         "author": "/u/edisson75",
         "url": "https://www.reddit.com/r/StableDiffusion/comments/1xc4g8x/minimax_h3_nostalgic/",
         "updated": "2026-10-22T00:43:29+00:00"
-      },
-      {
-        "id": "t3_1xc42eu",
-        "title": "Longshot Studio 0.15.0 - Lip Sync Music Video \"Falling Fast\"",
-        "author": "/u/R34vspec",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xc42eu/longshot_studio_0150_lip_sync_music_video_falling/",
-        "updated": "2026-10-22T00:24:50+00:00"
-      },
-      {
-        "id": "t3_1xbzw1o",
-        "title": "Minimax h3 Replace Background Workflow 4k 600frames+",
-        "author": "/u/Emotional_Example_12",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbzw1o/minimax_h3_replace_background_workflow_4k/",
-        "updated": "2026-10-21T21:23:22+00:00"
-      },
-      {
-        "id": "t3_1xbyw1j",
-        "title": "How do you image edit or image generate wit MINIMAX H3?",
-        "author": "/u/flaminghotcola",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbyw1j/how_do_you_image_edit_or_image_generate_wit/",
-        "updated": "2026-10-21T20:45:06+00:00"
-      },
-      {
-        "id": "t3_1xbx2lk",
-        "title": "Minimax H3 Singularity V2 - was updated to the new version!",
-        "author": "/u/theOliviaRossi",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbx2lk/minimax_h3_singularity_v2_was_updated_to_the_new/",
-        "updated": "2026-10-21T19:35:45+00:00"
-      },
-      {
-        "id": "t3_1xbqej5",
-        "title": "I built a free, offline AI cartoon studio that runs on a 4 GB VRAM gaming laptop: talking characters, lip-synced music videos, 12 languages (open source)",
-        "author": "/u/Labsbyshri",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbqej5/i_built_a_free_offline_ai_cartoon_studio_that/",
-        "updated": "2026-10-21T15:33:39+00:00"
-      },
-      {
-        "id": "t3_1xbpcmw",
-        "title": "Workflows and model sets in PixlStash. Adapt workflows to new models like MOSS and easily apply LoRAs",
-        "author": "/u/Infamous_Campaign687",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbpcmw/workflows_and_model_sets_in_pixlstash_adapt/",
-        "updated": "2026-10-21T14:54:05+00:00"
-      },
-      {
-        "id": "t3_1xboo2u",
-        "title": "LoRA Training for Fibo 2.0 Added",
-        "author": "/u/AcademiaSD",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xboo2u/lora_training_for_fibo_20_added/",
-        "updated": "2026-10-21T14:27:41+00:00"
-      },
-      {
-        "id": "t3_1xbobrr",
-        "title": "Original character LoRA for MiniMax H3 learnings. Workflows included.",
-        "author": "/u/DeliciousGorilla",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbobrr/original_character_lora_for_minimax_h3_learnings/",
-        "updated": "2026-10-21T14:14:33+00:00"
-      },
-      {
-        "id": "t3_1xbl2e3",
-        "title": "Please help me understand the Minimax h3",
-        "author": "/u/ok_n_na",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbl2e3/please_help_me_understand_the_minimax_h3/",
-        "updated": "2026-10-21T11:53:20+00:00"
-      },
-      {
-        "id": "t3_1xbite5",
-        "title": "Little advice(but important) for minimax h3 r2v users",
-        "author": "/u/theshield99",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbite5/little_advicebut_important_for_minimax_h3_r2v/",
-        "updated": "2026-10-21T09:48:08+00:00"
-      },
-      {
-        "id": "t3_1xbfej9",
-        "title": "FastH3 Omni Was Released Today and why not a single post sharing any test results?",
-        "author": "/u/Archersbows7",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xbfej9/fasth3_omni_was_released_today_and_why_not_a/",
-        "updated": "2026-10-21T06:13:34+00:00"
       }
     ]
   },
   "reddit/r-comfyui": {
     "posts": [
+      {
+        "id": "t3_1xdyu4a",
+        "title": "Higgsfield Genjutsu (Character Replace) is Now Available With SwarmUI v185 and ComfyUI v145 locally for free via MiniMax H3 - 1 click to install and use",
+        "author": "/u/CeFurkan",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdyu4a/higgsfield_genjutsu_character_replace_is_now/",
+        "updated": "2026-10-24T04:07:19+00:00"
+      },
+      {
+        "id": "t3_1xdvjri",
+        "title": "I made a full 4-minute music video for The Flaming Lips’ “Pompeii am Götterdämmerung” 100% locally on one RTX 4090: Qwen-Image 2.1 + MiniMax H3 + LatentSync + S",
+        "author": "/u/PatBQc",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdvjri/i_made_a_full_4minute_music_video_for_the_flaming/",
+        "updated": "2026-10-24T01:13:37+00:00"
+      },
+      {
+        "id": "t3_1xdq0v5",
+        "title": "How to add negative prompts for Minimax H3?",
+        "author": "/u/TigerClaw305",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdq0v5/how_to_add_negative_prompts_for_minimax_h3/",
+        "updated": "2026-10-23T21:03:44+00:00"
+      },
+      {
+        "id": "t3_1xdovs4",
+        "title": "MiniMax H3 Dual Segment has evolved into MiniMax H3 Chain Director V1.0 for ComfyUI",
+        "author": "/u/Far_Patience4517",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdovs4/minimax_h3_dual_segment_has_evolved_into_minimax/",
+        "updated": "2026-10-23T20:17:54+00:00"
+      },
+      {
+        "id": "t3_1xdkghu",
+        "title": "What's Feasible for a Local Video Generation with a 24GB 4090 GPU?",
+        "author": "/u/reason808",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdkghu/whats_feasible_for_a_local_video_generation_with/",
+        "updated": "2026-10-23T17:30:28+00:00"
+      },
+      {
+        "id": "t3_1xdjrjb",
+        "title": "Performance preservation plus video extension with minimax H3. Is it possible yet?",
+        "author": "/u/ItsLukeHill",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdjrjb/performance_preservation_plus_video_extension/",
+        "updated": "2026-10-23T17:04:18+00:00"
+      },
+      {
+        "id": "t3_1xdjooq",
+        "title": "Running Minimax H3 on ComfyUI Runpod Serverless",
+        "author": "/u/kimbarsegyan",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdjooq/running_minimax_h3_on_comfyui_runpod_serverless/",
+        "updated": "2026-10-23T17:01:30+00:00"
+      },
+      {
+        "id": "t3_1xdimhp",
+        "title": "AbyssBeacon v1.5.1: Find new LoRAs and checkpoints, track updates, and download into ComfyUI",
+        "author": "/u/Cjr0420",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xdimhp/abyssbeacon_v151_find_new_loras_and_checkpoints/",
+        "updated": "2026-10-23T16:21:34+00:00"
+      },
+      {
+        "id": "t3_1xddxh7",
+        "title": "Good character replacement",
+        "author": "/u/marco_il_bello",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xddxh7/good_character_replacement/",
+        "updated": "2026-10-23T13:23:22+00:00"
+      },
       {
         "id": "t3_1xd43i2",
         "title": "A quick MOSS-Image news round-up - 23rd October 2026",
@@ -718,69 +781,6 @@
         "author": "/u/kid_90",
         "url": "https://www.reddit.com/r/comfyui/comments/1xaxlu1/minimax_h3_got_hit_the_road_dude/",
         "updated": "2026-10-20T16:58:37+00:00"
-      },
-      {
-        "id": "t3_1xawqn4",
-        "title": "How I Built an End-to-End AI Face Swap Video Workflow",
-        "author": "/u/Few-Profession421",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xawqn4/how_i_built_an_endtoend_ai_face_swap_video/",
-        "updated": "2026-10-20T16:26:02+00:00"
-      },
-      {
-        "id": "t3_1xattjc",
-        "title": "RTX 3060 12GB + 32GB RAM | MiniMax H3 | 25s / 600 Frames in 22m27s | 4-Step DMAD | Single-Pass",
-        "author": "/u/JinnTsui",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xattjc/rtx_3060_12gb_32gb_ram_minimax_h3_25s_600_frames/",
-        "updated": "2026-10-20T14:36:08+00:00"
-      },
-      {
-        "id": "t3_1xarqpu",
-        "title": "[J-POP] You & Me (君と僕) | Official Music Video | 80s Japanese City Pop - MiniMax H3",
-        "author": "/u/SeaTransportation457",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xarqpu/jpop_you_me_君と僕_official_music_video_80s_japanese/",
-        "updated": "2026-10-20T13:10:21+00:00"
-      },
-      {
-        "id": "t3_1xaph61",
-        "title": "Testing Kissing scenes with Minimax H3",
-        "author": "/u/CQDSN",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xaph61/testing_kissing_scenes_with_minimax_h3/",
-        "updated": "2026-10-20T11:20:59+00:00"
-      },
-      {
-        "id": "t3_1xalme6",
-        "title": "Minimax H3 ref2va not replacing characters",
-        "author": "/u/alex13331",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xalme6/minimax_h3_ref2va_not_replacing_characters/",
-        "updated": "2026-10-20T07:24:32+00:00"
-      },
-      {
-        "id": "t3_1xak5x3",
-        "title": "Helm: training-free activation steering for ComfyUI (a dial for what the model already knows) #OpenSourceHiggsfield",
-        "author": "/u/leolambertini",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xak5x3/helm_trainingfree_activation_steering_for_comfyui/",
-        "updated": "2026-10-20T05:55:51+00:00"
-      },
-      {
-        "id": "t3_1xahy4n",
-        "title": "MiniMax H3 - Really is the best open-source video model.",
-        "author": "/u/Cheap_Credit_3957",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xahy4n/minimax_h3_really_is_the_best_opensource_video/",
-        "updated": "2026-10-20T03:50:12+00:00"
-      },
-      {
-        "id": "t3_1xa6j0t",
-        "title": "Backlot: an open-source Higgsfield-style studio that runs on a 16 GB card (MiniMax H3 + Krea 2 + Qwen 2.1, Comfy SDK) #OpenSourceHiggsfield",
-        "author": "/u/Mist3r-Robot",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xa6j0t/backlot_an_opensource_higgsfieldstyle_studio_that/",
-        "updated": "2026-10-19T19:30:10+00:00"
-      },
-      {
-        "id": "t3_1xa3e7d",
-        "title": "best minimax extender?",
-        "author": "/u/NefariousnessFun4043",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xa3e7d/best_minimax_extender/",
-        "updated": "2026-10-19T17:35:55+00:00"
       }
     ]
   },
