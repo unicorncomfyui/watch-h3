@@ -286,26 +286,26 @@
     ]
   },
   "gh/minimax-h3": {
-    "head": "d21241f0a4b3",
-    "head_date": "2026-08-15T08:31:16Z",
-    "head_msg": "Merge pull request #44 from GyArmyBrat/improve-skills",
+    "head": "199b7d0e1fd9",
+    "head_date": "2026-10-28T10:13:57Z",
+    "head_msg": "Merge pull request #83 from SammanthaLLM/main",
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "426f5eea52a7",
-    "head_date": "2026-10-27T01:12:41Z",
-    "head_msg": "ComfyUI v0.43.0",
+    "head": "79cf64c21a1d",
+    "head_date": "2026-10-28T07:43:04Z",
+    "head_msg": "Look up a pinned frontend release by its tag instead of listing every release. (#17402)",
     "release": "v0.43.0",
     "release_date": "2026-10-27T02:40:46Z",
     "release_name": "v0.43.0"
   },
   "gh/workflow-templates": {
-    "head": "3c2199b93624",
-    "head_date": "2026-10-26T17:27:06Z",
-    "head_msg": "Add Kling 4.0, Fibo 2.0, MOSS-Image and MiniMax H3 templates (bump 0.11.97) (#1378)",
-    "release": "v0.11.97",
-    "release_date": "2026-10-26T17:30:40Z",
-    "release_name": "v0.11.97",
+    "head": "bf26c7cfc3ce",
+    "head_date": "2026-10-28T11:30:59Z",
+    "head_msg": "Fix minComfyUIVersion for Bria FIBO 2.0 API templates (#1381)",
+    "release": "v0.11.98",
+    "release_date": "2026-10-27T18:32:28Z",
+    "release_name": "v0.11.98",
     "file:templates/video_minimax_h3_i2v.json": "bcc680e74537",
     "file:templates/video_minimax_h3_r2v.json": "7ffa22d98706",
     "file:templates/video_minimax_h3_t2v.json": "b99a270eadd7"
@@ -349,21 +349,21 @@
     "sha256": "7cdd87101ff62907"
   },
   "doc/minimax-api": {
-    "bytes": 707324,
-    "sha256": "1a6fb22679cfec98"
+    "bytes": 707359,
+    "sha256": "a1319407850f0cac"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 263,
-      "head": "7e1af9c202fbd0051df3da43572976acd12857dc",
+      "behind": 300,
+      "head": "00430d61e8f7d34680f424ef49decd008481823d",
       "latest": "update DB",
       "code": 34,
       "kind": "perf+fix+compat+feature",
       "why": [
         "feat(custom-node-list): register 5 verified-safe nodepacks (WeeLLM, Meta SAM-Audio, PixelPanda, Free Model and Node Cache, ComfyUI-Auth) + node_db/new sync",
         "Add ComfyUI Aiter Attention",
-        "fix(security-messages): state the actual gate in install-denial messages (#3128)"
+        "fix(custom-node-list): adopt canonical title/description for Newaiguy/ComfyUI-h3_sage_amd (#3144)"
       ]
     },
     "Kosinkadink/ComfyUI-VideoHelperSuite": {
@@ -380,10 +380,10 @@
     },
     "kijai/ComfyUI-KJNodes": {
       "pinned": "35e595619376",
-      "behind": 44,
-      "head": "2371136d2fa6fd0914e514cd99b36dabe5db9adf",
-      "latest": "Merge pull request #780 from phazei/fix-builder-dimensions",
-      "code": 24,
+      "behind": 46,
+      "head": "0209e3091a1f4a9e112d2320c55f47572b00994f",
+      "latest": "Fix subgraph handling in node swap, recreate, shake and Set/Get conversions",
+      "code": 30,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Optimize tiny vae some",
@@ -393,10 +393,10 @@
     },
     "rgthree/rgthree-comfy": {
       "pinned": "6b76ee6f2c5a",
-      "behind": 34,
-      "head": "d7297b42f0fa78bec1c0411478f887423c249502",
-      "latest": "Merge pull request #751 from mvanhorn/fix/726-power-puter-api-pnginfo",
-      "code": 81,
+      "behind": 39,
+      "head": "218d6347dac5b6499ae56dbfeb25cbb6dd203ac5",
+      "latest": "Merge pull request #799 from unclehooru/fix-clone-disconnects-original",
+      "code": 96,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Cache head branch for updating extensions from git.",
@@ -436,6 +436,62 @@
   "reddit/r-StableDiffusion": {
     "posts": [
       {
+        "id": "t3_1xhhlu4",
+        "title": "Minimax H3 Motion refmod questions, Dataset & prep",
+        "author": "/u/Ambitious_Corgi5723",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xhhlu4/minimax_h3_motion_refmod_questions_dataset_prep/",
+        "updated": "2026-10-28T07:33:18+00:00"
+      },
+      {
+        "id": "t3_1xher16",
+        "title": "Minimax H3 BF16 and face refinement.",
+        "author": "/u/TheDerminator1337",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xher16/minimax_h3_bf16_and_face_refinement/",
+        "updated": "2026-10-28T04:37:32+00:00"
+      },
+      {
+        "id": "t3_1xhecjk",
+        "title": "Introducing H3 Relay Hires node: 0.5 → 2 MP anime upscaler, ~4x faster than native, with a full 20-step pass 1 (no turbo LoRA needed for the take)",
+        "author": "/u/crinklypaper",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xhecjk/introducing_h3_relay_hires_node_05_2_mp_anime/",
+        "updated": "2026-10-28T04:15:22+00:00"
+      },
+      {
+        "id": "t3_1xh9oio",
+        "title": "Minimax H3 question: proper tongue movement on \"nananana\" sounds?",
+        "author": "/u/Pnarpok",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xh9oio/minimax_h3_question_proper_tongue_movement_on/",
+        "updated": "2026-10-28T00:27:00+00:00"
+      },
+      {
+        "id": "t3_1xh8nh7",
+        "title": "A few weeks ago I knew absolutely nothing about AI animation… today I finished an entire animated music video for my own song 🥹",
+        "author": "/u/Capable-Insurance-58",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xh8nh7/a_few_weeks_ago_i_knew_absolutely_nothing_about/",
+        "updated": "2026-10-27T23:42:45+00:00"
+      },
+      {
+        "id": "t3_1xh7wv3",
+        "title": "Minimax H3 - Persona 5: The Animation",
+        "author": "/u/Certain_Potato_4509",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xh7wv3/minimax_h3_persona_5_the_animation/",
+        "updated": "2026-10-27T23:11:28+00:00"
+      },
+      {
+        "id": "t3_1xgwn0m",
+        "title": "I am currently trying out refmod but having a little bit of \"trouble\" with the labels.",
+        "author": "/u/Azhram",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xgwn0m/i_am_currently_trying_out_refmod_but_having_a/",
+        "updated": "2026-10-27T16:06:22+00:00"
+      },
+      {
+        "id": "t3_1xgt2h1",
+        "title": "Here is my submission for ComfyUI’s Open Source Higgsfield challenge: Openjutsu, one-click character swap for videos, fully local using Minimax H3 only",
+        "author": "/u/Devajyoti1231",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xgt2h1/here_is_my_submission_for_comfyuis_open_source/",
+        "updated": "2026-10-27T13:50:05+00:00"
+      },
+      {
         "id": "t3_1xgpn4y",
         "title": "GOAT’d Text Generator update 🐐 — context memory, new prompt guides, and a cleaner UI",
         "author": "/u/ninjaGurung",
@@ -455,13 +511,6 @@
         "author": "/u/martinerous",
         "url": "https://www.reddit.com/r/StableDiffusion/comments/1xgp1ov/minimax_long_lipsync_demo/",
         "updated": "2026-10-27T10:38:36+00:00"
-      },
-      {
-        "id": "t3_1xgoypj",
-        "title": "MiniMax H3 heavy artifacts depending on source image",
-        "author": "/u/Radiant-Photograph46",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xgoypj/minimax_h3_heavy_artifacts_depending_on_source/",
-        "updated": "2026-10-27T10:33:52+00:00"
       },
       {
         "id": "t3_1xgnkq5",
@@ -560,60 +609,81 @@
         "author": "/u/lelus78",
         "url": "https://www.reddit.com/r/StableDiffusion/comments/1xfw8kr/opensource_local_studio_image_edit_picturetovideo/",
         "updated": "2026-10-26T13:04:14+00:00"
-      },
-      {
-        "id": "t3_1xfndhk",
-        "title": "Nvidia laptop gpu differences?",
-        "author": "/u/Crosscorvette",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xfndhk/nvidia_laptop_gpu_differences/",
-        "updated": "2026-10-26T04:35:17+00:00"
-      },
-      {
-        "id": "t3_1xfl3al",
-        "title": "Introducing Clown Prophecy (The only actually fix to degredation)",
-        "author": "/u/roychodraws",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xfl3al/introducing_clown_prophecy_the_only_actually_fix/",
-        "updated": "2026-10-26T02:35:01+00:00"
-      },
-      {
-        "id": "t3_1xfez10",
-        "title": "’80s-style Flock Safety commercial",
-        "author": "/u/Effective_Garbage_34",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xfez10/80sstyle_flock_safety_commercial/",
-        "updated": "2026-10-25T21:54:56+00:00"
-      },
-      {
-        "id": "t3_1xfdki1",
-        "title": "MINIMAX H3 Blurry Text Issue: Has anyone found a good solution to fix blurry text in minimax h3 ? I am almost there.",
-        "author": "/u/OkSilver7237",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xfdki1/minimax_h3_blurry_text_issue_has_anyone_found_a/",
-        "updated": "2026-10-25T20:55:27+00:00"
-      },
-      {
-        "id": "t3_1xfd1tv",
-        "title": "I built an open-source local film studio for 8 GB cards (LTX 2.5 and MiniMax H3), with long takes joined in latent space",
-        "author": "/u/Dry-Acanthisitta-652",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xfd1tv/i_built_an_opensource_local_film_studio_for_8_gb/",
-        "updated": "2026-10-25T20:34:18+00:00"
-      },
-      {
-        "id": "t3_1xf5pqg",
-        "title": "My first scene created with MiniMax H3 in ComfyUI, rendered on an NVIDIA RTX 3090 GPU.",
-        "author": "/u/Sourcecode12",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xf5pqg/my_first_scene_created_with_minimax_h3_in_comfyui/",
-        "updated": "2026-10-25T15:46:12+00:00"
-      },
-      {
-        "id": "t3_1xex586",
-        "title": "Anyone else getting Overwhelmed?",
-        "author": "/u/Instagatuh",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xex586/anyone_else_getting_overwhelmed/",
-        "updated": "2026-10-25T08:40:01+00:00"
       }
     ]
   },
   "reddit/r-comfyui": {
     "posts": [
+      {
+        "id": "t3_1xhmt6x",
+        "title": "MiniMax H3 Face Fix! Remove Blurry Faces in ComfyUI (6GB VRAM WORKFLOW)",
+        "author": "/u/cgpixel23",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xhmt6x/minimax_h3_face_fix_remove_blurry_faces_in/",
+        "updated": "2026-10-28T12:33:21+00:00"
+      },
+      {
+        "id": "t3_1xhlut5",
+        "title": "RTX 3060 12GB — Finally Got a Usable 25-Second Video at Native 1536×864 (ComfyUI + H3)",
+        "author": "/u/JinnTsui",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xhlut5/rtx_3060_12gb_finally_got_a_usable_25second_video/",
+        "updated": "2026-10-28T11:47:28+00:00"
+      },
+      {
+        "id": "t3_1xhiejp",
+        "title": "Silly sitcom to test my virtual actors",
+        "author": "/u/CQDSN",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xhiejp/silly_sitcom_to_test_my_virtual_actors/",
+        "updated": "2026-10-28T08:25:34+00:00"
+      },
+      {
+        "id": "t3_1xhflua",
+        "title": "IronLeo78 MTV (v0.0.2)",
+        "author": "/u/IronLeo78x",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xhflua/ironleo78_mtv_v002/",
+        "updated": "2026-10-28T05:27:20+00:00"
+      },
+      {
+        "id": "t3_1xhevdh",
+        "title": "FrameForge - A open source desktop app for building Movies with Minimax H3",
+        "author": "/u/Super_Range45",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xhevdh/frameforge_a_open_source_desktop_app_for_building/",
+        "updated": "2026-10-28T04:44:26+00:00"
+      },
+      {
+        "id": "t3_1xh82ky",
+        "title": "How'd I do on my first ComfyUI project? 😊",
+        "author": "/u/Capable-Insurance-58",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xh82ky/howd_i_do_on_my_first_comfyui_project/",
+        "updated": "2026-10-27T23:17:59+00:00"
+      },
+      {
+        "id": "t3_1xh73t4",
+        "title": "Freefield: Higgsfield rebuilt on ComfyUI, 117 apps, open weights only (MIT)",
+        "author": "/u/neuregex",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xh73t4/freefield_higgsfield_rebuilt_on_comfyui_117_apps/",
+        "updated": "2026-10-27T22:37:14+00:00"
+      },
+      {
+        "id": "t3_1xgzxex",
+        "title": "Last Light, a sunset chase made in ComfyUI",
+        "author": "/u/no3us",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xgzxex/last_light_a_sunset_chase_made_in_comfyui/",
+        "updated": "2026-10-27T18:05:36+00:00"
+      },
+      {
+        "id": "t3_1xgu6b8",
+        "title": "RTX 3060 12GB + MiniMax H3: Native 2336×1312 Snow Leopard Video | 243 Frames, 4 Steps, 33 Minutes",
+        "author": "/u/JinnTsui",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xgu6b8/rtx_3060_12gb_minimax_h3_native_23361312_snow/",
+        "updated": "2026-10-27T14:33:34+00:00"
+      },
+      {
+        "id": "t3_1xgr56h",
+        "title": "[NEW] Modal cloud for ComfyUI.",
+        "author": "/u/Mistermango23",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xgr56h/new_modal_cloud_for_comfyui/",
+        "updated": "2026-10-27T12:26:36+00:00"
+      },
       {
         "id": "t3_1xgcfk3",
         "title": "I created a custom node that can help you generate as many frames as you want with high motion transfer accuracy in MiniMax H3",
@@ -718,76 +788,6 @@
         "author": "/u/Cheap_Credit_3957",
         "url": "https://www.reddit.com/r/comfyui/comments/1xfh9a4/sonnet_55_created_a_music_video_in_comfyui_fully/",
         "updated": "2026-10-25T23:35:26+00:00"
-      },
-      {
-        "id": "t3_1xfgt06",
-        "title": "Been testing MiniMax H3 locally on an RTX 5070 12GB — looks amazing, but there's still a lot to figure out",
-        "author": "/u/BuyVarious176",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xfgt06/been_testing_minimax_h3_locally_on_an_rtx_5070/",
-        "updated": "2026-10-25T23:14:40+00:00"
-      },
-      {
-        "id": "t3_1xfdp08",
-        "title": "MINIMAX H3 Blurry Text Issue: Has anyone found a good solution to fix blurry text in minimax h3 ? I am almost there.",
-        "author": "/u/OkSilver7237",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xfdp08/minimax_h3_blurry_text_issue_has_anyone_found_a/",
-        "updated": "2026-10-25T21:00:24+00:00"
-      },
-      {
-        "id": "t3_1xf5r4l",
-        "title": "My first scene created with MiniMax H3 in ComfyUI, rendered on an NVIDIA RTX 3090 GPU.",
-        "author": "/u/Sourcecode12",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xf5r4l/my_first_scene_created_with_minimax_h3_in_comfyui/",
-        "updated": "2026-10-25T15:47:45+00:00"
-      },
-      {
-        "id": "t3_1xf3khv",
-        "title": "MiniMax H3 Singularity V2 on RTX 3060 12GB — 1536×864, 243 Frames, 4 Steps, 608 Seconds",
-        "author": "/u/JinnTsui",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xf3khv/minimax_h3_singularity_v2_on_rtx_3060_12gb/",
-        "updated": "2026-10-25T14:18:59+00:00"
-      },
-      {
-        "id": "t3_1xf2qu7",
-        "title": "H3 ref2v",
-        "author": "/u/PersonalMango2562",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xf2qu7/h3_ref2v/",
-        "updated": "2026-10-25T13:44:18+00:00"
-      },
-      {
-        "id": "t3_1xf2efz",
-        "title": "\"Synamon Cannella\"",
-        "author": "/u/No-While1332",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xf2efz/synamon_cannella/",
-        "updated": "2026-10-25T13:28:55+00:00"
-      },
-      {
-        "id": "t3_1xf0wim",
-        "title": "Generate 4K AI Videos with Just 6GB VRAM with MiniMax H3 in ComfyUI:",
-        "author": "/u/cgpixel23",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xf0wim/generate_4k_ai_videos_with_just_6gb_vram_with/",
-        "updated": "2026-10-25T12:18:21+00:00"
-      },
-      {
-        "id": "t3_1xex5j8",
-        "title": "Mature Anime screencap style lora for Minimax H3",
-        "author": "/u/sirdrak",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xex5j8/mature_anime_screencap_style_lora_for_minimax_h3/",
-        "updated": "2026-10-25T08:40:35+00:00"
-      },
-      {
-        "id": "t3_1xev4vb",
-        "title": "Follow-up to my 4MP MOSS-Image post: Quick 3s local MiniMax H3 I2V tests.",
-        "author": "/u/AxonkaiLab",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xev4vb/followup_to_my_4mp_mossimage_post_quick_3s_local/",
-        "updated": "2026-10-25T06:39:02+00:00"
-      },
-      {
-        "id": "t3_1xeprfe",
-        "title": "ComfyUI gpu-unlock timings: BF16 vs INT8, with seconds saved (free comparison)",
-        "author": "/u/Acceptable_Put9983",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xeprfe/comfyui_gpuunlock_timings_bf16_vs_int8_with/",
-        "updated": "2026-10-25T01:42:39+00:00"
       }
     ]
   },
