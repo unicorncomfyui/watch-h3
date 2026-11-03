@@ -292,9 +292,9 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "bb878b9ee352",
-    "head_date": "2026-11-02T04:02:16Z",
-    "head_msg": "Fix fp8_e4m3fn_fast falling back to bf16 compute with dynamic VRAM (#16941)",
+    "head": "ab08f7b2caa6",
+    "head_date": "2026-11-03T08:10:17Z",
+    "head_msg": "[Partner Nodes] feat(Sonilo): add Sonilo Music 1.5 node (#17475)",
     "release": "v0.43.0",
     "release_date": "2026-10-27T02:40:46Z",
     "release_name": "v0.43.0"
@@ -349,14 +349,14 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 335528,
-    "sha256": "33fb754a91d759cb"
+    "bytes": 334498,
+    "sha256": "c1cda090a4d446de"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 323,
-      "head": "e265d0b8f238921844f30ae6af3a5dbac10e8db6",
+      "behind": 324,
+      "head": "4c50a2bc8b9e684d8a85930567957470b952bebe",
       "latest": "update DB",
       "code": 34,
       "kind": "perf+fix+compat+feature",
@@ -436,6 +436,83 @@
   },
   "reddit/r-StableDiffusion": {
     "posts": [
+      {
+        "id": "t3_1xmt4bf",
+        "title": "advice for local ai",
+        "author": "/u/Organic_Ranger_7710",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xmt4bf/advice_for_local_ai/",
+        "updated": "2026-11-03T13:36:51+00:00"
+      },
+      {
+        "id": "t3_1xmmt0f",
+        "title": "Cant we turn minimax into seadance 2.5",
+        "author": "/u/Concern_Maximum",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xmmt0f/cant_we_turn_minimax_into_seadance_25/",
+        "updated": "2026-11-03T07:39:41+00:00"
+      },
+      {
+        "id": "t3_1xmm9uk",
+        "title": "Flip a switch and stop your Videos from Degrading. 50 Clip Test No Degrading at the end. Geiru Context Suite",
+        "author": "/u/roychodraws",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xmm9uk/flip_a_switch_and_stop_your_videos_from_degrading/",
+        "updated": "2026-11-03T07:06:19+00:00"
+      },
+      {
+        "id": "t3_1xmkqpe",
+        "title": "What can I use to extend videos past 15 seconds on Minimax H3 ref2va?",
+        "author": "/u/throwaway0204055",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xmkqpe/what_can_i_use_to_extend_videos_past_15_seconds/",
+        "updated": "2026-11-03T05:36:41+00:00"
+      },
+      {
+        "id": "t3_1xmd7pj",
+        "title": "Why im getting a lot of this? :/",
+        "author": "/u/Ninndzaa",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xmd7pj/why_im_getting_a_lot_of_this/",
+        "updated": "2026-11-02T23:34:52+00:00"
+      },
+      {
+        "id": "t3_1xmal1l",
+        "title": "Open-H3-Regenerate-2K to preserve draft pass details",
+        "author": "/u/TgoAI",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xmal1l/openh3regenerate2k_to_preserve_draft_pass_details/",
+        "updated": "2026-11-02T21:47:08+00:00"
+      },
+      {
+        "id": "t3_1xm7u3x",
+        "title": "RTX 3090 tensor unlock on Windows: got it to actually boot (BitLocker was the problem) + real ComfyUI video numbers",
+        "author": "/u/LavateLasManos666",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xm7u3x/rtx_3090_tensor_unlock_on_windows_got_it_to/",
+        "updated": "2026-11-02T20:02:39+00:00"
+      },
+      {
+        "id": "t3_1xm71mi",
+        "title": "Single shot generation experiment (MiniMax H3/Slopus)",
+        "author": "/u/BittiAI",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xm71mi/single_shot_generation_experiment_minimax_h3slopus/",
+        "updated": "2026-11-02T19:33:46+00:00"
+      },
+      {
+        "id": "t3_1xm5mb1",
+        "title": "Krea2 & Minimax H3 music video / local only",
+        "author": "/u/SpiritualLimit996",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xm5mb1/krea2_minimax_h3_music_video_local_only/",
+        "updated": "2026-11-02T18:42:39+00:00"
+      },
+      {
+        "id": "t3_1xm3bwe",
+        "title": "I turned my front windows into a five-window Halloween show using Minimax generated clips, Unreal Engine 5, touch designer, depth maps, and one projector (sampl",
+        "author": "/u/tekprodfx16",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xm3bwe/i_turned_my_front_windows_into_a_fivewindow/",
+        "updated": "2026-11-02T17:21:48+00:00"
+      },
+      {
+        "id": "t3_1xm2o6v",
+        "title": "Someone said every AI music video has attractive models in the band and asked for Muppets instead, so I made it (rendered locally with MiniMax H3 + my Video Bui",
+        "author": "/u/Cheap_Credit_3957",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xm2o6v/someone_said_every_ai_music_video_has_attractive/",
+        "updated": "2026-11-02T16:58:43+00:00"
+      },
       {
         "id": "t3_1xly4rw",
         "title": "My H3 Settings that generate 15 second videos in 2 mins.",
@@ -533,88 +610,46 @@
         "author": "/u/darthrehad",
         "url": "https://www.reddit.com/r/StableDiffusion/comments/1xlcbcx/video_gen_on_9070_xt_nowadays/",
         "updated": "2026-11-01T19:40:22+00:00"
-      },
-      {
-        "id": "t3_1xlaj6u",
-        "title": "Why doesn't MiniMax H3 understand simple, direct instructions in prompts?",
-        "author": "/u/zeroedit",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xlaj6u/why_doesnt_minimax_h3_understand_simple_direct/",
-        "updated": "2026-11-01T18:30:08+00:00"
-      },
-      {
-        "id": "t3_1xl9epi",
-        "title": "Few tips I learned as a total noob with minimax h3",
-        "author": "/u/bmallCakeDiver",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xl9epi/few_tips_i_learned_as_a_total_noob_with_minimax_h3/",
-        "updated": "2026-11-01T17:46:27+00:00"
-      },
-      {
-        "id": "t3_1xl6amz",
-        "title": "Sulphur-3 is coming soon!",
-        "author": "/u/toyxyz",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xl6amz/sulphur3_is_coming_soon/",
-        "updated": "2026-11-01T15:45:14+00:00"
-      },
-      {
-        "id": "t3_1xkztnw",
-        "title": "Ikimono Gakari - Blue Bird | Naruto Live Action Band MV [Fanmade AI] - Aorora",
-        "author": "/u/Automatic_Lynx_7777",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xkztnw/ikimono_gakari_blue_bird_naruto_live_action_band/",
-        "updated": "2026-11-01T10:32:58+00:00"
-      },
-      {
-        "id": "t3_1xky11z",
-        "title": "MiniMax H3 Ref2VA Realistic Metal (Robot) lssue",
-        "author": "/u/MmFeS_120",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xky11z/minimax_h3_ref2va_realistic_metal_robot_lssue/",
-        "updated": "2026-11-01T08:38:49+00:00"
-      },
-      {
-        "id": "t3_1xkug9r",
-        "title": "Happy Helloween🎃",
-        "author": "/u/Christian4243",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xkug9r/happy_helloween/",
-        "updated": "2026-11-01T04:53:04+00:00"
-      },
-      {
-        "id": "t3_1xko1m5",
-        "title": "Civitarchive seems to no longer update (atleast for Minimax H3). Things I saw deleted in Civitai are not shown in Civitarchive",
-        "author": "/u/Suibeam",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xko1m5/civitarchive_seems_to_no_longer_update_atleast/",
-        "updated": "2026-10-31T23:09:29+00:00"
-      },
-      {
-        "id": "t3_1xknw7r",
-        "title": "Halloween Characters Dancing – SPOOKY HALLOWEEN DANCE | Monster Party",
-        "author": "/u/Extension_Affect_483",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xknw7r/halloween_characters_dancing_spooky_halloween/",
-        "updated": "2026-10-31T23:02:21+00:00"
-      },
-      {
-        "id": "t3_1xkkwnm",
-        "title": "Slopus 0.4.0 is out – MOSS, Krea 2, Fibo 2.0 support, music generation and improved video workflows",
-        "author": "/u/BittiAI",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xkkwnm/slopus_040_is_out_moss_krea_2_fibo_20_support/",
-        "updated": "2026-10-31T20:44:43+00:00"
-      },
-      {
-        "id": "t3_1xkjk5i",
-        "title": "Help",
-        "author": "/u/Inevitable-Bus-8654",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xkjk5i/help/",
-        "updated": "2026-10-31T19:48:10+00:00"
-      },
-      {
-        "id": "t3_1xkivvu",
-        "title": "Happy Halloween! MiniMax H3 did it again! Music video using my video builder inside ComfyUI.",
-        "author": "/u/Cheap_Credit_3957",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xkivvu/happy_halloween_minimax_h3_did_it_again_music/",
-        "updated": "2026-10-31T19:20:04+00:00"
       }
     ]
   },
   "reddit/r-comfyui": {
     "posts": [
+      {
+        "id": "t3_1xmrcyl",
+        "title": "ComfyUI Tutorial: PIKA H3 + MiniMax H3 Singularity V2 + NVIDIA Regenerative 2K Upscaling KIJAI LORA (With 6GB of VRAM)",
+        "author": "/u/cgpixel23",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xmrcyl/comfyui_tutorial_pika_h3_minimax_h3_singularity/",
+        "updated": "2026-11-03T12:13:09+00:00"
+      },
+      {
+        "id": "t3_1xmp6dh",
+        "title": "I built a free, open-source film studio on top of ComfyUI + MiniMax H3: idea to finished short film, on your own PC",
+        "author": "/u/itsVariance",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xmp6dh/i_built_a_free_opensource_film_studio_on_top_of/",
+        "updated": "2026-11-03T10:10:02+00:00"
+      },
+      {
+        "id": "t3_1xmnxtj",
+        "title": "We open-sourced our video app that runs on your ComfyUI (H3 VFX LoRAs, Qwen, Flux)",
+        "author": "/u/devdef",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xmnxtj/we_opensourced_our_video_app_that_runs_on_your/",
+        "updated": "2026-11-03T08:53:23+00:00"
+      },
+      {
+        "id": "t3_1xmaf9g",
+        "title": "First try at a combined/multi-clip video",
+        "author": "/u/Ducth_IT",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xmaf9g/first_try_at_a_combinedmulticlip_video/",
+        "updated": "2026-11-02T21:40:54+00:00"
+      },
+      {
+        "id": "t3_1xm2scl",
+        "title": "Someone said every AI music video has attractive models in the band and asked for Muppets instead, so I made it (rendered locally with MiniMax H3 + my Video Bui",
+        "author": "/u/Cheap_Credit_3957",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xm2scl/someone_said_every_ai_music_video_has_attractive/",
+        "updated": "2026-11-02T17:02:41+00:00"
+      },
       {
         "id": "t3_1xlnocn",
         "title": "Am i missing out by using the default H3 workflows?",
@@ -735,13 +770,6 @@
         "updated": "2026-10-31T04:54:19+00:00"
       },
       {
-        "id": "t3_1xjv2d9",
-        "title": "This took 12 hours to make and nobody cares...",
-        "author": "/u/Grinderius",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xjv2d9/this_took_12_hours_to_make_and_nobody_cares/",
-        "updated": "2026-10-30T23:41:48+00:00"
-      },
-      {
         "id": "t3_1xjr2ia",
         "title": "[Open Source] ComfyUI Motion Previs Studio — 3D Camera Blocking, Character Animation, OpenPose/Depth Exports & Direct ComfyUI Rendering",
         "author": "/u/navarisun",
@@ -761,34 +789,6 @@
         "author": "/u/gatortux",
         "url": "https://www.reddit.com/r/comfyui/comments/1xjmkxk/minimax_h3_komikku/",
         "updated": "2026-10-30T18:01:03+00:00"
-      },
-      {
-        "id": "t3_1xji649",
-        "title": "Nightshift: an open-source AI video studio for your own GPU. Fast drafts by day, the exact same take finished overnight #OpenSourceHiggsfield",
-        "author": "/u/Huge_Relation2996",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xji649/nightshift_an_opensource_ai_video_studio_for_your/",
-        "updated": "2026-10-30T15:18:22+00:00"
-      },
-      {
-        "id": "t3_1xjgrdr",
-        "title": "Three cases into an AI-animated comedy, and character consistency is still the hardest part (MiniMax H3 / LTX / ComfyUI)",
-        "author": "/u/magratheya_64",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xjgrdr/three_cases_into_an_aianimated_comedy_and/",
-        "updated": "2026-10-30T14:23:43+00:00"
-      },
-      {
-        "id": "t3_1xjfytv",
-        "title": "Your ComfyUI workflows on a timeline, with one-click presets for settings and bypassed nodes - Sonder Editor - Now an App",
-        "author": "/u/SonderSaid",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xjfytv/your_comfyui_workflows_on_a_timeline_with/",
-        "updated": "2026-10-30T13:52:49+00:00"
-      },
-      {
-        "id": "t3_1xjfxnz",
-        "title": "I made MarcoStudio, 13 image and video tools that run on your own ComfyUI (open source, MIT)",
-        "author": "/u/Available-Way-2117",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xjfxnz/i_made_marcostudio_13_image_and_video_tools_that/",
-        "updated": "2026-10-30T13:51:28+00:00"
       }
     ]
   },
