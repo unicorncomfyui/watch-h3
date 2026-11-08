@@ -292,9 +292,9 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "1332fabfcc50",
-    "head_date": "2026-11-07T00:06:23Z",
-    "head_msg": "Add solid mode to Extract Mesh from Splat (#17497)",
+    "head": "0decb39ee5b5",
+    "head_date": "2026-11-08T09:56:54Z",
+    "head_msg": "[Partner Nodes] chore(Grok): update prices and tooltips for retired image models (#17532)",
     "release": "v0.44.0",
     "release_date": "2026-11-04T01:12:27Z",
     "release_name": "v0.44.0"
@@ -349,21 +349,21 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 327035,
-    "sha256": "f174f90aec72d6b5"
+    "bytes": 336011,
+    "sha256": "bbcf38988374da9e"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 324,
-      "head": "4c50a2bc8b9e684d8a85930567957470b952bebe",
+      "behind": 339,
+      "head": "c501d0d50a769dd4a4e33e9bd551c480a5d592ec",
       "latest": "update DB",
       "code": 34,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Add ComfyUI Aiter Attention",
         "Merge pull request #3359 from Yasei-no-otoko/add-aiter-attention",
-        "Fix PerfectVideoResolution description: list only implemented models (WAN 2.2, MiniMax H3, LTX)"
+        "fix(custom-node-list): relocate merged git-clone entries above copy/unzip zone (Expert-Wildcard, PreFlight, LoadImageCrop, LoadVideoCrop; author-adjacent for existing authors) + node_db/new sync"
       ]
     },
     "Kosinkadink/ComfyUI-VideoHelperSuite": {
@@ -436,6 +436,69 @@
   },
   "reddit/r-StableDiffusion": {
     "posts": [
+      {
+        "id": "t3_1xqx0jt",
+        "title": "MiniMax H3 single frame edit excels at character consistency and identity preservation. Do we really need character LoRAs anymore?",
+        "author": "/u/arthan1011",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqx0jt/minimax_h3_single_frame_edit_excels_at_character/",
+        "updated": "2026-11-08T12:10:45+00:00"
+      },
+      {
+        "id": "t3_1xqv88z",
+        "title": "No module named 'llama_ccp'",
+        "author": "/u/0Se7ens",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqv88z/no_module_named_llama_ccp/",
+        "updated": "2026-11-08T10:16:28+00:00"
+      },
+      {
+        "id": "t3_1xqs59t",
+        "title": "H3 Model Focusing on Acting ?",
+        "author": "/u/Vosquad97",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqs59t/h3_model_focusing_on_acting/",
+        "updated": "2026-11-08T06:52:32+00:00"
+      },
+      {
+        "id": "t3_1xqnnlk",
+        "title": "LTX 2.5 music video: good character consistency, but mushy motion and facial detail. How would you improve this workflow?",
+        "author": "/u/Inevitable-Bus-8654",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqnnlk/ltx_25_music_video_good_character_consistency_but/",
+        "updated": "2026-11-08T02:32:25+00:00"
+      },
+      {
+        "id": "t3_1xqhxpp",
+        "title": "Making a movie with MiniMax H3 using Hybrid_FL2VA_REF2VA",
+        "author": "/u/itsZaka",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqhxpp/making_a_movie_with_minimax_h3_using_hybrid_fl2va/",
+        "updated": "2026-11-07T21:51:58+00:00"
+      },
+      {
+        "id": "t3_1xqgu4e",
+        "title": "Filmworkbench: making (semi-)automated short films through a chat interface, with MiniMax H3 and eight scene recipes (workflow and GitHub included)",
+        "author": "/u/Eastern-Ad9515",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqgu4e/filmworkbench_making_semiautomated_short_films/",
+        "updated": "2026-11-07T21:01:54+00:00"
+      },
+      {
+        "id": "t3_1xqg7j2",
+        "title": "IV Studio 1.0: I rebuilt my free, open-source film studio for ComfyUI + MiniMax H3 from your comments (now on Linux and Mac)",
+        "author": "/u/itsVariance",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqg7j2/iv_studio_10_i_rebuilt_my_free_opensource_film/",
+        "updated": "2026-11-07T20:33:55+00:00"
+      },
+      {
+        "id": "t3_1xqfcjs",
+        "title": "Ultima Online (6 min) made with MiniMax H3 in ComfyUI on a single 24 GB GPU",
+        "author": "/u/Remarkable_Park1184",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqfcjs/ultima_online_6_min_made_with_minimax_h3_in/",
+        "updated": "2026-11-07T19:56:34+00:00"
+      },
+      {
+        "id": "t3_1xq8e67",
+        "title": "Voice Consistency Issue",
+        "author": "/u/optimizeverything",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xq8e67/voice_consistency_issue/",
+        "updated": "2026-11-07T15:01:37+00:00"
+      },
       {
         "id": "t3_1xq0wgr",
         "title": "i need help to get an updated image and video model",
@@ -547,74 +610,67 @@
         "author": "/u/CQDSN",
         "url": "https://www.reddit.com/r/StableDiffusion/comments/1xozyxt/how_to_create_a_masterpiece/",
         "updated": "2026-11-06T01:15:09+00:00"
-      },
-      {
-        "id": "t3_1xoxn2i",
-        "title": "3D Animation on 5060ti 16gb and 16gb ram",
-        "author": "/u/National_Mirror_1025",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xoxn2i/3d_animation_on_5060ti_16gb_and_16gb_ram/",
-        "updated": "2026-11-05T23:27:28+00:00"
-      },
-      {
-        "id": "t3_1xoxg7n",
-        "title": "Minimax H3 character swap is 🤌",
-        "author": "/u/tindell-",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xoxg7n/minimax_h3_character_swap_is/",
-        "updated": "2026-11-05T23:18:56+00:00"
-      },
-      {
-        "id": "t3_1xowiik",
-        "title": "is LTX2.5 broken in comfyui?",
-        "author": "/u/brocolongo",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xowiik/is_ltx25_broken_in_comfyui/",
-        "updated": "2026-11-05T22:37:16+00:00"
-      },
-      {
-        "id": "t3_1xowfxi",
-        "title": "MinimaxH3 captioning dataset for lora training (MOTION specifically)",
-        "author": "/u/Ambitious_Corgi5723",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xowfxi/minimaxh3_captioning_dataset_for_lora_training/",
-        "updated": "2026-11-05T22:34:01+00:00"
-      },
-      {
-        "id": "t3_1xousq3",
-        "title": "Vimoo-AI/Vimoo-1.0-Lite-ComfyUI · Hugging Face",
-        "author": "/u/Apprehensive_Sky892",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xousq3/vimooaivimoo10litecomfyui_hugging_face/",
-        "updated": "2026-11-05T21:26:21+00:00"
-      },
-      {
-        "id": "t3_1xoqalq",
-        "title": "is minimax h3 image edit better than qwen 2.1 image edit",
-        "author": "/u/nakarumai",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xoqalq/is_minimax_h3_image_edit_better_than_qwen_21/",
-        "updated": "2026-11-05T18:29:18+00:00"
-      },
-      {
-        "id": "t3_1xoovpo",
-        "title": "Clothes extraction with MiniMax H3 single frame edit",
-        "author": "/u/arthan1011",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xoovpo/clothes_extraction_with_minimax_h3_single_frame/",
-        "updated": "2026-11-05T17:36:28+00:00"
-      },
-      {
-        "id": "t3_1xoo0w9",
-        "title": "Minimax H3 Audio Refiner?",
-        "author": "/u/fluce13",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xoo0w9/minimax_h3_audio_refiner/",
-        "updated": "2026-11-05T17:04:08+00:00"
-      },
-      {
-        "id": "t3_1xoh39a",
-        "title": "One line of text or a song in, a finished film out — my free, open-source video studio runs it all locally on a 16 GB RTX (Remiqora Video 0.3)",
-        "author": "/u/inikolax",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xoh39a/one_line_of_text_or_a_song_in_a_finished_film_out/",
-        "updated": "2026-11-05T12:11:46+00:00"
       }
     ]
   },
   "reddit/r-comfyui": {
     "posts": [
+      {
+        "id": "t3_1xqwhs0",
+        "title": "I tried RelayVSR 2× in ComfyUI — original vs. upscaled video",
+        "author": "/u/Acrobatic-Example315",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqwhs0/i_tried_relayvsr_2_in_comfyui_original_vs/",
+        "updated": "2026-11-08T11:39:31+00:00"
+      },
+      {
+        "id": "t3_1xqvwxg",
+        "title": "MiniMax H4 Ripple with Pika Flex and Singularity V2 ComfyUI Workflow Tut...",
+        "author": "/u/Maleficent-Tell-2718",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqvwxg/minimax_h4_ripple_with_pika_flex_and_singularity/",
+        "updated": "2026-11-08T11:01:42+00:00"
+      },
+      {
+        "id": "t3_1xqqhxh",
+        "title": "Minimax H3 Best Remix Tool | Friendly Ultra-Fast Character Replacement | Create 1080p Ultra-Long Videos",
+        "author": "/u/wjc_5",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqqhxh/minimax_h3_best_remix_tool_friendly_ultrafast/",
+        "updated": "2026-11-08T05:11:07+00:00"
+      },
+      {
+        "id": "t3_1xqm7ma",
+        "title": "3D Blockout to AI Video [Blender + MinimaxH3 Ref2Vid]",
+        "author": "/u/Time-Ad-7720",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqm7ma/3d_blockout_to_ai_video_blender_minimaxh3_ref2vid/",
+        "updated": "2026-11-08T01:17:09+00:00"
+      },
+      {
+        "id": "t3_1xqfux1",
+        "title": "IV Studio 1.0: I rebuilt my free, open-source film studio for ComfyUI + MiniMax H3 from your comments (now on Linux and Mac)",
+        "author": "/u/itsVariance",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqfux1/iv_studio_10_i_rebuilt_my_free_opensource_film/",
+        "updated": "2026-11-07T20:18:15+00:00"
+      },
+      {
+        "id": "t3_1xqfd3v",
+        "title": "I made a free app that turns one sentence or a song into a whole video with sound, on your own PC (built on ComfyUI, open source)",
+        "author": "/u/inikolax",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqfd3v/i_made_a_free_app_that_turns_one_sentence_or_a/",
+        "updated": "2026-11-07T19:57:11+00:00"
+      },
+      {
+        "id": "t3_1xqctax",
+        "title": "MOSS-Image Inpainting revisited",
+        "author": "/u/Infamous_Campaign687",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqctax/mossimage_inpainting_revisited/",
+        "updated": "2026-11-07T18:08:46+00:00"
+      },
+      {
+        "id": "t3_1xqblov",
+        "title": "Simple page",
+        "author": "/u/lordstryfe",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xqblov/simple_page/",
+        "updated": "2026-11-07T17:17:43+00:00"
+      },
       {
         "id": "t3_1xq3fiz",
         "title": "MiniMax H3 running locally on an RTX 5060 Ti 16GB",
@@ -733,62 +789,6 @@
         "author": "/u/EzkaProductions",
         "url": "https://www.reddit.com/r/comfyui/comments/1xnxlvv/refmods_for_minimax_h3_consistent_character_voice/",
         "updated": "2026-11-04T19:36:15+00:00"
-      },
-      {
-        "id": "t3_1xnubdp",
-        "title": "ComfyUI v0.44.0",
-        "author": "/u/Gremlation",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnubdp/comfyui_v0440/",
-        "updated": "2026-11-04T17:31:13+00:00"
-      },
-      {
-        "id": "t3_1xnu0y2",
-        "title": "A custom node Preview 40+ Camera Moves and 70+ Film Styles In ComfyUI",
-        "author": "/u/Mysterious_Pride_858",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnu0y2/a_custom_node_preview_40_camera_moves_and_70_film/",
-        "updated": "2026-11-04T17:20:22+00:00"
-      },
-      {
-        "id": "t3_1xnt378",
-        "title": "First time getting this error using this node which worked fine yesterday....",
-        "author": "/u/Solarmage77",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnt378/first_time_getting_this_error_using_this_node/",
-        "updated": "2026-11-04T16:45:59+00:00"
-      },
-      {
-        "id": "t3_1xnqzwa",
-        "title": "What's the current cutting edge for AI filmmaking with consistent characters, environments, and precise blocking across shots?",
-        "author": "/u/Due-Air-5626",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnqzwa/whats_the_current_cutting_edge_for_ai_filmmaking/",
-        "updated": "2026-11-04T15:24:26+00:00"
-      },
-      {
-        "id": "t3_1xnodqp",
-        "title": "The 13th [Minimax H3 Comfy UI]",
-        "author": "/u/JL_Films",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnodqp/the_13th_minimax_h3_comfy_ui/",
-        "updated": "2026-11-04T13:36:53+00:00"
-      },
-      {
-        "id": "t3_1xnkrt7",
-        "title": "Dual GPU split workload",
-        "author": "/u/vjustme_9104",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnkrt7/dual_gpu_split_workload/",
-        "updated": "2026-11-04T10:23:51+00:00"
-      },
-      {
-        "id": "t3_1xnjlwl",
-        "title": "ComfyUI va in crash con l'errore \"TypeError: Failed to fetch\" e disconnessione del server durante l'esecuzione del prompt",
-        "author": "/u/Original-Pattern3610",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnjlwl/comfyui_va_in_crash_con_lerrore_typeerror_failed/",
-        "updated": "2026-11-04T09:08:51+00:00"
-      },
-      {
-        "id": "t3_1xnbaec",
-        "title": "Minimax Pika-VBVR-Sol VAE Workflow - MMH3 for TTS & Image Editing - 3mp Upscaler-Detailer & More",
-        "author": "/u/Support_Marmoset",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xnbaec/minimax_pikavbvrsol_vae_workflow_mmh3_for_tts/",
-        "updated": "2026-11-04T01:27:05+00:00"
       }
     ]
   },
