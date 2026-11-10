@@ -1,7 +1,7 @@
 {
   "hf/minimax-h3": {
-    "sha": "42ed227ee7df",
-    "modified": "2026-08-13T01:46:29.000Z",
+    "sha": "0919fb684102",
+    "modified": "2026-11-09T23:28:00.000Z",
     "files": [
       ".gitattributes",
       "FL2VA/audio_vae/config.json",
@@ -292,20 +292,20 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "fca60fe70e5b",
-    "head_date": "2026-11-09T01:56:03Z",
-    "head_msg": "Fix qwen fp8 crashing when generating text. (#17620)",
+    "head": "b40cca229d23",
+    "head_date": "2026-11-10T14:08:29Z",
+    "head_msg": "[Partner Nodes] feat(ByteDance): add Seedream 5.5 model (#17631)",
     "release": "v0.44.0",
     "release_date": "2026-11-04T01:12:27Z",
     "release_name": "v0.44.0"
   },
   "gh/workflow-templates": {
-    "head": "611c497cca40",
-    "head_date": "2026-11-09T10:44:46Z",
-    "head_msg": "ci: fix manifest-deferral follow-ups (MCP index, version gate direction) (#1405)",
-    "release": "v0.11.103",
-    "release_date": "2026-11-05T21:09:43Z",
-    "release_name": "v0.11.103",
+    "head": "fd532c9a156e",
+    "head_date": "2026-11-10T14:21:28Z",
+    "head_msg": "MiniMax-H3-Image templates, Seedream 5.5, Pika audio, H3 Max lip sync, RelayVSR (bump 0.11.104) (#14",
+    "release": "v0.11.104",
+    "release_date": "2026-11-10T14:26:19Z",
+    "release_name": "v0.11.104",
     "file:templates/video_minimax_h3_i2v.json": "c3c77a1c3d10",
     "file:templates/video_minimax_h3_r2v.json": "dcdade1802b4",
     "file:templates/video_minimax_h3_t2v.json": "0eb8f1bd1116"
@@ -349,14 +349,14 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 336216,
-    "sha256": "46feb41f7a4069f1"
+    "bytes": 338888,
+    "sha256": "6e5155f2b71ce843"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 342,
-      "head": "0e0fe46d58809d6ca3a399cbcc76e19090b904c0",
+      "behind": 343,
+      "head": "15e49ea544a4b20627c2eec01341843e8c4b6d49",
       "latest": "update DB",
       "code": 34,
       "kind": "perf+fix+compat+feature",
@@ -436,6 +436,76 @@
   },
   "reddit/r-StableDiffusion": {
     "posts": [
+      {
+        "id": "t3_1xsobly",
+        "title": "MiniMax-H3-Image is coming!",
+        "author": "/u/Crazy-Repeat-2006",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xsobly/minimaxh3image_is_coming/",
+        "updated": "2026-11-10T14:29:49+00:00"
+      },
+      {
+        "id": "t3_1xsoblk",
+        "title": "MiniMax H3-Image released",
+        "author": "/u/tricck3zz",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xsoblk/minimax_h3image_released/",
+        "updated": "2026-11-10T14:29:48+00:00"
+      },
+      {
+        "id": "t3_1xsj747",
+        "title": "H3 Editor: a timeline video editor for MiniMax H3 inside ComfyUI. You write shots instead of wiring graphs (open source, GPL-3.0)",
+        "author": "/u/igorls1",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xsj747/h3_editor_a_timeline_video_editor_for_minimax_h3/",
+        "updated": "2026-11-10T10:09:05+00:00"
+      },
+      {
+        "id": "t3_1xsgftc",
+        "title": "MiniMax H3 native 20 steps, high resolution sampler, scheduler and shift",
+        "author": "/u/Glittering-Cold-2981",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xsgftc/minimax_h3_native_20_steps_high_resolution/",
+        "updated": "2026-11-10T07:10:21+00:00"
+      },
+      {
+        "id": "t3_1xsg5w7",
+        "title": "H3 on an M1 macbook air 16gb",
+        "author": "/u/DaLyon92x",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xsg5w7/h3_on_an_m1_macbook_air_16gb/",
+        "updated": "2026-11-10T06:53:24+00:00"
+      },
+      {
+        "id": "t3_1xsal47",
+        "title": "Minimax H3 with turbo_silver_dareties_comfy_full_v1 (8 step)",
+        "author": "/u/Cequejedisestvrai",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xsal47/minimax_h3_with_turbo_silver_dareties_comfy_full/",
+        "updated": "2026-11-10T01:56:39+00:00"
+      },
+      {
+        "id": "t3_1xs7f3x",
+        "title": "Full Friends Episode - MiniMax H3",
+        "author": "/u/Thorozar",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xs7f3x/full_friends_episode_minimax_h3/",
+        "updated": "2026-11-09T23:32:09+00:00"
+      },
+      {
+        "id": "t3_1xs4sls",
+        "title": "Maybe our roads will cross again some day.... A cover song made with yue2 after an old romanian song. H3, OFC",
+        "author": "/u/aurelm",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xs4sls/maybe_our_roads_will_cross_again_some_day_a_cover/",
+        "updated": "2026-11-09T21:46:35+00:00"
+      },
+      {
+        "id": "t3_1xs41gi",
+        "title": "H3 Context Windows ghost on long videos because the overlaps are averaged. Chaining the windows instead fixes it (H3MD 0.4, tested on a 2:20 music video)",
+        "author": "/u/ReferenceFluffy6159",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xs41gi/h3_context_windows_ghost_on_long_videos_because/",
+        "updated": "2026-11-09T21:16:56+00:00"
+      },
+      {
+        "id": "t3_1xrznux",
+        "title": "dEEPZoNE - Digital Ghosts - Music Video - 1080P",
+        "author": "/u/dEEPZoNE",
+        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xrznux/deepzone_digital_ghosts_music_video_1080p/",
+        "updated": "2026-11-09T18:33:34+00:00"
+      },
       {
         "id": "t3_1xrtvfa",
         "title": "Hey yall, is there any way I can run MiniMax H3 T2V, I2V or V2V (like Viggle-Remake) on my PC? Specs listed in the body text :)",
@@ -540,87 +610,66 @@
         "author": "/u/0Se7ens",
         "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqv88z/no_module_named_llama_ccp/",
         "updated": "2026-11-08T10:16:28+00:00"
-      },
-      {
-        "id": "t3_1xqs59t",
-        "title": "H3 Model Focusing on Acting ?",
-        "author": "/u/Vosquad97",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqs59t/h3_model_focusing_on_acting/",
-        "updated": "2026-11-08T06:52:32+00:00"
-      },
-      {
-        "id": "t3_1xqnnlk",
-        "title": "LTX 2.5 music video: good character consistency, but mushy motion and facial detail. How would you improve this workflow?",
-        "author": "/u/Inevitable-Bus-8654",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqnnlk/ltx_25_music_video_good_character_consistency_but/",
-        "updated": "2026-11-08T02:32:25+00:00"
-      },
-      {
-        "id": "t3_1xqhxpp",
-        "title": "Making a movie with MiniMax H3 using Hybrid_FL2VA_REF2VA",
-        "author": "/u/itsZaka",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqhxpp/making_a_movie_with_minimax_h3_using_hybrid_fl2va/",
-        "updated": "2026-11-07T21:51:58+00:00"
-      },
-      {
-        "id": "t3_1xqgu4e",
-        "title": "Filmworkbench: making (semi-)automated short films through a chat interface, with MiniMax H3 and eight scene recipes (workflow and GitHub included)",
-        "author": "/u/Eastern-Ad9515",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqgu4e/filmworkbench_making_semiautomated_short_films/",
-        "updated": "2026-11-07T21:01:54+00:00"
-      },
-      {
-        "id": "t3_1xqg7j2",
-        "title": "IV Studio 1.0: I rebuilt my free, open-source film studio for ComfyUI + MiniMax H3 from your comments (now on Linux and Mac)",
-        "author": "/u/itsVariance",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqg7j2/iv_studio_10_i_rebuilt_my_free_opensource_film/",
-        "updated": "2026-11-07T20:33:55+00:00"
-      },
-      {
-        "id": "t3_1xqfcjs",
-        "title": "Ultima Online (6 min) made with MiniMax H3 in ComfyUI on a single 24 GB GPU",
-        "author": "/u/Remarkable_Park1184",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xqfcjs/ultima_online_6_min_made_with_minimax_h3_in/",
-        "updated": "2026-11-07T19:56:34+00:00"
-      },
-      {
-        "id": "t3_1xq8e67",
-        "title": "Voice Consistency Issue",
-        "author": "/u/optimizeverything",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xq8e67/voice_consistency_issue/",
-        "updated": "2026-11-07T15:01:37+00:00"
-      },
-      {
-        "id": "t3_1xq0wgr",
-        "title": "i need help to get an updated image and video model",
-        "author": "/u/zerowatcher6",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xq0wgr/i_need_help_to_get_an_updated_image_and_video/",
-        "updated": "2026-11-07T07:53:06+00:00"
-      },
-      {
-        "id": "t3_1xq0sou",
-        "title": "RTX 6000 96GB(MINIMAX H3)",
-        "author": "/u/Pitiful_Archer_4381",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xq0sou/rtx_6000_96gbminimax_h3/",
-        "updated": "2026-11-07T07:46:18+00:00"
-      },
-      {
-        "id": "t3_1xq0kuk",
-        "title": "Updated hyperflow-h3-flash (4, 6, or 8 steps)",
-        "author": "/u/Apprehensive_Sky892",
-        "url": "https://www.reddit.com/r/StableDiffusion/comments/1xq0kuk/updated_hyperflowh3flash_4_6_or_8_steps/",
-        "updated": "2026-11-07T07:32:27+00:00"
       }
     ]
   },
   "reddit/r-comfyui": {
     "posts": [
       {
-        "id": "t3_1xruhiv",
-        "title": "Made new videos!",
-        "author": "/u/Vibhuj01",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xruhiv/made_new_videos/",
-        "updated": "2026-11-09T15:23:57+00:00"
+        "id": "t3_1xsnyv5",
+        "title": "How long does a first/last-frame video shot take on a 4090? I timed MiniMax H3, LTX 2.5 and Wan 2.2 (all at 8+ steps) – plus the node pack I built around it",
+        "author": "/u/Cybertect74",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xsnyv5/how_long_does_a_firstlastframe_video_shot_take_on/",
+        "updated": "2026-11-10T14:15:04+00:00"
+      },
+      {
+        "id": "t3_1xsmep4",
+        "title": "ComfyUI Tutorial :Fixing MiniMax H3 Video Upscaling Details loss with RelayVSR & DLSS5 Nodes with only 6GB of Vram",
+        "author": "/u/cgpixel23",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xsmep4/comfyui_tutorial_fixing_minimax_h3_video/",
+        "updated": "2026-11-10T13:05:48+00:00"
+      },
+      {
+        "id": "t3_1xslwyn",
+        "title": "(Day 2)Made with MiniMax H3 6GB VRAM",
+        "author": "/u/No_Cow26",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xslwyn/day_2made_with_minimax_h3_6gb_vram/",
+        "updated": "2026-11-10T12:41:59+00:00"
+      },
+      {
+        "id": "t3_1xsj82z",
+        "title": "H3 Editor: a timeline video editor for MiniMax H3 inside ComfyUI. You write shots instead of wiring graphs (open source, GPL-3.0)",
+        "author": "/u/igorls1",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xsj82z/h3_editor_a_timeline_video_editor_for_minimax_h3/",
+        "updated": "2026-11-10T10:10:44+00:00"
+      },
+      {
+        "id": "t3_1xs6sbg",
+        "title": "CreativeField: Image, video and 3D workflows in one ComfyUI interface, with a built-in photo editor",
+        "author": "/u/QueasySide4011",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xs6sbg/creativefield_image_video_and_3d_workflows_in_one/",
+        "updated": "2026-11-09T23:05:37+00:00"
+      },
+      {
+        "id": "t3_1xs4d9u",
+        "title": "A very special workplace... [H3 Director Studio V2] Motion Context Dual",
+        "author": "/u/Far_Patience4517",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xs4d9u/a_very_special_workplace_h3_director_studio_v2/",
+        "updated": "2026-11-09T21:29:49+00:00"
+      },
+      {
+        "id": "t3_1xs29id",
+        "title": "The One Where Sam Altman Takes All the RAM",
+        "author": "/u/Riddy_93",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xs29id/the_one_where_sam_altman_takes_all_the_ram/",
+        "updated": "2026-11-09T20:08:59+00:00"
+      },
+      {
+        "id": "t3_1xrzvc1",
+        "title": "made with minimax H3 6gb vram",
+        "author": "/u/No_Cow26",
+        "url": "https://www.reddit.com/r/comfyui/comments/1xrzvc1/made_with_minimax_h3_6gb_vram/",
+        "updated": "2026-11-09T18:41:18+00:00"
       },
       {
         "id": "t3_1xrcfte",
@@ -740,55 +789,6 @@
         "author": "/u/iKontact",
         "url": "https://www.reddit.com/r/comfyui/comments/1xpyxot/what_am_i_doing_wrong_it_takes_forever_to_generate/",
         "updated": "2026-11-07T05:52:34+00:00"
-      },
-      {
-        "id": "t3_1xpy5bt",
-        "title": "Nobody asked for it, but here's a ComfyUI Anthem - made with Minimax H3, LTX, NB2.1, Qwen, YuNet, Gpt 2.5 + Suno - mix of Local & Cloud",
-        "author": "/u/SyntaxDiffusion",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xpy5bt/nobody_asked_for_it_but_heres_a_comfyui_anthem/",
-        "updated": "2026-11-07T05:07:29+00:00"
-      },
-      {
-        "id": "t3_1xptnnv",
-        "title": "ComfyUI-freefield: 117 ready-made workflows in a sidebar tab, with one button for the models and one to open each with an example",
-        "author": "/u/neuregex",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xptnnv/comfyuifreefield_117_readymade_workflows_in_a/",
-        "updated": "2026-11-07T01:12:07+00:00"
-      },
-      {
-        "id": "t3_1xphfs5",
-        "title": "ComfyUI-MiniMaxH3-TemporalWindow-SpatialTiles works on 16GB VRAM + 32GB RAM with NO OOM",
-        "author": "/u/Select_Bowler3099",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xphfs5/comfyuiminimaxh3temporalwindowspatialtiles_works/",
-        "updated": "2026-11-06T16:40:28+00:00"
-      },
-      {
-        "id": "t3_1xp9mfh",
-        "title": "Super Huge Update for Minimax H3 Temporal Spatial Node 🔥🔥🔥",
-        "author": "/u/No-Property3068",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xp9mfh/super_huge_update_for_minimax_h3_temporal_spatial/",
-        "updated": "2026-11-06T10:33:11+00:00"
-      },
-      {
-        "id": "t3_1xp95uk",
-        "title": "Techno Girl - Music Video",
-        "author": "/u/Juiceman8686",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xp95uk/techno_girl_music_video/",
-        "updated": "2026-11-06T10:04:02+00:00"
-      },
-      {
-        "id": "t3_1xp5vys",
-        "title": "combined image and ref to video workflow minimax h3",
-        "author": "/u/robertpalmsss",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xp5vys/combined_image_and_ref_to_video_workflow_minimax/",
-        "updated": "2026-11-06T06:29:46+00:00"
-      },
-      {
-        "id": "t3_1xp5jlj",
-        "title": "RTX 3060 12GB GA106 GPU Unlock on Windows 11 — BF16 +85.5%, FP16 +102.2% (UEFI Boot Proof)",
-        "author": "/u/JinnTsui",
-        "url": "https://www.reddit.com/r/comfyui/comments/1xp5jlj/rtx_3060_12gb_ga106_gpu_unlock_on_windows_11_bf16/",
-        "updated": "2026-11-06T06:08:51+00:00"
       }
     ]
   },
