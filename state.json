@@ -292,9 +292,9 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "4d64a8bc072b",
-    "head_date": "2026-11-11T05:42:39Z",
-    "head_msg": "Conform Concatenate Video clips to the first clip's frame rate and audio (FRONT-3775) (#17621)",
+    "head": "c5751c81abe1",
+    "head_date": "2026-11-12T04:49:37Z",
+    "head_msg": "Remove directml support. (#17711)",
     "release": "v0.45.0",
     "release_date": "2026-11-10T21:42:42Z",
     "release_name": "v0.45.0"
@@ -349,21 +349,21 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 326987,
-    "sha256": "f3668d9ae3d25480"
+    "bytes": 336293,
+    "sha256": "0a1a29d569fe6e3c"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 343,
-      "head": "15e49ea544a4b20627c2eec01341843e8c4b6d49",
-      "latest": "update DB",
-      "code": 34,
+      "behind": 371,
+      "head": "ea0b0f58647a7a84ac732d6ce05a1501d812e10e",
+      "latest": "v3: Remove share destinations that no longer accept workflows (#3501)",
+      "code": 36,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Add ComfyUI Aiter Attention",
         "Merge pull request #3359 from Yasei-no-otoko/add-aiter-attention",
-        "fix(custom-node-list): relocate merged git-clone entries above copy/unzip zone (Expert-Wildcard, PreFlight, LoadImageCrop, LoadVideoCrop; author-adjacent for existing authors) + node_db/new sync"
+        "Fix ComfyUI requirements for multi-GPU nodes"
       ]
     },
     "Kosinkadink/ComfyUI-VideoHelperSuite": {
