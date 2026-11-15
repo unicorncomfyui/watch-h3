@@ -292,9 +292,9 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "eee59185ff4f",
-    "head_date": "2026-11-14T02:14:28Z",
-    "head_msg": "Add a mesh input to Create Camera Info to frame any mesh (#17730)",
+    "head": "157db2ea2f83",
+    "head_date": "2026-11-15T09:20:36Z",
+    "head_msg": "[Partner Nodes] feat(OpenRouter): add Meta Muse Wonder, Spark 1.3 and Ember models (#17744)",
     "release": "v0.45.0",
     "release_date": "2026-11-10T21:42:42Z",
     "release_name": "v0.45.0"
@@ -350,15 +350,15 @@
   },
   "doc/minimax-api": {
     "bytes": 325469,
-    "sha256": "40546476bb17882c"
+    "sha256": "135606d493336ca2"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 388,
-      "head": "5b9988cd8e7638bc686f223121940c16044ba2c1",
-      "latest": "Weigh the clauses of a pip requirement together (#3524)",
-      "code": 44,
+      "behind": 405,
+      "head": "86ed519f2d9413f8155bf4e07c397abd676528b2",
+      "latest": "update DB",
+      "code": 54,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Add ComfyUI Aiter Attention",
@@ -380,10 +380,10 @@
     },
     "kijai/ComfyUI-KJNodes": {
       "pinned": "35e595619376",
-      "behind": 60,
-      "head": "56781c108c520e9c75db140b6886927c1785e3d2",
-      "latest": "Allow scrubbing video with keys on ImageCompareKJ",
-      "code": 35,
+      "behind": 62,
+      "head": "70701d2a11d4797cf52733290ed0b6b5037148d9",
+      "latest": "Add option to show image metadata",
+      "code": 36,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Optimize tiny vae some",
