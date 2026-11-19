@@ -292,17 +292,17 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "0263e48806e5",
-    "head_date": "2026-11-18T07:20:41Z",
-    "head_msg": "[Partner Nodes] feat: move more partner nodes to Comfy Router (#17794)",
-    "release": "v0.45.0",
-    "release_date": "2026-11-10T21:42:42Z",
-    "release_name": "v0.45.0"
+    "head": "995456d0188f",
+    "head_date": "2026-11-19T10:04:48Z",
+    "head_msg": "[Partner Nodes] feat(Tripo): add Smart UV node (#17827)",
+    "release": "v0.46.0",
+    "release_date": "2026-11-18T22:55:32Z",
+    "release_name": "v0.46.0"
   },
   "gh/workflow-templates": {
-    "head": "85984c2b1ee8",
-    "head_date": "2026-11-17T20:26:15Z",
-    "head_msg": "Add Kling 4.0 image, image edit and long image templates (#1431)",
+    "head": "6724fbce5cd4",
+    "head_date": "2026-11-19T14:05:57Z",
+    "head_msg": "fix(breeze-tts2): make the shipped script describe the model (#1436)",
     "release": "v0.11.111",
     "release_date": "2026-11-17T20:29:14Z",
     "release_name": "v0.11.111",
@@ -349,16 +349,16 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 324913,
-    "sha256": "b202a9978ea54204"
+    "bytes": 315603,
+    "sha256": "2a5e4958a9b465fc"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 412,
-      "head": "8a75836a7b0b9ce0bd81801fd39d5737a6d7121b",
-      "latest": "Fix git_exe, .git/config reading, the commit and submodules of a node pack and an update whose git s",
-      "code": 65,
+      "behind": 420,
+      "head": "2908ccdd6f567e06040ed42c96f205c09f27b7c8",
+      "latest": "update DB",
+      "code": 90,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Add ComfyUI Aiter Attention",
@@ -380,9 +380,9 @@
     },
     "kijai/ComfyUI-KJNodes": {
       "pinned": "35e595619376",
-      "behind": 64,
-      "head": "4d6f027c23991aef33698a5c8c57452111df4cdb",
-      "latest": "version 1.5.5",
+      "behind": 67,
+      "head": "aa2b5ea5e7f61b51f5d26d726f23c1d74e951016",
+      "latest": "Update minimax_nodes.py",
       "code": 36,
       "kind": "perf+fix+compat+feature",
       "why": [
