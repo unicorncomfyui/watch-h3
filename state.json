@@ -292,23 +292,23 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "f99de883d5e6",
-    "head_date": "2026-11-21T09:23:08Z",
-    "head_msg": "[Partner Nodes] feat(Pruna): add P-Video-2 Pro Avatar and Reference to Video nodes (#17864)",
+    "head": "8b25bbc371b7",
+    "head_date": "2026-11-22T09:53:50Z",
+    "head_msg": "[Partner Nodes] feat(ElevenLabs): add SFX v3 to the Text to Sound Effects node (#17875)",
     "release": "v0.46.0",
     "release_date": "2026-11-18T22:55:32Z",
     "release_name": "v0.46.0"
   },
   "gh/workflow-templates": {
-    "head": "8a2f1faedeef",
-    "head_date": "2026-11-21T14:12:48Z",
-    "head_msg": "feat(bundles): open the media-assets-03 asset shard and freeze media-assets-02 (#1439)",
+    "head": "8a665db5f05c",
+    "head_date": "2026-11-22T12:45:44Z",
+    "head_msg": "fix(blueprints): fill null seed widgets and repair the LTX 2.0 audio VAE link (#1441)",
     "release": "v0.11.114",
     "release_date": "2026-11-20T17:10:56Z",
     "release_name": "v0.11.114",
-    "file:templates/video_minimax_h3_i2v.json": "c3c77a1c3d10",
-    "file:templates/video_minimax_h3_r2v.json": "dcdade1802b4",
-    "file:templates/video_minimax_h3_t2v.json": "0eb8f1bd1116"
+    "file:templates/video_minimax_h3_i2v.json": "1ce62d6e81a4",
+    "file:templates/video_minimax_h3_r2v.json": "c64e95396311",
+    "file:templates/video_minimax_h3_t2v.json": "1c4f5cd33364"
   },
   "gh/sageattention": {
     "head": "d1a57a546c3d",
@@ -355,10 +355,10 @@
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 445,
-      "head": "c39db72d1ab6b878f6c882d6be6e24cfa3b6ceac",
-      "latest": "Do not pass aiohttp's deprecated verify_ssl argument (#3576)",
-      "code": 90,
+      "behind": 450,
+      "head": "2dd2f10cb364ae5276add6508602d8daf8f476cb",
+      "latest": "Register ComfyUI-Custom-Node-Manager in the dev channel",
+      "code": 94,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Add ComfyUI Aiter Attention",
