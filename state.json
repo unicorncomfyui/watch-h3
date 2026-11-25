@@ -292,17 +292,17 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "da8bd08e48de",
-    "head_date": "2026-11-24T03:54:40Z",
-    "head_msg": "Missing custom nodes folders should not cause a startup crash. (#17954)",
+    "head": "a2103ae69d98",
+    "head_date": "2026-11-25T12:59:00Z",
+    "head_msg": "[Partner Nodes] feat(Meshy): accept and emit task ids as STRING (#17987)",
     "release": "v0.46.0",
     "release_date": "2026-11-18T22:55:32Z",
     "release_name": "v0.46.0"
   },
   "gh/workflow-templates": {
-    "head": "eac646cad5e9",
-    "head_date": "2026-11-24T15:49:59Z",
-    "head_msg": "feat(validate): reject null slot_index and walk subgraph nodes (#1458)",
+    "head": "b413841d0d6c",
+    "head_date": "2026-11-25T14:41:51Z",
+    "head_msg": "chore(templates): add Hugging Face + ModelScope repo links to model download notes (#1462)",
     "release": "v0.11.118",
     "release_date": "2026-11-23T21:07:32Z",
     "release_name": "v0.11.118",
@@ -349,8 +349,8 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 314337,
-    "sha256": "0ac30d5b63cd872b"
+    "bytes": 323687,
+    "sha256": "d9ff1e30f753555d"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
@@ -368,10 +368,10 @@
     },
     "Kosinkadink/ComfyUI-VideoHelperSuite": {
       "pinned": "4ee72c065db2",
-      "behind": 4,
-      "head": "4d907bee61e92c2e65af3bd6383a4e4d356126d1",
-      "latest": "Add fallback value for step",
-      "code": 3,
+      "behind": 5,
+      "head": "775ae691ecbab6a6d09a2c186f95d130cf8a10d3",
+      "latest": "bump version",
+      "code": 4,
       "kind": "fix+feature",
       "why": [
         "Fix numeric annotated widget labels",
