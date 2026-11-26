@@ -292,17 +292,17 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "a2103ae69d98",
-    "head_date": "2026-11-25T12:59:00Z",
-    "head_msg": "[Partner Nodes] feat(Meshy): accept and emit task ids as STRING (#17987)",
+    "head": "8b0f107157b5",
+    "head_date": "2026-11-26T11:25:42Z",
+    "head_msg": "Release VBAR pins when a module cast fails part way (#17837)",
     "release": "v0.46.0",
     "release_date": "2026-11-18T22:55:32Z",
     "release_name": "v0.46.0"
   },
   "gh/workflow-templates": {
-    "head": "b413841d0d6c",
-    "head_date": "2026-11-25T14:41:51Z",
-    "head_msg": "chore(templates): add Hugging Face + ModelScope repo links to model download notes (#1462)",
+    "head": "3e0d149bff40",
+    "head_date": "2026-11-26T04:21:37Z",
+    "head_msg": "fix(validate): fail CI when a catalog index and the served templates disagree (#1466)",
     "release": "v0.11.118",
     "release_date": "2026-11-23T21:07:32Z",
     "release_name": "v0.11.118",
@@ -349,19 +349,19 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 323687,
-    "sha256": "d9ff1e30f753555d"
+    "bytes": 323052,
+    "sha256": "51106ca1a8af8f05"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 461,
-      "head": "ef84421c07ec283cee3d88b1098905ffb3cc5ac9",
-      "latest": "bump version to 3.43.3",
-      "code": 97,
+      "behind": 471,
+      "head": "89329cc34119a45632dcc0155439cd1b8ff2a8f9",
+      "latest": "update DB",
+      "code": 101,
       "kind": "perf+fix+compat+feature",
       "why": [
-        "Merge pull request #3359 from Yasei-no-otoko/add-aiter-attention",
+        "Add BSAI-H3-MotionFix to custom node list (MiniMax H3 high-speed motion glitch/noise fix wizard)",
         "Add BSAI-H3-MotionFix to custom node list (MiniMax H3 high-speed motion glitch/noise fix wizard)",
         "add ComfyUI_YuE2 -fix"
       ]
