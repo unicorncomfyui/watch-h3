@@ -292,17 +292,17 @@
     "file:skills/h3-prompt-writing/SKILL.md": "b6d9b2839384"
   },
   "gh/comfyui": {
-    "head": "8b0f107157b5",
-    "head_date": "2026-11-26T11:25:42Z",
-    "head_msg": "Release VBAR pins when a module cast fails part way (#17837)",
+    "head": "7c78b5641ab2",
+    "head_date": "2026-11-26T21:29:43Z",
+    "head_msg": "Update manual install instructions in README.md (#18013)",
     "release": "v0.46.0",
     "release_date": "2026-11-18T22:55:32Z",
     "release_name": "v0.46.0"
   },
   "gh/workflow-templates": {
-    "head": "3e0d149bff40",
-    "head_date": "2026-11-26T04:21:37Z",
-    "head_msg": "fix(validate): fail CI when a catalog index and the served templates disagree (#1466)",
+    "head": "80cc2752a4b0",
+    "head_date": "2026-11-27T16:14:38Z",
+    "head_msg": "fix(templates): correct Ideogram 4.6 precise-edit context_window note caps (#1502)",
     "release": "v0.11.118",
     "release_date": "2026-11-23T21:07:32Z",
     "release_name": "v0.11.118",
@@ -349,21 +349,21 @@
     "sha256": "b344c8c52f6e4839"
   },
   "doc/minimax-api": {
-    "bytes": 323052,
-    "sha256": "51106ca1a8af8f05"
+    "bytes": 322912,
+    "sha256": "210a99fdad84ef6f"
   },
   "pins/pod-comfyui-h3": {
     "Comfy-Org/ComfyUI-Manager": {
       "pinned": "d47c93461903",
-      "behind": 471,
-      "head": "89329cc34119a45632dcc0155439cd1b8ff2a8f9",
-      "latest": "update DB",
-      "code": 101,
+      "behind": 472,
+      "head": "5538a03d8bcde938c93989f152704c1ba1951011",
+      "latest": "Make torchaudio optional in the PyTorch check and restore, and in the install scripts (#3388)",
+      "code": 103,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Add BSAI-H3-MotionFix to custom node list (MiniMax H3 high-speed motion glitch/noise fix wizard)",
         "Add BSAI-H3-MotionFix to custom node list (MiniMax H3 high-speed motion glitch/noise fix wizard)",
-        "add ComfyUI_YuE2 -fix"
+        "Add BSAI-H3-MotionFix to custom node list (MiniMax H3 high-speed motion glitch/noise fix wizard)"
       ]
     },
     "Kosinkadink/ComfyUI-VideoHelperSuite": {
@@ -380,10 +380,10 @@
     },
     "kijai/ComfyUI-KJNodes": {
       "pinned": "35e595619376",
-      "behind": 68,
-      "head": "187868f53a7d9df007dbfe85891dab41453f7933",
-      "latest": "Add SkipDiTBlocksKJ",
-      "code": 36,
+      "behind": 72,
+      "head": "3775437db9f8ab0cca54d1afc79d589a9a27feb7",
+      "latest": "Add LatentPatchGridRemoveKJ",
+      "code": 38,
       "kind": "perf+fix+compat+feature",
       "why": [
         "Optimize tiny vae some",
@@ -410,10 +410,10 @@
     },
     "chrisgoringe/cg-use-everywhere": {
       "pinned": "50ae9f8c5d8b",
-      "behind": 21,
-      "head": "61e7bb9399b5f3cac9b1ff9a1197c5abc45edf21",
-      "latest": "484",
-      "code": 13,
+      "behind": 29,
+      "head": "c598ea8287d605b7798e2aa1f5e7ed5c3116f8c8",
+      "latest": "Merge pull request #489 from chrisgoringe/8.0.2",
+      "code": 16,
       "kind": "fix",
       "why": [
         "Merge pull request #478 from DrJKL/fix/per-graph-hooks",
